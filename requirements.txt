@@ -1,0 +1,6 @@
+sphinx
+sphinx-design
+sphinx-copybutton
+sphinx-rtd-theme
+myst-parser
+MarkupSafe
