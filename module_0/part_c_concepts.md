@@ -506,7 +506,7 @@ For the harder case — cancelling something you cannot check inside, like an in
 It races the operation against the signal, and note lines 18-21: if the signal has *already* aborted, it still attaches a
 `.catch(() => {})` to the abandoned promise. That is the unhandled-rejection problem above, handled deliberately.
 
-## Concept 6: The Ten Packages
+## Concept 6: The Twelve Packages
 
 Time for the map. Run this from the repo root:
 
@@ -515,10 +515,11 @@ ls packages/
 ```
 
 ```
-agent  ai  client  coding-agent  evals  protocol  server  session-backends  telemetry  tui
+agent   ai      chord   client    coding-agent  durable
+evals   protocol  server  session-backends  telemetry  tui
 ```
 
-Ten directories. Here is what each holds, and which module of this course builds your version of it:
+Twelve directories. Here is what each holds, and which module of this course builds your version of it:
 
 | Package | Holds | Python tools to consider | Module |
 | --- | --- | --- | --- |
@@ -531,17 +532,25 @@ Ten directories. Here is what each holds, and which module of this course builds
 | `telemetry` | Vendor-neutral telemetry contracts and typed schemas | — | mentioned in 6 |
 | `session-backends` | Pluggable session storage (SQLite) | `sqlite3` | mentioned in 3 |
 | `evals` | Benchmarking harness behaviour | — | not covered |
+| `chord` | Plugin/facet runtime, services, replicated state, and the `Context` type the tools use | `contextvars` | mentioned in 5 |
+| `durable` | Durable conversation, task, and document records | — | not covered |
+
+Two of those, `chord` and `durable`, are newer than the rest and are where pi is currently growing. `chord` is the one
+you will actually bump into, because its `Context` is the last parameter of every tool (Part B, File 2). Its README is
+explicit that it is not a pi package at all: it depends on nothing else in the repo and is meant to be usable by
+unrelated applications.
 
 **The dependency order is the interesting part.** From the `build` script in the root `package.json`:
 
 ```
-tui -> telemetry -> ai -> agent -> session-backends -> protocol -> client -> server -> coding-agent
+chord -> tui -> telemetry -> ai -> durable -> agent -> session-backends
+      -> protocol -> client -> server -> coding-agent
 ```
 
 Read it as an argument about layering:
 
-- **`tui` and `telemetry` depend on nothing.** A terminal renderer does not need to know what an agent is. That
-  independence is what makes it testable.
+- **`chord`, `tui`, and `telemetry` depend on nothing.** A terminal renderer does not need to know what an agent is.
+  That independence is what makes it testable, and `chord` is built first for the same reason.
 - **`ai` depends on neither of them.** It knows about models and messages, not about loops or terminals. You could build
   a completely different agent on top of `ai`.
 - **`agent` depends on `ai`.** The loop needs messages and a way to call a model. It does *not* depend on `tui` — the

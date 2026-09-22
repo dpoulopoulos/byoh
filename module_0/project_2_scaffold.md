@@ -24,7 +24,7 @@ It is scaffolding, not architecture. Once you have opinions of your own about wh
 package boundary you disagree with is worse than an unfamiliar name.
 
 Why a monorepo at all, when one package would do? Because the layering from
-[Concept 6](part_c_concepts.md#concept-6-the-ten-packages) only means something if it is enforced. `agent` may import `ai`; `ai` must never
+[Concept 6](part_c_concepts.md#concept-6-the-twelve-packages) only means something if it is enforced. `agent` may import `ai`; `ai` must never
 import `agent`. Separate packages make the illegal direction a dependency error instead of a bad habit.
 
 ## Step 1: The Workspace Root
