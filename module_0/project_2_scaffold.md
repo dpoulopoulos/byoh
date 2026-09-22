@@ -196,7 +196,12 @@ class Context(BaseModel):
 
 Read that against
 [pi's lines 409-455](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts#L409-L455)
-and notice how close it is. Same three messages, same discriminant, same content-blocks-not-a-string decision.
+and notice how close it is. Same discriminant, same content-blocks-not-a-string decision.
+
+One difference is deliberate. pi's union has **four** members; this scaffold has three, because it leaves out
+`SystemMessage` and keeps the prompt as `Context.system_prompt`. That is fine for a transcript you only print, and it is
+the wrong answer the moment the prompt or the tool set can change mid-conversation — which is exactly why pi moved it
+into the transcript. Note the gap now, and decide in Module 3 whether to close it.
 
 **Three translation notes.**
 
@@ -435,9 +440,15 @@ Run `uv run mypy packages`. `render.py` fails at the `assert_never` line, withou
 This is the payoff of the pattern: **the type checker found every place that needs updating.** In a real codebase that
 is forty files, and it lists all of them.
 
-Now decide what to do about it. pi's answer, from Pass 5, is that there *is* no system message — the system prompt lives
-on `Context`, because it is a property of the conversation rather than a turn within it. Revert the change, and note the
-reasoning: you just rediscovered a design decision by trying the alternative.
+Now decide what to do about it, and note that pi has answered this question **both ways**. Older versions kept the
+system prompt on `Context` only, as a property of the conversation rather than a turn within it — which is what this
+scaffold still does. Current pi has a `SystemMessage` in the union (Pass 5), because a prompt and a tool set can change
+mid-conversation, and a transcript that cannot record the change can no longer explain itself.
+
+So this break is not a mistake to revert. It is the real design decision, and you have just done the work of making it:
+the checker listed every site that has to care. Keep the fourth member if you want the pi shape, handle it in
+`render.py`, and drop `system_prompt` from `Context` once it is redundant. Revert it if you would rather stay minimal
+until Module 3 needs it. Either is defensible — write down which one you chose and why.
 
 ## Bonus Challenges
 

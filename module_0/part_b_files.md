@@ -235,7 +235,7 @@ implementation. Module 2 builds this properly.
 **Line 33: the return shape.** `content` is what the model sees — a `TextContent` block, exactly the type from
 [Pass 3](part_a_types.md#pass-3-content-blocks--the-discriminated-union-lines-332-368). `details` is `undefined` here because this tool has no
 structured result for the application. That is the `TDetails` parameter from
-[Pass 5](part_a_types.md#pass-5-the-three-messages-lines-409-455), instantiated as `undefined`.
+[Pass 5](part_a_types.md#pass-5-the-four-messages-lines-409-455), instantiated as `undefined`.
 
 Notice the message text: `Successfully wrote ${content.length} bytes to ${path}`. Confirming an action back to the model
 is deliberate — it needs to know the write happened.

@@ -435,11 +435,20 @@ The type checker will not warn you about any of these. `number` is `number`.
 
 ---
 
-## Pass 5: The Three Messages (Lines 409-455)
+## Pass 5: The Four Messages (Lines 409-455)
 
 Read lines 409-455. This is the center of the file. Stripped of comments:
 
 ```ts
+export interface SystemMessage {
+	role: "system";
+	content: string | TextContent[];
+	sections?: Record<string, string | null>;
+	toolsAdded?: Tool[];
+	toolsRemoved?: ToolReference[];
+	timestamp: number;
+}
+
 export interface UserMessage {
 	role: "user";
 	content: string | (TextContent | ImageContent)[];
@@ -454,6 +463,7 @@ export interface AssistantMessage {
 	model: string;
 	responseModel?: string;
 	responseId?: string;
+	providerThinkingLevel?: string;
 	diagnostics?: AssistantMessageDiagnostic[];
 	usage: Usage;
 	stopReason: StopReason;
@@ -464,28 +474,44 @@ export interface AssistantMessage {
 	timestamp: number;
 }
 
-export interface ToolResultMessage<TDetails = any> {
-	role: "toolResult";
-	toolCallId: string;
-	toolName: string;
-	content: (TextContent | ImageContent)[];
-	details?: TDetails;
-	usage?: Usage;
-	addedToolNames?: string[];
-	isError: boolean;
-	timestamp: number;
-}
+export type ToolResultMessage<TDetails = JsonValue> = IsJsonCompatible<TDetails> extends true
+	? {
+			role: "toolResult";
+			toolCallId: string;
+			toolName: string;
+			content: (TextContent | ImageContent)[];
+			details?: JsonRepresentation<TDetails>;
+			usage?: Usage;
+			isError: boolean;
+			timestamp: number;
+		}
+	: never;
 
-export type Message = UserMessage | AssistantMessage | ToolResultMessage;
+export type Message = SystemMessage | UserMessage | AssistantMessage | ToolResultMessage;
 ```
 
-**Read line 455 first.** `Message` is a union of three, discriminated on `role`. That single line is the data model of
+**Read line 455 first.** `Message` is a union of four, discriminated on `role`. That single line is the data model of
 every agent conversation in pi. A session is a `Message[]`. Compaction rewrites a `Message[]`. The TUI renders a
 `Message[]`. The provider adapters translate a `Message[]` into somebody's JSON.
 
-Now notice what the three members are *not*. There is no `SystemMessage`. The system prompt lives on `Context`, which we
-read in the next pass — it is a property of the conversation, not a message in it. And there is no base
-`Message` interface that the three extend. The union is the abstraction.
+Now notice what the four members are *not*. There is no base `Message` interface that the four extend. The union is the
+abstraction.
+
+**`SystemMessage` is a message, and that is a design decision worth pausing on.** The obvious place for a system prompt
+is one field on the conversation — and `Context.systemPrompt` in the next pass is exactly that. But pi keeps the *real*
+system prompt in the transcript, as a message with a position, because a prompt can change mid-conversation. Read the
+doc comment above the interface: the leading system message is the base prompt, and a later one adds instructions,
+replaces a named section through `sections`, or changes the tool set through `toolsAdded` / `toolsRemoved`. Replay them
+in order and you have the current prompt and the current tools.
+
+Why bother? Because a harness genuinely does change both mid-turn. A skill gets loaded, plan mode turns off, an
+extension registers a new tool. If the prompt were one mutable field, the transcript would no longer explain itself —
+you could not replay a session and know which tools the model could see at message 40. As a message it is just more
+conversation, and it serializes to the session file like everything else.
+
+The cost is that providers disagree about whether a system message may appear in the middle. pi handles that with a
+compat flag (`supportsMidConvoSystemMessages`): providers that allow it get each message in place, and the rest get one
+rebuilt leading system message with the replayed state folded in.
 
 **Three observations worth internalizing:**
 
@@ -502,23 +528,33 @@ you — the transcript still knows which turn came from where, and the running c
 alongside the user's words and the model's. This is the structural reason a harness is a *loop* rather than a function
 call: the result of running a tool is more conversation.
 
-**The generic:** `ToolResultMessage<TDetails = any>`.
+**The generic:** `ToolResultMessage<TDetails = JsonValue>`.
 
-`<TDetails>` is a **type parameter**, and `= any` is its **default**. This is Python's `TypeVar` plus `Generic`:
+`<TDetails>` is a **type parameter**, and `= JsonValue` is its **default**. This is Python's `TypeVar` plus `Generic`:
 
 ```python
-TDetails = TypeVar("TDetails", default=Any)
+TDetails = TypeVar("TDetails", default=JsonValue)
 
 class ToolResultMessage(BaseModel, Generic[TDetails]):
     details: TDetails | None = None
 ```
 
+The wrapper around it is new TypeScript, and it is a **constraint expressed as a conditional type**. Read
+`IsJsonCompatible<TDetails> extends true ? { ...the real shape... } : never` as a compile-time guard: if `TDetails`
+holds anything that cannot survive `JSON.stringify` — a function, a `Map`, a class instance — the whole type collapses
+to `never` and nothing can be assigned to it. `JsonRepresentation<TDetails>` then describes what the value looks like
+*after* the round trip.
+
+That is the same "it has to cross a wire" rule from Pass 3, promoted from a comment into something the compiler
+enforces. In Python you get the check for free in a different way: pydantic refuses to serialize a model it cannot
+serialize, and it tells you at the point of failure. Pass 8 is the same construct used for a different job.
+
 The purpose: `content` is what the *model* sees — text and images. `details` is what *your application* sees — the
 structured result. When the `read` tool runs, `content` holds the file text for the model, and `details` holds something
 like the line count and truncation flag for your UI. Different consumers, different shapes.
 
-The default matters for ergonomics. Because of `= any`, code that does not care can write `ToolResultMessage` with no
-angle brackets, which is why line 455 can say `| ToolResultMessage` plainly. Code that does care writes
+The default matters for ergonomics. Because of `= JsonValue`, code that does not care can write `ToolResultMessage`
+with no angle brackets, which is why line 455 can say `| ToolResultMessage` plainly. Code that does care writes
 `ToolResultMessage<ReadToolDetails>` and gets a typed `details`.
 
 **Questions to answer:**

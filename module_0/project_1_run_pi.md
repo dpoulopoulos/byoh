@@ -152,7 +152,8 @@ How many TypeScript files are in packages/ai/src, and what is the largest one?
 
 **What to observe, and this is the actual point of the project:**
 
-1. Your text appears — that is a `UserMessage` (Pass 5)
+1. Your text appears — that is a `UserMessage` (Pass 5), sitting after the leading `SystemMessage` that holds the
+   prompt and the tool declarations
 2. The model streams a reply token by token — those are `text_delta` events (Pass 7)
 3. A tool call appears with its arguments — a `ToolCall` block, arguments validated against a schema (Pass 6)
 4. The tool's output comes back — a `ToolResultMessage`, now part of the transcript
@@ -190,3 +191,5 @@ defaults" to "no defaults," and they are a preview of the entire course.
   good start. You are about to write the same proof in Python with `assert_never`, so read one first.
 - Open `packages/ai/src/types.ts` and `packages/agent/src/harness/tools/read.ts` side by side. Find the schema and the
   type that comes from it. That duplication is what pydantic removes for you.
+- Dump a session file and find the `"role": "system"` entries. There is one at the top, and there may be more further
+  down if the tool set changed mid-run. That is Pass 5's `SystemMessage` on disk.
