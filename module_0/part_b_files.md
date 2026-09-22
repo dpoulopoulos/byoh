@@ -93,7 +93,7 @@ description, and path get formatted into an XML block. That block goes into `Con
 descriptions and decides to `read` the file when relevant.
 
 That is the whole mechanism. No new channel, no special protocol — just text in the system prompt, exactly as
-[Pass 6](part_a_types.md#pass-6-tool-and-context--the-whole-interface-to-a-model-lines-478-513) predicted.
+[Pass 6](part_a_types.md#pass-6-tool-and-context--the-whole-interface-to-a-model-lines-576-621) predicted.
 
 **Questions to answer:**
 
@@ -252,9 +252,9 @@ abstraction passed in. That is what makes the tool testable without a filesystem
 implementation. Module 2 builds this properly.
 
 **Line 35: the return shape.** `content` is what the model sees — a `TextContent` block, exactly the type from
-[Pass 3](part_a_types.md#pass-3-content-blocks--the-discriminated-union-lines-332-368). `details` is `undefined` here because this tool has no
+[Pass 3](part_a_types.md#pass-3-content-blocks--the-discriminated-union-lines-364-394). `details` is `undefined` here because this tool has no
 structured result for the application. That is the `TDetails` parameter from
-[Pass 5](part_a_types.md#pass-5-the-four-messages-lines-409-455), instantiated as `undefined`.
+[Pass 5](part_a_types.md#pass-5-the-four-messages-lines-491-553), instantiated as `undefined`.
 
 Notice the message text: `Successfully wrote to ${path}`. Confirming an action back to the model is deliberate — it
 needs to know the write happened. Earlier versions of this tool also reported the byte count; it was dropped, which is a

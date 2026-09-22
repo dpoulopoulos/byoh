@@ -195,7 +195,7 @@ class Context(BaseModel):
 ```
 
 Read that against
-[pi's lines 409-455](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts#L409-L455)
+[pi's lines 491-553](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts#L491-L553)
 and notice how close it is. Same discriminant, same content-blocks-not-a-string decision.
 
 One difference is deliberate. pi's union has **four** members; this scaffold has three, because it leaves out
@@ -464,7 +464,7 @@ until Module 3 needs it. Either is defensible — write down which one you chose
    dollars. Then add pi's `reasoning: int | None` and write a comment explaining why adding it to `output` would be
    double counting.
 
-4. **Read the TypeScript back.** Open pi's `types.ts` at line 409 next to your `types.py`. For each difference, work out
+4. **Read the TypeScript back.** Open pi's `types.ts` at line 491 next to your `types.py`. For each difference, work out
    which of three things it is: pi solving a TypeScript problem you do not have, pi serving a requirement you do not
    have, or you having missed something. Only the third calls for a change. Write down the first two — that list is the
    beginning of your own design, and it is worth keeping as the course goes on.

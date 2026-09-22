@@ -13,7 +13,7 @@ to learn from it and judge it.
 **pi is a reference, not a blueprint.** You are not here to port it.
 
 The goal is to understand what an agent harness *is*: what problems it has to solve, and what the available answers cost.
-pi is how you get at that. It is about 140,000 lines of TypeScript, it has been in real use long enough to have met the
+pi is how you get at that. It is about 190,000 lines of TypeScript, it has been in real use long enough to have met the
 hard problems, and its reasoning is legible in the code. That makes it the best worked example available — a place to
 watch someone else's decisions, not a specification to satisfy.
 

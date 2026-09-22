@@ -64,7 +64,7 @@ are the return type.
 **Files are modules, and imports are hoisted.** A `.ts` file is a module the moment it uses `import` or `export`, with
 no `__init__.py` equivalent. `export` is what makes a name public; without it a name is genuinely unreachable from
 outside the file, not private-by-convention. And an `import` statement can legally appear anywhere in the file — you
-saw one at line 478 of `types.ts` — because imports are declarations, not statements that run in order.
+saw one at line 576 of `types.ts` — because imports are declarations, not statements that run in order.
 
 **`import type` is deleted; `import` is not.** This is the distinction to actually internalize, because it tells you at
 a glance which names in a file are real at runtime:
@@ -213,7 +213,7 @@ config types correctly; you do not need it to write Python.
 | `undefined` | "not set" | a missing property, a missing argument, no `return` |
 | `null` | "set, to nothing" | only ever explicit — nothing produces it by accident |
 
-Combine that with the optional-property marker `?` and pi gets **three** distinguishable states from one field. Line 84
+Combine that with the optional-property marker `?` and pi gets **three** distinguishable states from one field. Line 86
 of `types.ts`:
 
 ```ts
@@ -261,8 +261,8 @@ the signal.
 
 ## Concept 4: Result Instead of Exceptions
 
-Open [`packages/agent/src/harness/types.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/types.ts#L5-L38)
-and read lines 5-38:
+Open [`packages/agent/src/harness/types.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/types.ts#L8-L41)
+and read lines 8-41:
 
 ```ts
 /** Result of a fallible operation. Expected failures are returned as `ok: false` instead of thrown. */
@@ -313,7 +313,7 @@ function readFile(path: string): Result<string, FileError>   // the failures are
 The `Result` version puts failures in the type. You cannot reach `.value` without handling `.ok`, because the compiler
 will not let you. Python has no equivalent enforcement — an uncaught `FileNotFoundError` type-checks fine.
 
-That is why `toError(error: unknown): Error` exists on line 30 of the same file: it normalizes whatever came out of a
+That is why `toError(error: unknown): Error` exists on line 32 of the same file: it normalizes whatever came out of a
 `catch` into an actual `Error` before pi treats it as one. `getOrUndefined` sits between the two, and its doc comment is
 worth reading for the reasoning: it only accepts object values, "to avoid truthiness bugs with primitives," because a
 successful result holding `0` or `""` would otherwise be indistinguishable from a failure at the call site.
@@ -334,7 +334,7 @@ wrapper type. The case where a `Result`-like value clearly earns its keep is col
 — batch validation, say — so that is the one to weigh it against.
 
 `getOrThrow` is the escape hatch between the two worlds, and its doc comment scopes it honestly: "Intended for tests and
-explicit adapter boundaries." `write.ts` uses it on line 30 because a failed write inside a tool should abort the tool,
+explicit adapter boundaries." `write.ts` uses it on line 32 because a failed write inside a tool should abort the tool,
 and the tool-running layer above already catches and converts.
 
 Later modules add `TaggedError`, which gives typed error variants and an exhaustive `matchError`. That is the direct
@@ -369,7 +369,7 @@ The two models map closely otherwise, with two sharp exceptions. Take the mappin
 
 `Symbol.asyncIterator` is the dunder. `Symbol` is JavaScript's mechanism for protocol keys that cannot collide with
 ordinary string keys — the same role as `__aiter__`'s double underscores, implemented differently. You can see the shape
-in [`event-stream.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/utils/event-stream.ts#L50-L62):
+in [`event-stream.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/utils/event-stream.ts#L72-L84):
 
 ```ts
 async *[Symbol.asyncIterator](): AsyncIterator<T> {
@@ -420,7 +420,7 @@ const [x, y] = [await a, await b];   // total time = max, not sum
 unhandled rejection warning and can exit. Python is more forgiving about a coroutine you never awaited.
 
 **`void promise` is how pi says "on purpose."** Look at
-[`agent-loop.ts` lines 40-53](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts#L38-L54):
+[`agent-loop.ts` lines 43-57](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts#L43-L57):
 
 ```ts
 const stream = createAgentStream();
@@ -572,6 +572,6 @@ and have a working agent with no UI at all.
 
 **The one number worth remembering:** the agent loop itself, in
 [`packages/agent/src/agent-loop.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts),
-is a single file of 796 lines that holds **no state**. Everything difficult — the transcript, compaction, crash recovery,
+is a single file of 898 lines that holds **no state**. Everything difficult — the transcript, compaction, crash recovery,
 permissions — lives beside it, not in it. Open the file and skim it now. You will not understand it yet. Notice how small
 it is.

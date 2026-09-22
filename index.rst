@@ -36,7 +36,7 @@ A model is a function. Text in, text out. It cannot read your files, run your te
 
 A **harness** is everything around that function which turns it into an agent: the loop that calls the model repeatedly,
 the tools it can invoke, the transcript it carries, and the terminal you type into. `pi <https://github.com/earendil-works/pi>`_
-is one of the best open-source examples, at about 140,000 lines of TypeScript. Big enough to have met the hard problems,
+is one of the best open-source examples, at about 190,000 lines of TypeScript. Big enough to have met the hard problems,
 and readable enough to learn from.
 
 What You'll Learn

@@ -4,7 +4,7 @@ Open [`packages/ai/src/types.ts`](https://github.com/earendil-works/pi/blob/v0.8
 in your editor. This is the vocabulary file. Every other package in pi speaks the language defined here: what a message
 is, what a tool is, what a model is, what a token costs.
 
-It is 830 lines, and you are not going to read all of it. You will make eight focused passes, each targeting one
+It is 1024 lines, and you are not going to read all of it. You will make eight focused passes, each targeting one
 TypeScript concept. Pass 8 is a preview you are allowed to not understand yet.
 
 A note on line numbers: they are accurate for the pinned commit and will drift as pi changes. The file paths are the
@@ -114,9 +114,9 @@ In practice you never hit this, because every real file exports something. But i
 
 ---
 
-## Pass 2: The Open Union Trick (Lines 17-33)
+## Pass 2: The Open Union Trick (Lines 17-29)
 
-Read lines 17-33:
+Read lines 17-29:
 
 ```ts
 export type KnownApi =
@@ -168,7 +168,7 @@ But the whole point of the package is that you can point it at a server it has n
 your laptop. A closed union would make that impossible. Plain `string` would make it undiscoverable. The trick gives you
 both.
 
-You will see the same pattern for providers on line 76: `ProviderId = KnownProvider | string`. Read that line and notice
+You will see the same pattern for providers on line 77: `ProviderId = KnownProvider | string`. Read that line and notice
 it is spelled *differently* — plain `string`, no `& {}`.
 
 **Questions to answer:**
@@ -190,7 +190,7 @@ This is a deliberate exploit of an implementation detail. It is widely used, has
 language feature.
 :::
 
-- Line 76 is `export type ProviderId = KnownProvider | string;` — plain `string`, without the `& {}`. What does that
+- Line 77 is `export type ProviderId = KnownProvider | string;` — plain `string`, without the `& {}`. What does that
   type actually equal, and is it a bug?
 
 :::{dropdown} Answer
@@ -203,7 +203,7 @@ accept. `ProviderId` is used to *record* which provider produced a message, so a
 
 It is a small loss of editor help. Someone typing `provider: ` at a `ProviderId` position gets no suggestions where they
 could have gotten 41. Whether that is worth a `& {}` is a judgment call, and pi made a different call for `Api` (line 29)
-than for `ProviderId` (line 76).
+than for `ProviderId` (line 77).
 
 The reason this question is worth asking: it is very easy to write `Known | string` believing you preserved the literals.
 You did not. If you want them, you have to write the trick.
@@ -211,9 +211,9 @@ You did not. If you want them, you have to write the trick.
 
 ---
 
-## Pass 3: Content Blocks — The Discriminated Union (Lines 332-368)
+## Pass 3: Content Blocks — The Discriminated Union (Lines 364-394)
 
-This is the most important pass in the module. Read lines 338-368:
+This is the most important pass in the module. Read lines 364-394:
 
 ```ts
 export interface TextContent {
@@ -348,9 +348,9 @@ compared.
 
 ---
 
-## Pass 4: Usage, and Why a Harness Counts Tokens (Lines 370-393)
+## Pass 4: Usage, and Why a Harness Counts Tokens (Lines 396-419)
 
-Read lines 370-393:
+Read lines 396-419:
 
 ```ts
 export interface Usage {
@@ -442,9 +442,9 @@ The type checker will not warn you about any of these. `number` is `number`.
 
 ---
 
-## Pass 5: The Four Messages (Lines 409-455)
+## Pass 5: The Four Messages (Lines 491-553)
 
-Read lines 409-455. This is the center of the file. Stripped of comments:
+Read lines 491-553. This is the center of the file. Stripped of comments:
 
 ```ts
 export interface SystemMessage {
@@ -497,7 +497,7 @@ export type ToolResultMessage<TDetails = JsonValue> = IsJsonCompatible<TDetails>
 export type Message = SystemMessage | UserMessage | AssistantMessage | ToolResultMessage;
 ```
 
-**Read line 455 first.** `Message` is a union of four, discriminated on `role`. That single line is the data model of
+**Read line 553 first.** `Message` is a union of four, discriminated on `role`. That single line is the data model of
 every agent conversation in pi. A session is a `Message[]`. Compaction rewrites a `Message[]`. The TUI renders a
 `Message[]`. The provider adapters translate a `Message[]` into somebody's JSON.
 
@@ -561,7 +561,7 @@ structured result. When the `read` tool runs, `content` holds the file text for 
 like the line count and truncation flag for your UI. Different consumers, different shapes.
 
 The default matters for ergonomics. Because of `= JsonValue`, code that does not care can write `ToolResultMessage`
-with no angle brackets, which is why line 455 can say `| ToolResultMessage` plainly. Code that does care writes
+with no angle brackets, which is why line 553 can say `| ToolResultMessage` plainly. Code that does care writes
 `ToolResultMessage<ReadToolDetails>` and gets a typed `details`.
 
 **Questions to answer:**
@@ -610,15 +610,15 @@ it again in Module 1, when we write the provider adapters that do the normalizin
 
 ---
 
-## Pass 6: Tool and Context — The Whole Interface to a Model (Lines 478-513)
+## Pass 6: Tool and Context — The Whole Interface to a Model (Lines 576-621)
 
-Read lines 478-513. First, notice something odd on line 478:
+Read lines 576-621. First, notice something odd on line 576:
 
 ```ts
 import type { TSchema } from "typebox";
 ```
 
-An `import` statement, 478 lines into the file. This is legal: ES module imports are **hoisted**, so their position in
+An `import` statement, 576 lines into the file. This is legal: ES module imports are **hoisted**, so their position in
 the file has no effect. It is unusual style, but it is not a bug, and it tells you something useful — imports in
 TypeScript are declarations, not statements that execute in order.
 
@@ -755,9 +755,9 @@ tokens it may produce. It matters most for small local models. We use it in Modu
 
 ---
 
-## Pass 7: The Event Union, and `Extract` (Lines 515-539)
+## Pass 7: The Event Union, and `Extract` (Lines 637-668)
 
-Read lines 523-539:
+Read lines 652-668:
 
 ```ts
 export type AssistantMessageEvent =
@@ -782,7 +782,7 @@ export type AssistantMessageEvent =
 Twelve members, written as **inline object types** rather than named interfaces. Same discriminated union pattern as
 Pass 3, spelled compactly because none of these shapes is needed by name elsewhere.
 
-**Read the doc comment above it (lines 515-522).** It states a protocol: emit `start` first, then partial updates, then
+**Read the doc comment above it (lines 637-651).** It states a protocol: emit `start` first, then partial updates, then
 terminate with exactly one of `done` or `error`. That contract is not expressible in the type — nothing stops you from
 pushing two `done` events — so it is written in prose and enforced by the code that produces the stream. Worth noticing
 how often the interesting invariant is the one the type system cannot hold.
@@ -846,7 +846,7 @@ to every event shape, instead of a dozen hand-written variants.
 
 `Exclude` also lets pi *replace* a union member. This is where `AgentSessionEvent` — the very type those lines filter —
 gets built, in
-[`agent-session.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/core/agent-session.ts#L140-L148):
+[`agent-session.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/core/agent-session.ts#L164-L171):
 
 ```ts
 /** Session-specific events that extend the core AgentEvent */
@@ -897,7 +897,7 @@ sender is code you control.
 
 ---
 
-## Pass 8: `Model.compat` — A Conditional Type (Lines 794-823)
+## Pass 8: `Model.compat` — A Conditional Type (Lines 982-1016)
 
 This pass is a **preview**, and the one construct in this module you will never write. Read it to recognize it, and to
 understand the problem it solves — you will solve the same problem far more simply in Module 1. Do not try to reproduce
@@ -960,7 +960,7 @@ another type's *value* is genuinely absent from Python. Flag this as new, do not
 **Why it is here** is the interesting part, and it is the thread that runs through Module 1.
 
 `Model<TApi>` describes one model you can talk to. `compat` holds the flags for "this server is *almost*
-OpenAI-compatible, but it differs in these ways." Read the fields of `OpenAICompletionsCompat` (lines 545-605) — there are
+OpenAI-compatible, but it differs in these ways." Read the fields of `OpenAICompletionsCompat` (lines 674-751) — there are
 dozens: `supportsStore`, `supportsDeveloperRole`, `supportsReasoningEffort`, `supportsMidConvoSystemMessages`, and so on.
 
 Those flags are what make a harness work against a server it has never seen. A local Ollama or vLLM instance speaks
