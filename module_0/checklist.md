@@ -10,7 +10,7 @@ Before moving to Module 1, make sure you can answer "yes" to all of these.
 - [ ] I know the difference between `x?: string`, `x: string | undefined`, and `x: string`
 - [ ] I can read `x?.y`, `x ?? y`, `x!`, and `x as T` without stopping
 - [ ] I know which constructs to skip on a first read, and I skip them
-- [ ] I can read [`types.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/types.ts)
+- [ ] I can read [`types.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts)
       and identify interfaces, unions, generics, utility types, and one conditional type
 
 ## Why pi Looks the Way It Does

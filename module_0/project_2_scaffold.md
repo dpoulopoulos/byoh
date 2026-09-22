@@ -195,7 +195,7 @@ class Context(BaseModel):
 ```
 
 Read that against
-[pi's lines 409-455](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/types.ts#L409-L455)
+[pi's lines 409-455](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts#L409-L455)
 and notice how close it is. Same three messages, same discriminant, same content-blocks-not-a-string decision.
 
 **Three translation notes.**

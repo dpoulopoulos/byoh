@@ -1,6 +1,6 @@
 # Part A: Guided Reading of types.ts
 
-Open [`packages/ai/src/types.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/types.ts)
+Open [`packages/ai/src/types.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts)
 in your editor. This is the vocabulary file. Every other package in pi speaks the language defined here: what a message
 is, what a tool is, what a model is, what a token costs.
 
@@ -42,7 +42,7 @@ type*, and the entire statement is deleted before the code runs. `import` (witho
 
 Look at what that means in practice. `TelemetryContext` on line 1 is used to describe the shape of an argument, so it is
 imported as a type and vanishes. Compare with line 9 of
-[`agent-loop.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/agent/src/agent-loop.ts#L6-L12):
+[`agent-loop.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts#L6-L12):
 
 ```ts
 import {
@@ -628,7 +628,7 @@ const writeSchema = Type.Object({
 export type WriteToolInput = Static<typeof writeSchema>;
 ```
 
-Those two lines are from [`write.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/agent/src/harness/tools/write.ts#L8-L13),
+Those two lines are from [`write.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/tools/write.ts#L8-L13),
 which we read in Part B. `writeSchema` is a real object that exists at runtime and can be sent to a provider.
 `Static<typeof writeSchema>` derives the static type `{ path: string; content: string }` from it.
 
@@ -731,7 +731,7 @@ deltas, and deliberately so. A consumer that wants to re-render everything (a TU
 to append (writing to stdout) uses `delta`. Neither has to keep its own copy.
 
 Redundant, but not free — `partial` grows with the message, and it is attached to every event. pi strips it before events
-go over a wire, in [`json-event.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/coding-agent/src/modes/json-event.ts),
+go over a wire, in [`json-event.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/modes/json-event.ts),
 which is the third file we read in Part B.
 
 **Now the new TypeScript.** Look at the `done` member:
@@ -764,7 +764,7 @@ compute a type by filtering another type's members. Do not look for an analogy; 
 `Extract<StopReason, "stop" | ...>` as a small expression evaluated by the compiler, whose result is a type.
 
 You can see both used in anger. `Extract` pulls one member out of a union, in
-[`json-event.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/coding-agent/src/modes/json-event.ts#L20-L21):
+[`json-event.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/modes/json-event.ts#L20-L21):
 
 ```ts
 type MessageUpdateEvent = Extract<AgentSessionEvent, { type: "message_update" }>;
@@ -773,7 +773,7 @@ type JsonMessageUpdateEvent = Extract<JsonAgentSessionEvent, { type: "message_up
 
 `Exclude` does the opposite, and pi uses it to *replace* a union member. This is where `AgentSessionEvent` — the very
 type those two lines filter — gets built, in
-[`agent-session.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/coding-agent/src/core/agent-session.ts#L140-L148):
+[`agent-session.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/core/agent-session.ts#L140-L148):
 
 ```ts
 /** Session-specific events that extend the core AgentEvent */
@@ -883,7 +883,7 @@ dozens: `supportsStore`, `supportsDeveloperRole`, `supportsReasoningEffort`, and
 
 Those flags are what make a harness work against a server it has never seen. A local Ollama or vLLM instance speaks
 something *close* to the OpenAI completions API, and diverges in small ways. Each divergence is a flag. From pi's
-[models doc](https://github.com/earendil-works/pi/blob/v0.84.2/packages/coding-agent/docs/models.md):
+[models doc](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/docs/models.md):
 
 ```json
 {

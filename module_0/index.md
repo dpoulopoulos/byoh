@@ -148,7 +148,7 @@ the change, run the checker. Both languages have unusually good error messages. 
 
 ## Time Estimate
 
-- Part A (reading [`types.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/types.ts)): 2-3 hours
+- Part A (reading [`types.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts)): 2-3 hours
 - Part B (three small complete files): 45-60 minutes
 - Part C (concepts deep dive): 2 hours
 - Project 1 (build and run pi): 1 hour

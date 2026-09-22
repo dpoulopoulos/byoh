@@ -7,7 +7,7 @@ Hey there! Welcome to **Build Your Own Harness**. Over seven modules you write a
 understand every piece of machinery inside it.
 
 Along the way you read `pi <https://github.com/earendil-works/pi>`_, a production harness, as a worked example — pinned to
-the `v0.84.2 <https://github.com/earendil-works/pi/tree/v0.84.2>`_ tag, so every line number quoted here still points at
+the `v0.87.0 <https://github.com/earendil-works/pi/tree/v0.87.0>`_ tag, so every line number quoted here still points at
 the code it describes.
 
 If you are a Python engineer who has used a coding agent and wondered what is actually happening between your prompt and

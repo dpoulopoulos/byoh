@@ -5,7 +5,7 @@ hold in your head at once.
 
 ## File 1: system-prompt.ts (34 lines)
 
-Open [`packages/agent/src/harness/system-prompt.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/agent/src/harness/system-prompt.ts).
+Open [`packages/agent/src/harness/system-prompt.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/system-prompt.ts).
 This file turns a list of skills into a block of text for the system prompt. It is the simplest complete module in pi, and
 it contains six pieces of JavaScript you need.
 
@@ -131,7 +131,7 @@ This ordering rule applies to every escaping function you will ever write: **esc
 
 ## File 2: write.ts (39 lines)
 
-Open [`packages/agent/src/harness/tools/write.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/agent/src/harness/tools/write.ts).
+Open [`packages/agent/src/harness/tools/write.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/tools/write.ts).
 This is a complete tool — one of the things the model can actually invoke. Every tool in pi has this shape.
 
 ```ts
@@ -285,7 +285,7 @@ with no inheritance involved.
 
 ## File 3: 01-minimal.ts (26 lines)
 
-Open [`packages/coding-agent/examples/sdk/01-minimal.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/coding-agent/examples/sdk/01-minimal.ts).
+Open [`packages/coding-agent/examples/sdk/01-minimal.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/examples/sdk/01-minimal.ts).
 This is a complete, working coding agent.
 
 ```ts

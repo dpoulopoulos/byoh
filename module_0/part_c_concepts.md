@@ -261,7 +261,7 @@ the signal.
 
 ## Concept 4: Result Instead of Exceptions
 
-Open [`packages/agent/src/harness/types.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/agent/src/harness/types.ts#L5-L38)
+Open [`packages/agent/src/harness/types.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/types.ts#L5-L38)
 and read lines 5-38:
 
 ```ts
@@ -362,7 +362,7 @@ The two models map closely otherwise, with two sharp exceptions. Take the mappin
 
 `Symbol.asyncIterator` is the dunder. `Symbol` is JavaScript's mechanism for protocol keys that cannot collide with
 ordinary string keys — the same role as `__aiter__`'s double underscores, implemented differently. You can see the shape
-in [`event-stream.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/utils/event-stream.ts#L50-L62):
+in [`event-stream.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/utils/event-stream.ts#L50-L62):
 
 ```ts
 async *[Symbol.asyncIterator](): AsyncIterator<T> {
@@ -413,7 +413,7 @@ const [x, y] = [await a, await b];   // total time = max, not sum
 unhandled rejection warning and can exit. Python is more forgiving about a coroutine you never awaited.
 
 **`void promise` is how pi says "on purpose."** Look at
-[`agent-loop.ts` lines 40-53](https://github.com/earendil-works/pi/blob/v0.84.2/packages/agent/src/agent-loop.ts#L38-L54):
+[`agent-loop.ts` lines 40-53](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts#L38-L54):
 
 ```ts
 const stream = createAgentStream();
@@ -492,7 +492,7 @@ early, and that triggers `finally` for cleanup. That part works like Python.
 
 For the harder case — cancelling something you cannot check inside, like an in-flight HTTP request — pi has
 `raceWithAbortSignal` in
-[`utils/abort.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/utils/abort.ts#L17-L50).
+[`utils/abort.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/utils/abort.ts#L17-L50).
 It races the operation against the signal, and note lines 18-21: if the signal has *already* aborted, it still attaches a
 `.catch(() => {})` to the abandoned promise. That is the unhandled-rejection problem above, handled deliberately.
 
@@ -543,7 +543,7 @@ without the loop changing. And it is the reason this course builds packages in t
 and have a working agent with no UI at all.
 
 **The one number worth remembering:** the agent loop itself, in
-[`packages/agent/src/agent-loop.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/agent/src/agent-loop.ts),
+[`packages/agent/src/agent-loop.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts),
 is a single file of 796 lines that holds **no state**. Everything difficult — the transcript, compaction, crash recovery,
 permissions — lives beside it, not in it. Open the file and skim it now. You will not understand it yet. Notice how small
 it is.

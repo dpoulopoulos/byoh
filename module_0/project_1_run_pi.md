@@ -27,7 +27,7 @@ pi's root `package.json` declares `"engines": { "node": ">=22.19.0" }`. If you a
 
 - **A hosted API key.** Any of `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY`,
   and others. pi reads them from the environment. The full list is in
-  [`packages/ai/src/env-api-keys.ts`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/ai/src/env-api-keys.ts),
+  [`packages/ai/src/env-api-keys.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/env-api-keys.ts),
   and `pi-test.sh --no-env` unsets all of them if you want to test the keyless path.
 - **A local server.** [Ollama](https://ollama.com) or [LM Studio](https://lmstudio.ai) with a model pulled. Step 4 below
   covers pointing pi at it.
@@ -37,7 +37,7 @@ pi's root `package.json` declares `"engines": { "node": ">=22.19.0" }`. If you a
 ```bash
 git clone https://github.com/earendil-works/pi.git
 cd pi
-git checkout v0.84.2
+git checkout v0.87.0
 ```
 
 Checking out the pinned tag means the line numbers in this guide match what you see. Skip it if you would rather read
@@ -133,7 +133,7 @@ ollama pull qwen2.5-coder:7b        # once
 ```
 
 The full reference is
-[`packages/coding-agent/docs/models.md`](https://github.com/earendil-works/pi/blob/v0.84.2/packages/coding-agent/docs/models.md).
+[`packages/coding-agent/docs/models.md`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/docs/models.md).
 Read it now — it is the best short document in the repo, and Module 1 works through it properly.
 
 ## Step 5: Watch a Session End to End
