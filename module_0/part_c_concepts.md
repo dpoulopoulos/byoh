@@ -251,7 +251,7 @@ plain `None` is right, and pi's own habit is the same — the overwhelming major
 **Two operators you will read constantly:**
 
 - `x?.y` — **optional chaining**. Evaluates to `undefined` instead of throwing when `x` is null or undefined. You saw
-  `signal?.aborted` in `write.ts`.
+  `context.abortSignal?.aborted` in `write.ts`.
 - `x ?? y` — **nullish coalescing**. Falls back to `y` only for `null` and `undefined`, unlike `||` which also falls
   back for `0` and `""`. When you see `??` in pi, read it as "default, but `0` and empty string are legitimate values."
 
@@ -286,7 +286,7 @@ export function getOrThrow<TValue, TError>(result: Result<TValue, TError>): TVal
 distinct literal types, so `if (result.ok)` narrows exactly like `if (message.role === "user")`.
 
 ```ts
-const result = await env.readFile(path, signal);
+const result = await env.readTextFile(path, context);
 if (!result.ok) {
 	// result.error is available; result.value is not
 	return `could not read: ${result.error.message}`;
@@ -342,8 +342,13 @@ exhaustiveness.
 ## Concept 5: Async, Streams, and Cancellation
 
 This is the other place Python is straightforwardly better, and it is worth being explicit about why: **`asyncio`
-cancellation actually raises.** pi hand-writes a cancellation check at every boundary and has to thread an
-`AbortSignal` through every function in the call chain. You get the same behaviour from the language.
+cancellation actually raises.** pi hand-writes a cancellation check at every boundary and has to thread cancellation
+through every function in the call chain. You get the same behaviour from the language.
+
+Two layers do that threading differently, and it is worth knowing which is which before you read code. `packages/ai` and
+the agent loop pass a bare `AbortSignal`. The harness and tool layer passes a `Context` from pi's `chord` package — one
+object holding the signal plus scoped values, which is why `write.ts` reads `context.abortSignal` rather than `signal`.
+The mechanism underneath is identical; only the number of parameters changed.
 
 The two models map closely otherwise, with two sharp exceptions. Take the mapping first:
 
@@ -445,8 +450,13 @@ controller.abort();      // sets a flag and fires an event. Nothing raises. Noth
 `AbortSignal` is a flag plus an event listener. Aborting does not interrupt anything. Every piece of code that should
 respond has to check `signal.aborted`, or register a listener, or pass the signal down to something that does.
 
-This is why `write.ts` checks twice. This is why every function in pi's call chain takes a `signal` parameter. Forget to
-pass it down once, and everything below that point becomes uncancellable — with no warning of any kind.
+This is why `write.ts` checks twice. This is why every function in pi's call chain takes a `signal` or a `context`
+parameter. Forget to pass it down once, and everything below that point becomes uncancellable — with no warning of any
+kind.
+
+Python's `contextvars` removes even the parameter. A `ContextVar` set at the top of a task is readable anywhere below it
+without appearing in a single signature, and `asyncio.Task.cancel()` handles the cancellation half. Between the two,
+the whole threading problem goes away.
 
 Here is the behaviour, made visible. Save this and run it with `tsx`:
 

@@ -129,7 +129,7 @@ This ordering rule applies to every escaping function you will ever write: **esc
 
 ---
 
-## File 2: write.ts (39 lines)
+## File 2: write.ts (44 lines)
 
 Open [`packages/agent/src/harness/tools/write.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/tools/write.ts).
 This is a complete tool — one of the things the model can actually invoke. Every tool in pi has this shape.
@@ -160,17 +160,22 @@ export function createWriteTool<TContext extends ExecutionToolContext = Executio
 		description:
 			"Write content to a file. Creates the file if it doesn't exist, overwrites if it does. Automatically creates parent directories.",
 		parameters: writeSchema,
-		async execute(_toolCallId, { path, content }, signal, _onUpdate, { env }) {
-			const absolutePath = await resolveToolPath(env, path, signal);
-			return withFileMutationQueue(env, absolutePath, async () => {
-				if (signal?.aborted) throw new Error("Operation aborted");
-				getOrThrow(await env.writeFile(absolutePath, content, signal));
-				if (signal?.aborted) throw new Error("Operation aborted");
-				return {
-					content: [{ type: "text", text: `Successfully wrote ${content.length} bytes to ${path}` }],
-					details: undefined,
-				};
-			});
+		async execute(_toolCallId, { path, content }, _onUpdate, { env }, _invocation, context) {
+			const absolutePath = await resolveToolPath(env, path, context);
+			return withFileMutationQueue(
+				env,
+				absolutePath,
+				async () => {
+					if (context.abortSignal?.aborted) throw new Error("Operation aborted");
+					getOrThrow(await env.writeFile(absolutePath, content, context));
+					if (context.abortSignal?.aborted) throw new Error("Operation aborted");
+					return {
+						content: [{ type: "text", text: `Successfully wrote to ${path}` }],
+						details: undefined,
+					};
+				},
+				context,
+			);
 		},
 	};
 }
@@ -203,15 +208,28 @@ it back with its own fields intact, instead of widened away.
 object; this pulls out two fields and binds them as local names. Python 3 has no equivalent for dicts — the closest is
 `def execute(_id, args, ...)` followed by `path, content = args["path"], args["content"]`.
 
-Destructuring appears again in the fifth parameter, `{ env }`, taking one field from the tool context and ignoring the
+Destructuring appears again in the fourth parameter, `{ env }`, taking one field from the tool context and ignoring the
 rest.
+
+**Also line 26: the last parameter, `context`.** This is not the `Context` from Pass 6 — the name is reused. It is a
+**Go-style context**, from pi's `chord` package: one object that carries the cancellation signal (`context.abortSignal`)
+plus any scoped values, and that gets threaded down the whole call chain.
+
+Watch where it goes. `resolveToolPath(env, path, context)`, `env.writeFile(absolutePath, content, context)`,
+`withFileMutationQueue(env, absolutePath, fn, context)` — every call in the body takes it. That is the point: one
+parameter to pass instead of a signal, a deadline, a telemetry span and whatever comes next, so adding a new
+cross-cutting concern does not change every signature in the repo again.
+
+Python already has this, and it is `contextvars`. A `ContextVar` is read where it is needed rather than passed, so the
+plumbing disappears — and `asyncio` cancellation arrives on its own, so the signal half of the job is free too. Read
+this pattern, understand why pi needs it, and then do not copy it.
 
 **The `_` prefix on `_toolCallId` and `_onUpdate`** marks parameters that are deliberately unused. The linter is
 configured to accept it, exactly like Python's `_`. The parameters must still be listed because position determines
 identity.
 
-**Lines 29-31: cancellation is a manual check.** Two separate `if (signal?.aborted) throw new Error(...)` lines, before
-and after the write.
+**Lines 31-33: cancellation is a manual check.** Two separate `if (context.abortSignal?.aborted) throw new Error(...)`
+lines, before and after the write.
 
 This is the single most important thing in the file, and the biggest departure from Python. In `asyncio`, cancelling a
 task raises `CancelledError` *at* the await point — the exception finds you. Here, nothing happens. `AbortSignal` is a
@@ -221,28 +239,31 @@ So pi looks, twice: once before starting so an already-cancelled call does no wo
 arrived during the write is reported instead of returning success. Both checks are hand-written. If you forget them, your
 tool is uncancellable and nothing warns you.
 
-`signal?.aborted` uses **optional chaining**: if `signal` is `null` or `undefined`, the whole expression is `undefined`
-(falsy) instead of throwing. It is Python's `signal.aborted if signal is not None else None`, in one character.
+`context.abortSignal?.aborted` uses **optional chaining**: if `abortSignal` is `null` or `undefined`, the whole
+expression is `undefined` (falsy) instead of throwing. It is
+`context.abort_signal.aborted if context.abort_signal is not None else None`, in one character.
 
-**Line 30: `getOrThrow(await env.writeFile(...))`.** `env.writeFile` does not throw on failure. It returns a
+**Line 32: `getOrThrow(await env.writeFile(...))`.** `env.writeFile` does not throw on failure. It returns a
 `Result<T, E>` — a value that is either success or error. `getOrThrow` unwraps it, throwing if it holds an error.
 [Concept 4](part_c_concepts.md#concept-4-result-instead-of-exceptions) covers why.
 
-**Also on line 30: `env.writeFile`, not `fs.writeFile`.** This file never imports `node:fs`. It writes through `env`, an
+**Also on line 32: `env.writeFile`, not `fs.writeFile`.** This file never imports `node:fs`. It writes through `env`, an
 abstraction passed in. That is what makes the tool testable without a filesystem, and sandboxable by swapping the
 implementation. Module 2 builds this properly.
 
-**Line 33: the return shape.** `content` is what the model sees — a `TextContent` block, exactly the type from
+**Line 35: the return shape.** `content` is what the model sees — a `TextContent` block, exactly the type from
 [Pass 3](part_a_types.md#pass-3-content-blocks--the-discriminated-union-lines-332-368). `details` is `undefined` here because this tool has no
 structured result for the application. That is the `TDetails` parameter from
 [Pass 5](part_a_types.md#pass-5-the-four-messages-lines-409-455), instantiated as `undefined`.
 
-Notice the message text: `Successfully wrote ${content.length} bytes to ${path}`. Confirming an action back to the model
-is deliberate — it needs to know the write happened.
+Notice the message text: `Successfully wrote to ${path}`. Confirming an action back to the model is deliberate — it
+needs to know the write happened. Earlier versions of this tool also reported the byte count; it was dropped, which is a
+small lesson in itself. Every word in a tool result is a token the model pays for on every subsequent turn, and a byte
+count it did not ask for is not worth that.
 
 **Questions to answer:**
 
-- Why check `signal?.aborted` twice instead of once?
+- Why check `context.abortSignal?.aborted` twice instead of once?
 
 :::{dropdown} Answer
 The two checks defend different windows.
@@ -256,7 +277,7 @@ the write may have completed, but returning a cheerful success message would put
 transcript. The check converts it into an error instead.
 
 What neither check can do is *stop* the write mid-flight. That is the nature of cooperative cancellation: you get to
-notice at boundaries you choose. The `signal` is also passed *into* `env.writeFile`, so the implementation can abort
+notice at boundaries you choose. The `context` is also passed *into* `env.writeFile`, so the implementation can abort
 internally — but that is the implementation's job, not this file's.
 :::
 
