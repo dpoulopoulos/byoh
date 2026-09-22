@@ -314,7 +314,9 @@ The `Result` version puts failures in the type. You cannot reach `.value` withou
 will not let you. Python has no equivalent enforcement — an uncaught `FileNotFoundError` type-checks fine.
 
 That is why `toError(error: unknown): Error` exists on line 30 of the same file: it normalizes whatever came out of a
-`catch` into an actual `Error` before pi treats it as one.
+`catch` into an actual `Error` before pi treats it as one. `getOrUndefined` sits between the two, and its doc comment is
+worth reading for the reasoning: it only accepts object values, "to avoid truthiness bugs with primitives," because a
+successful result holding `0` or `""` would otherwise be indistinguishable from a failure at the call site.
 
 **pi's rule:** `Result` for **expected** failures — file not found, permission denied, provider returned 429. `throw`
 for **bugs** — invariant violated, unreachable branch reached. An expected failure is part of the function's contract. A
@@ -373,11 +375,11 @@ in [`event-stream.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/package
 async *[Symbol.asyncIterator](): AsyncIterator<T> {
 	while (true) {
 		if (this.queue.length > 0) {
-			yield this.queue.shift()!;
+			yield this.queue.dequeue()!;
 		} else if (this.done) {
 			return;
 		} else {
-			const result = await new Promise<IteratorResult<T>>((resolve) => this.waiting.push(resolve));
+			const result = await new Promise<IteratorResult<T>>((resolve) => this.waiting.enqueue(resolve));
 			if (result.done) return;
 			yield result.value;
 		}
@@ -387,7 +389,7 @@ async *[Symbol.asyncIterator](): AsyncIterator<T> {
 
 Read that as: hand out anything queued; if the producer is finished, stop; otherwise park until someone pushes. The
 `async *` prefix plus the `[Symbol.asyncIterator]` name is `async def __aiter__` with `yield` in it. The trailing `!` on
-`this.queue.shift()!` is a **non-null assertion**: "I know this returns `T | undefined`, but I just checked the length,
+`this.queue.dequeue()!` is a **non-null assertion**: "I know this returns `T | undefined`, but I just checked the length,
 so treat it as `T`." Same trust model as `cast`.
 
 **Exception 1: promises are eager.** This is the big one.
@@ -423,9 +425,16 @@ unhandled rejection warning and can exit. Python is more forgiving about a corou
 ```ts
 const stream = createAgentStream();
 
-void runAgentLoop(prompts, context, config, async (event) => {
-	stream.push(event);
-}, signal, streamFn).then((messages) => {
+void runAgentLoop(
+	prompts,
+	context,
+	config,
+	async (event) => {
+		stream.push(event);
+	},
+	signal,
+	streamFn,
+).then((messages) => {
 	stream.end(messages);
 });
 

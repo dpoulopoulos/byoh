@@ -67,8 +67,9 @@ Those symlinks pointing back into `packages/` are the whole trick of a monorepo.
 npm run check
 ```
 
-This runs Biome (format and lint), a few consistency scripts, and `tsgo --noEmit` for type checking. It does not run
-tests and does not emit files.
+This runs Biome (format and lint), a handful of consistency scripts — pinned dependencies, runtime dependencies,
+imports, entry graphs, the install lock — and `tsgo --noEmit` for type checking. It does not run tests and does not emit
+files.
 
 **What to observe:** it should pass silently. If it does not, your Node version or install is off. This is the command
 you will run most often when writing your own harness.
@@ -85,7 +86,7 @@ You do not need to build. `pi-test.sh` runs the TypeScript directly:
 Read the script — it is 57 lines, and the last one is the whole mechanism:
 
 ```bash
-"$SCRIPT_DIR/node_modules/.bin/tsx" --tsconfig "$SCRIPT_DIR/tsconfig.json" "$SCRIPT_DIR/packages/coding-agent/src/cli.ts"
+"$SCRIPT_DIR/node_modules/.bin/tsx" --tsconfig "$SCRIPT_DIR/tsconfig.json" "$SCRIPT_DIR/packages/coding-agent/src/experimental/cli.ts" ${ARGS[@]+"${ARGS[@]}"}
 ```
 
 That is [Concept 1](part_c_concepts.md#concept-1-how-to-read-typescript)'s right-hand path: `tsx` strips types and runs `cli.ts` with no build

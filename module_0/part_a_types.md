@@ -41,22 +41,28 @@ come back to it in [Concept 1](part_c_concepts.md#concept-1-how-to-read-typescri
 type*, and the entire statement is deleted before the code runs. `import` (without `type`) imports a real runtime value.
 
 Look at what that means in practice. `TelemetryContext` on line 1 is used to describe the shape of an argument, so it is
-imported as a type and vanishes. Compare with line 9 of
-[`agent-loop.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts#L6-L12):
+imported as a type and vanishes. Compare with the import block of
+[`agent-loop.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts#L6-L17):
 
 ```ts
 import {
 	type AssistantMessage,
-	type Context,
 	EventStream,
+	getCurrentTools,
+	getToolStateChanges,
+	normalizeContext,
+	type SystemMessage,
 	type ToolResultMessage,
+	type ToolStateChanges,
+	toToolDeclaration,
 	validateToolArguments,
 } from "@earendil-works/pi-ai";
 ```
 
-`EventStream` and `validateToolArguments` are real things at runtime: a class you can call `new` on, and a function you
-can call. `AssistantMessage`, `Context`, and `ToolResultMessage` are types, marked with an inline `type` keyword, and
-they are gone by the time the program starts.
+`EventStream`, `getCurrentTools`, `getToolStateChanges`, `normalizeContext`, `toToolDeclaration`, and
+`validateToolArguments` are real things at runtime: a class you can call `new` on, and five functions you can call.
+`AssistantMessage`, `SystemMessage`, `ToolResultMessage`, and `ToolStateChanges` are types, marked with an inline `type`
+keyword, and they are gone by the time the program starts.
 
 **Python parallel:** This is `if TYPE_CHECKING:` — but mandatory, per-symbol, and enforced. In Python you write:
 
@@ -233,7 +239,7 @@ export interface ToolCall {
 	type: "toolCall";
 	id: string;
 	name: string;
-	arguments: Record<string, any>;
+	arguments: JsonObject;
 	thoughtSignature?: string;
 	namespace?: string;
 }
@@ -319,8 +325,9 @@ TypeScript does have real binary types (`Uint8Array`, `ArrayBuffer`). pi uses th
 API and to a session file on disk. Anything in that path has to be JSON-representable, so images are base64 text and
 `mimeType` carries what the bytes actually are.
 
-This is the same reason `arguments: Record<string, any>` on `ToolCall` is a plain object and not a parsed, typed
-structure: the wire format is JSON, so the in-memory shape mirrors JSON.
+This is the same reason `arguments: JsonObject` on `ToolCall` is a plain object and not a parsed, typed structure:
+`JsonObject` is pi's own alias for "an object whose values are JSON values," so the type says out loud that the wire
+format is JSON and the in-memory shape mirrors it.
 :::
 
 - `ToolCall` has `type: "toolCall"` — camelCase — while `TextContent` has `type: "text"`. Why does the exact string
@@ -637,7 +644,29 @@ export interface Context {
 ```
 
 **`Context` is the entire input to a model.** Three fields. A system prompt, a list of messages, a list of tools. That is
-everything a harness sends. Every feature you have ever used in a coding agent — file reading, memory, skills, subagents,
+everything a harness sends.
+
+Read the doc comment above it carefully, though, because it changes what `Context` *is*. `systemPrompt` and `tools` are
+**shorthand**. A function called `normalizeContext()` folds them into the leading `SystemMessage` from Pass 5, and what
+reaches a provider is a `TranscriptContext` — messages and nothing else:
+
+```ts
+declare const transcriptContextBrand: unique symbol;
+
+export type TranscriptContext = {
+	messages: Message[];
+	readonly [transcriptContextBrand]: true;
+};
+```
+
+So there are really *two* context types, and the second one has a trick in it. `unique symbol` plus a `readonly`
+property nobody outside the module can produce is a **branded type**: structurally `TranscriptContext` is just
+`{ messages }`, but you cannot write one by hand, because you cannot name the brand. Only `normalizeContext()` can
+return one. That makes "this context has been normalized" a fact the compiler checks, instead of a convention.
+
+Python's answer is a plain `NewType` or a separate class, and it is less airtight — nothing stops you constructing the
+class directly. pi needs the brand because a raw `Context` reaching provider code is a silent bug: the system prompt
+would simply go missing. Every feature you have ever used in a coding agent — file reading, memory, skills, subagents,
 plan mode — ends up as text in one of those three fields. There is no fourth channel.
 
 Sit with that for a moment, because it is the most useful thing in this module. When you later wonder "how does feature X
@@ -768,7 +797,7 @@ to append (writing to stdout) uses `delta`. Neither has to keep its own copy.
 
 Redundant, but not free — `partial` grows with the message, and it is attached to every event. pi strips it before events
 go over a wire, in [`json-event.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/modes/json-event.ts),
-which is the third file we read in Part B.
+which we come back to two sections below.
 
 **Now the new TypeScript.** Look at the `done` member:
 
@@ -799,16 +828,24 @@ Only the last two have Python counterparts, and that is the honest summary: **th
 compute a type by filtering another type's members. Do not look for an analogy; there isn't one. Read
 `Extract<StopReason, "stop" | ...>` as a small expression evaluated by the compiler, whose result is a type.
 
-You can see both used in anger. `Extract` pulls one member out of a union, in
-[`json-event.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/modes/json-event.ts#L20-L21):
+You can see both used in anger, in
+[`json-event.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/modes/json-event.ts#L4-L18).
+`Extract` pulls one member out of a union, and `Exclude` puts a rewritten one back:
 
 ```ts
+type WithoutPartial<T> = T extends { partial: unknown } ? Omit<T, "partial"> : T;
+
 type MessageUpdateEvent = Extract<AgentSessionEvent, { type: "message_update" }>;
-type JsonMessageUpdateEvent = Extract<JsonAgentSessionEvent, { type: "message_update" }>;
+
+export type JsonAgentSessionEvent = Exclude<AgentSessionEvent, { type: "message_update" }> | JsonMessageUpdateEvent;
 ```
 
-`Exclude` does the opposite, and pi uses it to *replace* a union member. This is where `AgentSessionEvent` — the very
-type those two lines filter — gets built, in
+`WithoutPartial<T>` is worth a second look: a conditional type doing a chore. "If `T` has a `partial` field, give me `T`
+without it; otherwise give me `T`." That is the `partial`-stripping described above, written once as a type and applied
+to every event shape, instead of a dozen hand-written variants.
+
+`Exclude` also lets pi *replace* a union member. This is where `AgentSessionEvent` — the very type those lines filter —
+gets built, in
 [`agent-session.ts`](https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/core/agent-session.ts#L140-L148):
 
 ```ts
@@ -876,7 +913,9 @@ export interface Model<TApi extends Api> {
 	reasoning: boolean;
 	thinkingLevelMap?: ThinkingLevelMap;
 	input: ("text" | "image")[];
+	inputLimits?: ModelInputLimits;
 	cost: ModelCost;
+	promptCache?: ModelPromptCache;
 	contextWindow: number;
 	maxTokens: number;
 	samplingParams?: Record<string, unknown>;
@@ -889,7 +928,9 @@ export interface Model<TApi extends Api> {
 				? AnthropicMessagesCompat
 				: TApi extends "bedrock-converse-stream"
 					? BedrockCompat
-					: never;
+					: TApi extends "mistral-conversations"
+						? MistralConversationsCompat
+						: never;
 }
 ```
 
@@ -901,8 +942,13 @@ if    TApi is "openai-completions"                    -> compat is OpenAIComplet
 elif  TApi is one of the three responses APIs         -> compat is OpenAIResponsesCompat
 elif  TApi is "anthropic-messages"                    -> compat is AnthropicMessagesCompat
 elif  TApi is "bedrock-converse-stream"               -> compat is BedrockCompat
+elif  TApi is "mistral-conversations"                 -> compat is MistralConversationsCompat
 else                                                  -> compat is never
 ```
+
+Notice that the ladder grew a rung since the last release. That is the pattern's real selling point: adding a wire
+format is one more `extends` branch and one more `Compat` interface, and every `Model` typed with that `api` value
+picks it up automatically.
 
 `never` is the empty type: no value inhabits it. Landing on `never` means the property cannot be given any value at all.
 So for a model whose `api` is anything else, `compat` is unusable — which is the intended message: there are no
@@ -915,7 +961,7 @@ another type's *value* is genuinely absent from Python. Flag this as new, do not
 
 `Model<TApi>` describes one model you can talk to. `compat` holds the flags for "this server is *almost*
 OpenAI-compatible, but it differs in these ways." Read the fields of `OpenAICompletionsCompat` (lines 545-605) — there are
-dozens: `supportsStore`, `supportsDeveloperRole`, `supportsReasoningEffort`, and so on.
+dozens: `supportsStore`, `supportsDeveloperRole`, `supportsReasoningEffort`, `supportsMidConvoSystemMessages`, and so on.
 
 Those flags are what make a harness work against a server it has never seen. A local Ollama or vLLM instance speaks
 something *close* to the OpenAI completions API, and diverges in small ways. Each divergence is a flag. From pi's

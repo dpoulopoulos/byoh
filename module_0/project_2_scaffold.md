@@ -213,7 +213,8 @@ does at compile time — and unlike TypeScript, you get both halves from the sam
 is deliberate. Those strings go on the wire and into session files, so they are a format, not a naming choice. The field
 *names* are snake_case because those are yours.
 
-**`dict[str, object]`, not `dict[str, Any]`.** pi writes `Record<string, any>` here. `object` forces you to narrow before
+**`dict[str, object]`, not `dict[str, Any]`.** pi writes `JsonObject` here, its own alias for a JSON-shaped object.
+`object` forces you to narrow before
 using a value; `Any` switches the checker off. The scaffold uses `object` and pays the narrowing cost, on the grounds
 that `Any` should be a decision rather than a default.
 
