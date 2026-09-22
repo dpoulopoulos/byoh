@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home &mdash; Build Your Own Harness 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=0b20a9e2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=6dbb43f8"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module 0: Ground Floor" href="module_0/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Build Your Own Harness
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="module_0/index.html">Module 0: Ground Floor</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Build Your Own Harness</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Home</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="build-your-own-harness">
+<h1>Build Your Own Harness<a class="headerlink" href="#build-your-own-harness" title="Link to this heading"></a></h1>
+<p>Hey there! Welcome to <strong>Build Your Own Harness</strong>. Over seven modules you write an AI agent harness in Python, and come to
+understand every piece of machinery inside it.</p>
+<p>Along the way you read <a class="reference external" href="https://github.com/earendil-works/pi">pi</a>, a production harness, as a worked example — pinned to
+the <a class="reference external" href="https://github.com/earendil-works/pi/tree/v0.87.0">v0.87.0</a> tag, so every line number quoted here still points at
+the code it describes.</p>
+<p>If you are a Python engineer who has used a coding agent and wondered what is actually happening between your prompt and
+the model, you are in the right place. No toy examples. Every concept starts from a real problem, shown in real code, and
+ends with you deciding how your harness will handle it. 🚀</p>
+<p>You <strong>read</strong> TypeScript and you <strong>write</strong> Python. pi is a reference, not a blueprint. It shows you which problems a
+harness has to solve and one team’s answers, with the reasoning visible. Where a problem has more than one reasonable
+answer, the course puts the alternatives side by side with what each one costs. Which one goes into your harness is
+your call.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This course is in early access. The curriculum is finalized, but modules are still being written.
+Subscribe for updates!</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The course has only been tested on macOS. Everything should work on Linux and WSL, but paths and
+shell commands assume a Unix-like system.</p>
+</div>
+<section id="what-is-a-harness">
+<h2>What Is a Harness?<a class="headerlink" href="#what-is-a-harness" title="Link to this heading"></a></h2>
+<p>A model is a function. Text in, text out. It cannot read your files, run your tests, or remember yesterday.</p>
+<p>A <strong>harness</strong> is everything around that function which turns it into an agent: the loop that calls the model repeatedly,
+the tools it can invoke, the transcript it carries, and the terminal you type into. <a class="reference external" href="https://github.com/earendil-works/pi">pi</a>
+is one of the best open-source examples, at about 190,000 lines of TypeScript. Big enough to have met the hard problems,
+and readable enough to learn from.</p>
+</section>
+<section id="what-you-ll-learn">
+<h2>What You’ll Learn<a class="headerlink" href="#what-you-ll-learn" title="Link to this heading"></a></h2>
+<p>The course is organized into 7 modules. Each module takes on one problem a harness has to solve, shows you how pi solves
+it and why, and then has you solve it in Python.</p>
+<ol class="arabic simple" start="0">
+<li><p><strong>Ground Floor</strong> – Reading TypeScript, why erased types shape pi’s design, discriminated unions, and the vocabulary of a turn</p></li>
+<li><p><strong>Talking to Any Model</strong> – Provider adapters, SSE parsing, one interface over hosted APIs and local servers</p></li>
+<li><p><strong>The Loop and Its Tools</strong> – The agent loop, tool schemas, dependency inversion, and permission</p></li>
+<li><p><strong>State That Survives</strong> – Append-only sessions, the conversation tree, compaction, and crash recovery</p></li>
+<li><p><strong>The Terminal</strong> – Differential rendering, the editor, autocomplete, and a real TUI with Textual</p></li>
+<li><p><strong>Making It Yours</strong> – Extensions, skills, slash commands, and settings</p></li>
+<li><p><strong>Two Processes</strong> – The wire protocol, the client/server split, and testing without spending tokens</p></li>
+</ol>
+</section>
+<section id="projects">
+<h2>Projects<a class="headerlink" href="#projects" title="Link to this heading"></a></h2>
+<p>Each module ends with something that runs. These are the problems, not a checklist of pi features to reproduce:</p>
+<ul class="simple">
+<li><p>Scaffold a <code class="docutils literal notranslate"><span class="pre">uv</span></code> workspace, model a conversation with pydantic, and render a transcript</p></li>
+<li><p>Stream tokens from a hosted API and from a local server through one interface</p></li>
+<li><p>A working agent loop that reads files, edits them, and runs commands</p></li>
+<li><p>Sessions that survive a crash, and a transcript that compacts itself</p></li>
+<li><p>A terminal UI with a real text editor and autocomplete</p></li>
+<li><p>Extensions, skills, and slash commands loaded from disk</p></li>
+<li><p><strong>Capstone:</strong> split your harness into a client and a server over a typed protocol</p></li>
+</ul>
+</section>
+<section id="who-this-is-for">
+<h2>Who This Is For<a class="headerlink" href="#who-this-is-for" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Python engineers comfortable with <code class="docutils literal notranslate"><span class="pre">asyncio</span></code>, type hints, and pydantic, who want to read a real TypeScript codebase
+without adopting it</p></li>
+<li><p>Anyone who uses coding agents and wants to know how they actually work</p></li>
+<li><p>Developers who learn better by reading real code than by reading tutorials</p></li>
+</ul>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Solid programming experience, ideally Python</p></li>
+<li><p>Python 3.13 or newer, <a class="reference external" href="https://docs.astral.sh/uv/">uv</a>, and <code class="docutils literal notranslate"><span class="pre">git</span></code></p></li>
+<li><p>Node.js 22.19 or newer, only to build and run pi itself</p></li>
+<li><p>Access to at least one model. A hosted API key works. So does <a class="reference external" href="https://ollama.com">Ollama</a> or
+<a class="reference external" href="https://lmstudio.ai">LM Studio</a> on your own machine.</p></li>
+<li><p>No TypeScript or JavaScript experience required. You will learn to read it, not write it.</p></li>
+</ul>
+<p>Ready? Let’s dive in! 👇</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="module_0/index.html">Module 0: Ground Floor</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="module_0/index.html" class="btn btn-neutral float-right" title="Module 0: Ground Floor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Dimitris Poulopoulos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

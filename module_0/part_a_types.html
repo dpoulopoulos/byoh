@@ -1,0 +1,1071 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Part A: Guided Reading of types.ts &mdash; Build Your Own Harness 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b20a9e2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=6dbb43f8"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Part B: Guided Reading of Three Complete Files" href="part_b_files.html" />
+    <link rel="prev" title="Module 0: Ground Floor" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Build Your Own Harness
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Module 0: Ground Floor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#the-deal">The Deal</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#the-module-in-order">The Module in Order</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Part A: Guided Reading of types.ts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pass-1-the-import-block-lines-1-15">Pass 1: The Import Block (Lines 1-15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pass-2-the-open-union-trick-lines-17-29">Pass 2: The Open Union Trick (Lines 17-29)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pass-3-content-blocks-the-discriminated-union-lines-364-394">Pass 3: Content Blocks — The Discriminated Union (Lines 364-394)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pass-4-usage-and-why-a-harness-counts-tokens-lines-396-419">Pass 4: Usage, and Why a Harness Counts Tokens (Lines 396-419)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pass-5-the-four-messages-lines-491-553">Pass 5: The Four Messages (Lines 491-553)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pass-6-tool-and-context-the-whole-interface-to-a-model-lines-576-621">Pass 6: Tool and Context — The Whole Interface to a Model (Lines 576-621)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pass-7-the-event-union-and-extract-lines-637-668">Pass 7: The Event Union, and <code class="docutils literal notranslate"><span class="pre">Extract</span></code> (Lines 637-668)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pass-8-model-compat-a-conditional-type-lines-982-1016">Pass 8: <code class="docutils literal notranslate"><span class="pre">Model.compat</span></code> — A Conditional Type (Lines 982-1016)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="part_b_files.html">Part B: Guided Reading of Three Complete Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="part_c_concepts.html">Part C: Key Concepts Deep Dive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="project_1_run_pi.html">Project 1: Build and Run pi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="project_2_scaffold.html">Project 2: Scaffold Your Harness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="checklist.html">Self-Assessment Checklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="what_next.html">What is Next</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#who-this-is-for">Who This Is For</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#what-you-will-learn">What You Will Learn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#why-this-matters">Why This Matters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#how-to-use-this-guide">How to Use This Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#time-estimate">Time Estimate</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Build Your Own Harness</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module 0: Ground Floor</a></li>
+      <li class="breadcrumb-item active">Part A: Guided Reading of types.ts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/module_0/part_a_types.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="part-a-guided-reading-of-types-ts">
+<h1>Part A: Guided Reading of types.ts<a class="headerlink" href="#part-a-guided-reading-of-types-ts" title="Link to this heading"></a></h1>
+<p>Open <a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts"><code class="docutils literal notranslate"><span class="pre">packages/ai/src/types.ts</span></code></a>
+in your editor. This is the vocabulary file. Every other package in pi speaks the language defined here: what a message
+is, what a tool is, what a model is, what a token costs.</p>
+<p>It is 1024 lines, and you are not going to read all of it. You will make eight focused passes, each targeting one
+TypeScript concept. Pass 8 is a preview you are allowed to not understand yet.</p>
+<p>A note on line numbers: they are accurate for the pinned commit and will drift as pi changes. The file paths are the
+durable part. If a line number looks wrong, search for the name instead.</p>
+<section id="pass-1-the-import-block-lines-1-15">
+<h2>Pass 1: The Import Block (Lines 1-15)<a class="headerlink" href="#pass-1-the-import-block-lines-1-15" title="Link to this heading"></a></h2>
+<p>Read the first fifteen lines:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">TelemetryContext</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@earendil-works/pi-telemetry"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AnthropicOptions</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"./api/anthropic-messages.ts"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AzureOpenAIResponsesOptions</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"./api/azure-openai-responses.ts"</span><span class="p">;</span>
+<span class="c1">// ... ten more like it ...</span>
+<span class="k">import</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AssistantMessageEventStream</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"./utils/event-stream.ts"</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AssistantMessageEventStream</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"./utils/event-stream.ts"</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Four things are happening here, and three of them will surprise you.</p>
+<p><strong>1. There is no <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>.</strong> A TypeScript file is a module the moment it uses <code class="docutils literal notranslate"><span class="pre">import</span></code> or <code class="docutils literal notranslate"><span class="pre">export</span></code>. There is no
+marker file that turns a directory into a package. A file that has neither keyword is not a module at all; its top-level
+variables leak into the global scope. This is why every file in pi has at least one <code class="docutils literal notranslate"><span class="pre">export</span></code>.</p>
+<p><strong>2. The file extension is required.</strong> <code class="docutils literal notranslate"><span class="pre">&quot;./api/anthropic-messages.ts&quot;</span></code> includes <code class="docutils literal notranslate"><span class="pre">.ts</span></code>. Python writes
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">.api.anthropic_messages</span> <span class="pre">import</span> <span class="pre">AnthropicOptions</span></code> with no extension and no leading dot for the file type. ES modules
+require the extension, because the runtime resolves the path literally instead of searching a set of candidate names.</p>
+<p>Note that pi imports <code class="docutils literal notranslate"><span class="pre">.ts</span></code> even though what eventually runs is <code class="docutils literal notranslate"><span class="pre">.js</span></code>. That is a compiler setting, not the default; we
+come back to it in <a class="reference internal" href="part_c_concepts.html#concept-1-how-to-read-typescript"><span class="std std-ref">Concept 1</span></a>.</p>
+<p><strong>3. <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">type</span></code> is not the same as <code class="docutils literal notranslate"><span class="pre">import</span></code>.</strong> This is the first genuinely new idea. <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">type</span></code> imports <em>only the
+type</em>, and the entire statement is deleted before the code runs. <code class="docutils literal notranslate"><span class="pre">import</span></code> (without <code class="docutils literal notranslate"><span class="pre">type</span></code>) imports a real runtime value.</p>
+<p>Look at what that means in practice. <code class="docutils literal notranslate"><span class="pre">TelemetryContext</span></code> on line 1 is used to describe the shape of an argument, so it is
+imported as a type and vanishes. Compare with the import block of
+<a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts#L6-L17"><code class="docutils literal notranslate"><span class="pre">agent-loop.ts</span></code></a>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="kr">type</span><span class="w"> </span><span class="nx">AssistantMessage</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">EventStream</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">getCurrentTools</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">getToolStateChanges</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">normalizeContext</span><span class="p">,</span>
+<span class="w">	</span><span class="kr">type</span><span class="w"> </span><span class="nx">SystemMessage</span><span class="p">,</span>
+<span class="w">	</span><span class="kr">type</span><span class="w"> </span><span class="nx">ToolResultMessage</span><span class="p">,</span>
+<span class="w">	</span><span class="kr">type</span><span class="w"> </span><span class="nx">ToolStateChanges</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">toToolDeclaration</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">validateToolArguments</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@earendil-works/pi-ai"</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">EventStream</span></code>, <code class="docutils literal notranslate"><span class="pre">getCurrentTools</span></code>, <code class="docutils literal notranslate"><span class="pre">getToolStateChanges</span></code>, <code class="docutils literal notranslate"><span class="pre">normalizeContext</span></code>, <code class="docutils literal notranslate"><span class="pre">toToolDeclaration</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">validateToolArguments</span></code> are real things at runtime: a class you can call <code class="docutils literal notranslate"><span class="pre">new</span></code> on, and five functions you can call.
+<code class="docutils literal notranslate"><span class="pre">AssistantMessage</span></code>, <code class="docutils literal notranslate"><span class="pre">SystemMessage</span></code>, <code class="docutils literal notranslate"><span class="pre">ToolResultMessage</span></code>, and <code class="docutils literal notranslate"><span class="pre">ToolStateChanges</span></code> are types, marked with an inline <code class="docutils literal notranslate"><span class="pre">type</span></code>
+keyword, and they are gone by the time the program starts.</p>
+<p><strong>Python parallel:</strong> This is <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">TYPE_CHECKING:</span></code> — but mandatory, per-symbol, and enforced. In Python you write:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.api.anthropic_messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicOptions</span>
+</pre></div>
+</div>
+<p>…to avoid a circular import or a slow import at runtime. In TypeScript, <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">type</span></code> does that job with one keyword,
+and the compiler will tell you if you got it wrong.</p>
+<p><strong>4. A file can re-export.</strong> Line 15 re-exports <code class="docutils literal notranslate"><span class="pre">AssistantMessageEventStream</span></code> so consumers can get it from
+<code class="docutils literal notranslate"><span class="pre">types.ts</span></code> without knowing it lives in <code class="docutils literal notranslate"><span class="pre">utils/event-stream.ts</span></code>. This is <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">.utils.event_stream</span> <span class="pre">import</span> <span class="pre">X</span> <span class="pre">as</span> <span class="pre">X</span></code> in an
+<code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>, and it serves the same purpose: a stable public surface over a private layout.</p>
+<p><strong>Questions to answer before moving on:</strong></p>
+<ul class="simple">
+<li><p>Why does pi bother marking imports as <code class="docutils literal notranslate"><span class="pre">type</span></code> instead of just importing everything normally?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Three reasons, in order of how much they matter.</p>
+<p class="sd-card-text">First, <strong>circular imports</strong>. Types can be mutually recursive without any problem, because they do not exist at runtime.
+Values cannot. <code class="docutils literal notranslate"><span class="pre">types.ts</span></code> imports from <code class="docutils literal notranslate"><span class="pre">./api/anthropic-messages.ts</span></code>, and that file almost certainly needs types from
+<code class="docutils literal notranslate"><span class="pre">types.ts</span></code>. With <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">type</span></code>, both directions are free. With value imports, you get a cycle that either crashes or
+produces <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<p class="sd-card-text">Second, <strong>honesty about cost</strong>. A value import means the module is loaded and its top-level code runs. A type import
+costs nothing. Marking them differently makes the runtime cost of a file visible in its import block.</p>
+<p class="sd-card-text">Third, <strong>the compiler can enforce it</strong>. With the <code class="docutils literal notranslate"><span class="pre">verbatimModuleSyntax</span></code> family of settings, TypeScript errors if you
+value-import something that is only a type. That turns a subtle startup-time bug into a compile error.</p>
+</div>
+</details><ul class="simple">
+<li><p>What happens to a <code class="docutils literal notranslate"><span class="pre">.ts</span></code> file that contains no <code class="docutils literal notranslate"><span class="pre">import</span></code> and no <code class="docutils literal notranslate"><span class="pre">export</span></code>?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">It is treated as a <strong>script</strong>, not a module. Its top-level declarations go into the global scope, where they can collide
+with declarations from any other script file in the project. Two such files each declaring <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">config</span> <span class="pre">=</span> <span class="pre">...</span></code> is a
+duplicate-identifier error.</p>
+<p class="sd-card-text">This is the opposite of Python, where every <code class="docutils literal notranslate"><span class="pre">.py</span></code> file has its own namespace automatically and there is no way to
+accidentally leak into a global one. In TypeScript the module namespace is opt-in, and <code class="docutils literal notranslate"><span class="pre">export</span></code> is how you opt in.</p>
+<p class="sd-card-text">In practice you never hit this, because every real file exports something. But it explains why you sometimes see a lone
+<code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">{};</span></code> at the top of a file that has nothing to export: it is a declaration that says “this is a module.”</p>
+</div>
+</details></section>
+<hr class="docutils" />
+<section id="pass-2-the-open-union-trick-lines-17-29">
+<h2>Pass 2: The Open Union Trick (Lines 17-29)<a class="headerlink" href="#pass-2-the-open-union-trick-lines-17-29" title="Link to this heading"></a></h2>
+<p>Read lines 17-29:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">KnownApi</span><span class="w"> </span><span class="o">=</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"openai-completions"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"mistral-conversations"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"openai-responses"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"azure-openai-responses"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"openai-codex-responses"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"anthropic-messages"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"bedrock-converse-stream"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"google-generative-ai"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"google-vertex"</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="s2">"pi-messages"</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">KnownApi</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">{});</span>
+</pre></div>
+</div>
+<p><strong>What <code class="docutils literal notranslate"><span class="pre">KnownApi</span></code> is:</strong> a <strong>string literal union</strong>. The type <code class="docutils literal notranslate"><span class="pre">&quot;openai-completions&quot;</span></code> is a type with exactly one value: the
+string <code class="docutils literal notranslate"><span class="pre">&quot;openai-completions&quot;</span></code>. Union ten of those together with <code class="docutils literal notranslate"><span class="pre">|</span></code> and you have a type that accepts exactly those ten
+strings and nothing else.</p>
+<p><strong>Python parallel:</strong> <code class="docutils literal notranslate"><span class="pre">Literal[&quot;openai-completions&quot;,</span> <span class="pre">&quot;anthropic-messages&quot;,</span> <span class="pre">...]</span></code>. Identical idea. TypeScript just uses it
+about a hundred times more often, because it is the default way to model a closed set instead of a fallback for when
+<code class="docutils literal notranslate"><span class="pre">Enum</span></code> feels too heavy.</p>
+<p>Notice there is no <code class="docutils literal notranslate"><span class="pre">enum</span></code> here. pi has no enums anywhere, on purpose. We will see why in
+<a class="reference internal" href="part_c_concepts.html#concept-2-types-are-erased"><span class="std std-ref">Concept 2</span></a>.</p>
+<p><strong>What <code class="docutils literal notranslate"><span class="pre">Api</span></code> is:</strong> this one is a trick, and it is worth understanding because it appears throughout pi.</p>
+<p>The goal is a type that means: “one of these ten strings, but any other string is also allowed.” The obvious spelling is
+<code class="docutils literal notranslate"><span class="pre">KnownApi</span> <span class="pre">|</span> <span class="pre">string</span></code>. That does not work. TypeScript <strong>collapses</strong> it: since every member of <code class="docutils literal notranslate"><span class="pre">KnownApi</span></code> is also a
+<code class="docutils literal notranslate"><span class="pre">string</span></code>, the union simplifies to plain <code class="docutils literal notranslate"><span class="pre">string</span></code>, and your editor loses the ten suggestions. The type is still correct,
+but the autocomplete is gone, which was the whole point.</p>
+<p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">&amp;</span> <span class="pre">{}</span></code> is the workaround. It means “a <code class="docutils literal notranslate"><span class="pre">string</span></code>, intersected with the empty object type.” Semantically that is
+still just <code class="docutils literal notranslate"><span class="pre">string</span></code>. But it is not <em>literally</em> the type <code class="docutils literal notranslate"><span class="pre">string</span></code>, so TypeScript cannot collapse the union, and the ten
+literals survive as autocomplete suggestions.</p>
+<p>The practical effect, in an editor:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">a</span><span class="o">:</span><span class="w"> </span><span class="kt">Api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"anthropic-messages"</span><span class="p">;</span><span class="w">  </span><span class="c1">// suggested by autocomplete</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">b</span><span class="o">:</span><span class="w"> </span><span class="kt">Api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"my-weird-local-proxy"</span><span class="p">;</span><span class="w"> </span><span class="c1">// accepted, no error</span>
+</pre></div>
+</div>
+<p><strong>Why pi needs this:</strong> <code class="docutils literal notranslate"><span class="pre">Api</span></code> names a <em>wire format</em> — the request and response shape of an HTTP API. pi ships ten of them.
+But the whole point of the package is that you can point it at a server it has never heard of, including one running on
+your laptop. A closed union would make that impossible. Plain <code class="docutils literal notranslate"><span class="pre">string</span></code> would make it undiscoverable. The trick gives you
+both.</p>
+<p>You will see the same pattern for providers on line 77: <code class="docutils literal notranslate"><span class="pre">ProviderId</span> <span class="pre">=</span> <span class="pre">KnownProvider</span> <span class="pre">|</span> <span class="pre">string</span></code>. Read that line and notice
+it is spelled <em>differently</em> — plain <code class="docutils literal notranslate"><span class="pre">string</span></code>, no <code class="docutils literal notranslate"><span class="pre">&amp;</span> <span class="pre">{}</span></code>.</p>
+<p><strong>Questions to answer:</strong></p>
+<ul class="simple">
+<li><p>Why does <code class="docutils literal notranslate"><span class="pre">KnownApi</span> <span class="pre">|</span> <span class="pre">string</span></code> collapse to <code class="docutils literal notranslate"><span class="pre">string</span></code>, but <code class="docutils literal notranslate"><span class="pre">KnownApi</span> <span class="pre">|</span> <span class="pre">(string</span> <span class="pre">&amp;</span> <span class="pre">{})</span></code> does not?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">TypeScript simplifies unions by removing members that are <strong>subtypes</strong> of another member. <code class="docutils literal notranslate"><span class="pre">&quot;anthropic-messages&quot;</span></code> is a
+subtype of <code class="docutils literal notranslate"><span class="pre">string</span></code> — every value of the first type is a valid value of the second — so in the union <code class="docutils literal notranslate"><span class="pre">&quot;anthropic-messages&quot;</span> <span class="pre">|</span> <span class="pre">string</span></code>, the literal is redundant and gets dropped. Do that for all ten and nothing is left but <code class="docutils literal notranslate"><span class="pre">string</span></code>.</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">&amp;</span> <span class="pre">{}</span></code> is an <strong>intersection</strong>: a value must satisfy both <code class="docutils literal notranslate"><span class="pre">string</span></code> and <code class="docutils literal notranslate"><span class="pre">{}</span></code>. Since every non-null string already
+satisfies <code class="docutils literal notranslate"><span class="pre">{}</span></code>, the set of values is the same as <code class="docutils literal notranslate"><span class="pre">string</span></code>. But the compiler’s simplification step works on type
+<em>structure</em>, not on the set of values it denotes. It does not recognize <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">&amp;</span> <span class="pre">{}</span></code> as identical to <code class="docutils literal notranslate"><span class="pre">string</span></code>, so it
+cannot use it to absorb the literals, and all ten survive.</p>
+<p class="sd-card-text">This is a deliberate exploit of an implementation detail. It is widely used, has a nickname
+(the “open enum” or “literal union with autocomplete” pattern), and is stable in practice — but it is a trick, not a
+language feature.</p>
+</div>
+</details><ul class="simple">
+<li><p>Line 77 is <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">type</span> <span class="pre">ProviderId</span> <span class="pre">=</span> <span class="pre">KnownProvider</span> <span class="pre">|</span> <span class="pre">string;</span></code> — plain <code class="docutils literal notranslate"><span class="pre">string</span></code>, without the <code class="docutils literal notranslate"><span class="pre">&amp;</span> <span class="pre">{}</span></code>. What does that
+type actually equal, and is it a bug?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">It equals exactly <code class="docutils literal notranslate"><span class="pre">string</span></code>. The union collapses, and the 41 provider literals are gone as far as the compiler and your
+autocomplete are concerned.</p>
+<p class="sd-card-text">Is it a bug? Not a correctness bug — the type still accepts every value it should accept, and rejects nothing it should
+accept. <code class="docutils literal notranslate"><span class="pre">ProviderId</span></code> is used to <em>record</em> which provider produced a message, so anything a config file names is legal, and
+<code class="docutils literal notranslate"><span class="pre">string</span></code> is honest about that.</p>
+<p class="sd-card-text">It is a small loss of editor help. Someone typing <code class="docutils literal notranslate"><span class="pre">provider:</span> </code> at a <code class="docutils literal notranslate"><span class="pre">ProviderId</span></code> position gets no suggestions where they
+could have gotten 41. Whether that is worth a <code class="docutils literal notranslate"><span class="pre">&amp;</span> <span class="pre">{}</span></code> is a judgment call, and pi made a different call for <code class="docutils literal notranslate"><span class="pre">Api</span></code> (line 29)
+than for <code class="docutils literal notranslate"><span class="pre">ProviderId</span></code> (line 77).</p>
+<p class="sd-card-text">The reason this question is worth asking: it is very easy to write <code class="docutils literal notranslate"><span class="pre">Known</span> <span class="pre">|</span> <span class="pre">string</span></code> believing you preserved the literals.
+You did not. If you want them, you have to write the trick.</p>
+</div>
+</details></section>
+<hr class="docutils" />
+<section id="pass-3-content-blocks-the-discriminated-union-lines-364-394">
+<h2>Pass 3: Content Blocks — The Discriminated Union (Lines 364-394)<a class="headerlink" href="#pass-3-content-blocks-the-discriminated-union-lines-364-394" title="Link to this heading"></a></h2>
+<p>This is the most important pass in the module. Read lines 364-394:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">TextContent</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">textSignature?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">ThinkingContent</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"thinking"</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">thinking</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">thinkingSignature?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">redacted?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">ImageContent</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"image"</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">      </span><span class="c1">// base64 encoded image data</span>
+<span class="w">	</span><span class="nx">mimeType</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">  </span><span class="c1">// e.g., "image/jpeg", "image/png"</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">ToolCall</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"toolCall"</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">arguments</span><span class="o">:</span><span class="w"> </span><span class="kt">JsonObject</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">thoughtSignature?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">namespace?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Four interfaces. Each has a <code class="docutils literal notranslate"><span class="pre">type</span></code> field whose type is a <strong>single string literal</strong>. That is the whole pattern, and it is
+the backbone of pi.</p>
+<p><strong>What a discriminated union is:</strong> a union of object types where every member has a common field holding a distinct
+literal value. That field is the <strong>discriminant</strong>. Once you check it, TypeScript <em>narrows</em> the type to the matching
+member, and you get access to that member’s fields and no others.</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">describe</span><span class="p">(</span><span class="nx">block</span><span class="o">:</span><span class="w"> </span><span class="kt">TextContent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ThinkingContent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ImageContent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ToolCall</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="kr">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"text"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="k">return</span><span class="w"> </span><span class="nx">block</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span><span class="w">      </span><span class="c1">// OK: narrowed to TextContent</span>
+<span class="w">	</span><span class="p">}</span>
+<span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="kr">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"toolCall"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="k">return</span><span class="w"> </span><span class="nx">block</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span><span class="w">      </span><span class="c1">// OK: narrowed to ToolCall</span>
+<span class="w">	</span><span class="p">}</span>
+<span class="w">	</span><span class="c1">// return block.text;       // Error: `text` does not exist on ThinkingContent | ImageContent</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="s2">"(other)"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>That narrowing is the payoff. You did not cast anything. You did not call <code class="docutils literal notranslate"><span class="pre">isinstance</span></code>. You compared a string, and the
+compiler followed along.</p>
+<p><strong>Python parallel:</strong> This is a tagged union, and Python can express it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">TextContent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ToolCall</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"toolCall"</span><span class="p">]</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">arguments</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+
+<span class="n">Content</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">TextContent</span> <span class="o">|</span> <span class="n">ToolCall</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">"type"</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>You have probably written exactly this with pydantic. The difference is which one is the <em>default</em>. In Python, the
+instinct for “four kinds of content block” is a base class and four subclasses; the tagged union is the thing you reach
+for when you need pydantic to parse it. In TypeScript, the tagged union <em>is</em> the instinct, and inheritance is rare.</p>
+<p>Count the classes in pi’s core types file: zero. Count the interfaces: about forty. That ratio is not an accident, and it
+is not because TypeScript lacks classes. It has them, with inheritance, abstract methods, and access modifiers. pi mostly
+does not use them for data.</p>
+<p><strong>Why not?</strong> Because the data has to cross a wire. Every message in pi gets serialized to JSON, written to a session
+file, or sent to an HTTP API. A class instance loses its identity the moment you <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> it — what comes back is
+a plain object with the same fields and no methods, and no <code class="docutils literal notranslate"><span class="pre">instanceof</span></code> will recognize it. A discriminated union survives
+the round trip perfectly, because the discriminant is <em>data</em>. It is a field in the JSON.</p>
+<p><strong>Optional properties:</strong> notice <code class="docutils literal notranslate"><span class="pre">textSignature?:</span> <span class="pre">string</span></code>. The <code class="docutils literal notranslate"><span class="pre">?</span></code> makes the property optional. It means the field may be
+absent entirely.</p>
+<p>This is a real distinction that Python blurs, and it matters:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Spelling</p></th>
+<th class="head"><p>Absent allowed?</p></th>
+<th class="head"><p>Explicit <code class="docutils literal notranslate"><span class="pre">undefined</span></code> allowed?</p></th>
+<th class="head"><p>Python analogue</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">string</span></code></p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">str</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x?:</span> <span class="pre">string</span></code></p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None</span></code>, roughly</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code></p></td>
+<td><p><strong>no</strong></p></td>
+<td><p>yes</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></code>, required</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x?:</span> <span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code></p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody>
+</table>
+<p>The third row is the one that surprises people. <code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code> means the key <strong>must be present</strong>, and its value
+may be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>. You have to write <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">x:</span> <span class="pre">undefined</span> <span class="pre">}</span></code>, not <code class="docutils literal notranslate"><span class="pre">{}</span></code>. pi uses the <code class="docutils literal notranslate"><span class="pre">?</span></code> form nearly everywhere, which is why
+optional fields in pi can simply be left out.</p>
+<p><strong>Questions to answer:</strong></p>
+<ul class="simple">
+<li><p>Why does <code class="docutils literal notranslate"><span class="pre">ImageContent</span></code> store <code class="docutils literal notranslate"><span class="pre">data:</span> <span class="pre">string</span></code> instead of raw bytes?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Because the value has to survive <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code>, and JSON has no byte type. The comment says it: base64.</p>
+<p class="sd-card-text">TypeScript does have real binary types (<code class="docutils literal notranslate"><span class="pre">Uint8Array</span></code>, <code class="docutils literal notranslate"><span class="pre">ArrayBuffer</span></code>). pi uses them where bytes stay in memory. But an
+<code class="docutils literal notranslate"><span class="pre">ImageContent</span></code> block goes into a <code class="docutils literal notranslate"><span class="pre">Message</span></code>, which goes into a <code class="docutils literal notranslate"><span class="pre">Context</span></code>, which gets serialized both to a provider’s HTTP
+API and to a session file on disk. Anything in that path has to be JSON-representable, so images are base64 text and
+<code class="docutils literal notranslate"><span class="pre">mimeType</span></code> carries what the bytes actually are.</p>
+<p class="sd-card-text">This is the same reason <code class="docutils literal notranslate"><span class="pre">arguments:</span> <span class="pre">JsonObject</span></code> on <code class="docutils literal notranslate"><span class="pre">ToolCall</span></code> is a plain object and not a parsed, typed structure:
+<code class="docutils literal notranslate"><span class="pre">JsonObject</span></code> is pi’s own alias for “an object whose values are JSON values,” so the type says out loud that the wire
+format is JSON and the in-memory shape mirrors it.</p>
+</div>
+</details><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ToolCall</span></code> has <code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">&quot;toolCall&quot;</span></code> — camelCase — while <code class="docutils literal notranslate"><span class="pre">TextContent</span></code> has <code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">&quot;text&quot;</span></code>. Why does the exact string
+matter at all, given they are just labels?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Because the string <strong>is</strong> the runtime representation. It is not a label the compiler invents for its own bookkeeping; it
+is a literal value that gets written into JSON, sent to a provider, saved in a session file, and read back later.</p>
+<p class="sd-card-text">That has two consequences. First, changing <code class="docutils literal notranslate"><span class="pre">&quot;toolCall&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;tool_call&quot;</span></code> is a <strong>wire format change</strong>, not a rename. Old
+session files on disk still contain the old string, and code that switches on the new one will silently fail to match
+them. Second, the compiler cannot help you find every place the string appears in data — only in code.</p>
+<p class="sd-card-text">So the discriminant values are effectively frozen once anything has been persisted. That is the trade you accept for
+using data as the type tag. It is also why <code class="docutils literal notranslate"><span class="pre">Api</span></code> and <code class="docutils literal notranslate"><span class="pre">ProviderId</span></code> values look like slugs: they are stored, not just
+compared.</p>
+</div>
+</details></section>
+<hr class="docutils" />
+<section id="pass-4-usage-and-why-a-harness-counts-tokens-lines-396-419">
+<h2>Pass 4: Usage, and Why a Harness Counts Tokens (Lines 396-419)<a class="headerlink" href="#pass-4-usage-and-why-a-harness-counts-tokens-lines-396-419" title="Link to this heading"></a></h2>
+<p>Read lines 396-419:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">Usage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">input</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">output</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">cacheRead</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">cacheWrite</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">cacheWrite1h?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">reasoning?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">totalTokens</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">cost</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="nx">input</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">		</span><span class="nx">output</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">		</span><span class="nx">cacheRead</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">		</span><span class="nx">cacheWrite</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">		</span><span class="nx">total</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">StopReason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pending"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"stop"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"length"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"toolUse"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"error"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"aborted"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"deferred"</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Two small things to notice about the TypeScript, and one big thing to notice about the design.</p>
+<p><strong>TypeScript, first.</strong> <code class="docutils literal notranslate"><span class="pre">cost</span></code> is an <strong>inline object type</strong>. There is no named <code class="docutils literal notranslate"><span class="pre">Cost</span></code> interface; the shape is written
+directly where it is used. This is normal and idiomatic. In Python you would almost always define a separate
+<code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">Cost(BaseModel)</span></code>, because there is no syntax for an anonymous structured type. TypeScript has one, so small
+one-use shapes stay inline.</p>
+<p>Also: <code class="docutils literal notranslate"><span class="pre">number</span></code> is the only numeric type here. TypeScript has no <code class="docutils literal notranslate"><span class="pre">int</span></code> and no <code class="docutils literal notranslate"><span class="pre">float</span></code>. <code class="docutils literal notranslate"><span class="pre">number</span></code> is an IEEE-754 double,
+exactly Python’s <code class="docutils literal notranslate"><span class="pre">float</span></code>. Token counts are integers by convention, not by type. (There is a <code class="docutils literal notranslate"><span class="pre">bigint</span></code>, for arbitrary
+precision integers, and pi does not use it.)</p>
+<p><strong>Now the design.</strong> Look at what <code class="docutils literal notranslate"><span class="pre">Usage</span></code> distinguishes: input tokens, output tokens, tokens read from cache, tokens
+written to cache, and — separately — a one-hour-retention subset of the cache writes. Then a parallel breakdown of cost
+in dollars.</p>
+<p>That is a lot of structure for “how many tokens did that cost.” It is there because these numbers have different prices.
+A cached input token can cost a tenth of a fresh one. An output token can cost five times an input token. A harness that
+tracks a single <code class="docutils literal notranslate"><span class="pre">total_tokens</span></code> number cannot tell you why your bill looks the way it does, and cannot make decisions
+based on it.</p>
+<p>And <code class="docutils literal notranslate"><span class="pre">reasoning?:</span> <span class="pre">number</span></code> carries a documented subtlety worth reading the comment for: reasoning tokens are a <strong>subset</strong>
+of <code class="docutils literal notranslate"><span class="pre">output</span></code>, already included in it. Adding them would double count. The <code class="docutils literal notranslate"><span class="pre">?</span></code> is doing real work — it is <code class="docutils literal notranslate"><span class="pre">undefined</span></code> for
+providers that do not report the breakdown, which is different from <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">StopReason</span></code></strong> is another string literal union, and it is worth reading as a list of everything that can end a model’s
+turn: it finished (<code class="docutils literal notranslate"><span class="pre">stop</span></code>), it hit the token limit (<code class="docutils literal notranslate"><span class="pre">length</span></code>), it wants to call a tool (<code class="docutils literal notranslate"><span class="pre">toolUse</span></code>), something broke
+(<code class="docutils literal notranslate"><span class="pre">error</span></code>), the user cancelled (<code class="docutils literal notranslate"><span class="pre">aborted</span></code>), it has not finished yet (<code class="docutils literal notranslate"><span class="pre">pending</span></code>), or the result will arrive later
+(<code class="docutils literal notranslate"><span class="pre">deferred</span></code>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">toolUse</span></code> is the one that makes an agent an agent. That value is what the loop checks to decide whether to go around
+again. We build that loop in Module 2.</p>
+<p><strong>Questions to answer:</strong></p>
+<ul class="simple">
+<li><p>Why is <code class="docutils literal notranslate"><span class="pre">cacheWrite1h</span></code> optional while <code class="docutils literal notranslate"><span class="pre">cacheWrite</span></code> is required?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Because only one provider reports the split. The comment says so: “Only Anthropic reports this split.”</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">cacheWrite</span></code> is required because pi can always produce a number for it — zero if there were no cache writes. But
+<code class="docutils literal notranslate"><span class="pre">cacheWrite1h</span></code> is a <em>subset</em> of that number, and for a provider that does not break it down, pi genuinely does not know
+what it is. <code class="docutils literal notranslate"><span class="pre">0</span></code> would be a lie: it would claim there were no 1-hour cache writes, when the truth is that the information
+is unavailable.</p>
+<p class="sd-card-text">This is the distinction between “zero” and “unknown,” and it is exactly what optional properties are for. Same reasoning
+applies to <code class="docutils literal notranslate"><span class="pre">reasoning?</span></code>.</p>
+</div>
+</details><ul class="simple">
+<li><p>Python’s <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code> are separate types. TypeScript has only <code class="docutils literal notranslate"><span class="pre">number</span></code>. Where could that bite a harness?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Anywhere an integer is required and arithmetic can produce a fraction. Three realistic spots in a harness:</p>
+<p class="sd-card-text"><strong>Token budgets.</strong> Divide a context window to decide how much to keep during compaction — <code class="docutils literal notranslate"><span class="pre">contextWindow</span> <span class="pre">*</span> <span class="pre">0.7</span></code> — and you
+get <code class="docutils literal notranslate"><span class="pre">137011.19999999999</span></code>. Pass that to something expecting a count and you may get a rejected request. The fix is
+explicit: <code class="docutils literal notranslate"><span class="pre">Math.floor(...)</span></code>.</p>
+<p class="sd-card-text"><strong>Array indexing.</strong> <code class="docutils literal notranslate"><span class="pre">messages[i</span> <span class="pre">/</span> <span class="pre">2]</span></code> with an odd <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">undefined</span></code> at runtime, with no error, because a non-integer
+index simply does not match a key. Python raises <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> here.</p>
+<p class="sd-card-text"><strong>Float precision on costs.</strong> <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span></code> is <code class="docutils literal notranslate"><span class="pre">0.30000000000000004</span></code> in both languages, but Python at least offers
+<code class="docutils literal notranslate"><span class="pre">Decimal</span></code>. TypeScript’s usual answer is to compute in the smallest unit (or accept the noise, which pi does — these are
+display values, not billing).</p>
+<p class="sd-card-text">The type checker will not warn you about any of these. <code class="docutils literal notranslate"><span class="pre">number</span></code> is <code class="docutils literal notranslate"><span class="pre">number</span></code>.</p>
+</div>
+</details></section>
+<hr class="docutils" />
+<section id="pass-5-the-four-messages-lines-491-553">
+<h2>Pass 5: The Four Messages (Lines 491-553)<a class="headerlink" href="#pass-5-the-four-messages-lines-491-553" title="Link to this heading"></a></h2>
+<p>Read lines 491-553. This is the center of the file. Stripped of comments:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">SystemMessage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s2">"system"</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">TextContent</span><span class="p">[];</span>
+<span class="w">	</span><span class="nx">sections?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">toolsAdded?</span><span class="o">:</span><span class="w"> </span><span class="kt">Tool</span><span class="p">[];</span>
+<span class="w">	</span><span class="nx">toolsRemoved?</span><span class="o">:</span><span class="w"> </span><span class="kt">ToolReference</span><span class="p">[];</span>
+<span class="w">	</span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">UserMessage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="nx">TextContent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ImageContent</span><span class="p">)[];</span>
+<span class="w">	</span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">AssistantMessage</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s2">"assistant"</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">TextContent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ThinkingContent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ToolCall</span><span class="p">)[];</span>
+<span class="w">	</span><span class="nx">api</span><span class="o">:</span><span class="w"> </span><span class="kt">Api</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">provider</span><span class="o">:</span><span class="w"> </span><span class="kt">ProviderId</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">model</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">responseModel?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">responseId?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">providerThinkingLevel?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">diagnostics?</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessageDiagnostic</span><span class="p">[];</span>
+<span class="w">	</span><span class="nx">usage</span><span class="o">:</span><span class="w"> </span><span class="kt">Usage</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">stopReason</span><span class="o">:</span><span class="w"> </span><span class="kt">StopReason</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">deferred?</span><span class="o">:</span><span class="w"> </span><span class="kt">DeferredHandle</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">errorMessage?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">rawStopReason?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">endTurn?</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">ToolResultMessage</span><span class="o">&lt;</span><span class="nx">TDetails</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">JsonValue</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">IsJsonCompatible</span><span class="o">&lt;</span><span class="nx">TDetails</span><span class="o">&gt;</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">	</span><span class="o">?</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s2">"toolResult"</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">toolCallId</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">toolName</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">TextContent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ImageContent</span><span class="p">)[];</span>
+<span class="w">			</span><span class="nx">details?</span><span class="o">:</span><span class="w"> </span><span class="kt">JsonRepresentation</span><span class="o">&lt;</span><span class="nx">TDetails</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">usage?</span><span class="o">:</span><span class="w"> </span><span class="kt">Usage</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">isError</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">		</span><span class="p">}</span>
+<span class="w">	</span><span class="o">:</span><span class="w"> </span><span class="nx">never</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SystemMessage</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">UserMessage</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">AssistantMessage</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ToolResultMessage</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Read line 553 first.</strong> <code class="docutils literal notranslate"><span class="pre">Message</span></code> is a union of four, discriminated on <code class="docutils literal notranslate"><span class="pre">role</span></code>. That single line is the data model of
+every agent conversation in pi. A session is a <code class="docutils literal notranslate"><span class="pre">Message[]</span></code>. Compaction rewrites a <code class="docutils literal notranslate"><span class="pre">Message[]</span></code>. The TUI renders a
+<code class="docutils literal notranslate"><span class="pre">Message[]</span></code>. The provider adapters translate a <code class="docutils literal notranslate"><span class="pre">Message[]</span></code> into somebody’s JSON.</p>
+<p>Now notice what the four members are <em>not</em>. There is no base <code class="docutils literal notranslate"><span class="pre">Message</span></code> interface that the four extend. The union is the
+abstraction.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">SystemMessage</span></code> is a message, and that is a design decision worth pausing on.</strong> The obvious place for a system prompt
+is one field on the conversation — and <code class="docutils literal notranslate"><span class="pre">Context.systemPrompt</span></code> in the next pass is exactly that. But pi keeps the <em>real</em>
+system prompt in the transcript, as a message with a position, because a prompt can change mid-conversation. Read the
+doc comment above the interface: the leading system message is the base prompt, and a later one adds instructions,
+replaces a named section through <code class="docutils literal notranslate"><span class="pre">sections</span></code>, or changes the tool set through <code class="docutils literal notranslate"><span class="pre">toolsAdded</span></code> / <code class="docutils literal notranslate"><span class="pre">toolsRemoved</span></code>. Replay them
+in order and you have the current prompt and the current tools.</p>
+<p>Why bother? Because a harness genuinely does change both mid-turn. A skill gets loaded, plan mode turns off, an
+extension registers a new tool. If the prompt were one mutable field, the transcript would no longer explain itself —
+you could not replay a session and know which tools the model could see at message 40. As a message it is just more
+conversation, and it serializes to the session file like everything else.</p>
+<p>The cost is that providers disagree about whether a system message may appear in the middle. pi handles that with a
+compat flag (<code class="docutils literal notranslate"><span class="pre">supportsMidConvoSystemMessages</span></code>): providers that allow it get each message in place, and the rest get one
+rebuilt leading system message with the replayed state folded in.</p>
+<p><strong>Three observations worth internalizing:</strong></p>
+<p><strong>1. Content is a list of blocks, never a string</strong> (except for the convenience case on <code class="docutils literal notranslate"><span class="pre">UserMessage</span></code>, which allows a bare
+<code class="docutils literal notranslate"><span class="pre">string</span></code>). An assistant turn is a <em>sequence</em>: some text, then some thinking, then two tool calls. That is why streaming a
+response means emitting events about <em>blocks at an index</em>, which is exactly what Pass 7 shows.</p>
+<p><strong>2. <code class="docutils literal notranslate"><span class="pre">AssistantMessage</span></code> carries its own provenance.</strong> <code class="docutils literal notranslate"><span class="pre">api</span></code>, <code class="docutils literal notranslate"><span class="pre">provider</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code>, <code class="docutils literal notranslate"><span class="pre">usage</span></code>, <code class="docutils literal notranslate"><span class="pre">stopReason</span></code>. The message
+records which model produced it and what it cost. This is not decoration. If you switch models mid-conversation — pi lets
+you — the transcript still knows which turn came from where, and the running cost stays correct. A design that kept
+“current model” outside the messages would lose that.</p>
+<p><strong>3. <code class="docutils literal notranslate"><span class="pre">ToolResultMessage</span></code> is a message, not a return value.</strong> A tool result goes into the transcript as a first-class turn,
+alongside the user’s words and the model’s. This is the structural reason a harness is a <em>loop</em> rather than a function
+call: the result of running a tool is more conversation.</p>
+<p><strong>The generic:</strong> <code class="docutils literal notranslate"><span class="pre">ToolResultMessage&lt;TDetails</span> <span class="pre">=</span> <span class="pre">JsonValue&gt;</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;TDetails&gt;</span></code> is a <strong>type parameter</strong>, and <code class="docutils literal notranslate"><span class="pre">=</span> <span class="pre">JsonValue</span></code> is its <strong>default</strong>. This is Python’s <code class="docutils literal notranslate"><span class="pre">TypeVar</span></code> plus <code class="docutils literal notranslate"><span class="pre">Generic</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">TDetails</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">"TDetails"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">JsonValue</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ToolResultMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">Generic</span><span class="p">[</span><span class="n">TDetails</span><span class="p">]):</span>
+    <span class="n">details</span><span class="p">:</span> <span class="n">TDetails</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>The wrapper around it is new TypeScript, and it is a <strong>constraint expressed as a conditional type</strong>. Read
+<code class="docutils literal notranslate"><span class="pre">IsJsonCompatible&lt;TDetails&gt;</span> <span class="pre">extends</span> <span class="pre">true</span> <span class="pre">?</span> <span class="pre">{</span> <span class="pre">...the</span> <span class="pre">real</span> <span class="pre">shape...</span> <span class="pre">}</span> <span class="pre">:</span> <span class="pre">never</span></code> as a compile-time guard: if <code class="docutils literal notranslate"><span class="pre">TDetails</span></code>
+holds anything that cannot survive <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> — a function, a <code class="docutils literal notranslate"><span class="pre">Map</span></code>, a class instance — the whole type collapses
+to <code class="docutils literal notranslate"><span class="pre">never</span></code> and nothing can be assigned to it. <code class="docutils literal notranslate"><span class="pre">JsonRepresentation&lt;TDetails&gt;</span></code> then describes what the value looks like
+<em>after</em> the round trip.</p>
+<p>That is the same “it has to cross a wire” rule from Pass 3, promoted from a comment into something the compiler
+enforces. In Python you get the check for free in a different way: pydantic refuses to serialize a model it cannot
+serialize, and it tells you at the point of failure. Pass 8 is the same construct used for a different job.</p>
+<p>The purpose: <code class="docutils literal notranslate"><span class="pre">content</span></code> is what the <em>model</em> sees — text and images. <code class="docutils literal notranslate"><span class="pre">details</span></code> is what <em>your application</em> sees — the
+structured result. When the <code class="docutils literal notranslate"><span class="pre">read</span></code> tool runs, <code class="docutils literal notranslate"><span class="pre">content</span></code> holds the file text for the model, and <code class="docutils literal notranslate"><span class="pre">details</span></code> holds something
+like the line count and truncation flag for your UI. Different consumers, different shapes.</p>
+<p>The default matters for ergonomics. Because of <code class="docutils literal notranslate"><span class="pre">=</span> <span class="pre">JsonValue</span></code>, code that does not care can write <code class="docutils literal notranslate"><span class="pre">ToolResultMessage</span></code>
+with no angle brackets, which is why line 553 can say <code class="docutils literal notranslate"><span class="pre">|</span> <span class="pre">ToolResultMessage</span></code> plainly. Code that does care writes
+<code class="docutils literal notranslate"><span class="pre">ToolResultMessage&lt;ReadToolDetails&gt;</span></code> and gets a typed <code class="docutils literal notranslate"><span class="pre">details</span></code>.</p>
+<p><strong>Questions to answer:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UserMessage.content</span></code> is <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">|</span> <span class="pre">(TextContent</span> <span class="pre">|</span> <span class="pre">ImageContent)[]</span></code>. Why allow both?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Ergonomics at the boundary where humans write code. The common case is a plain text prompt, and
+<code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">role:</span> <span class="pre">&quot;user&quot;,</span> <span class="pre">content:</span> <span class="pre">&quot;hello&quot;</span> <span class="pre">}</span></code> is much nicer to write than
+<code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">role:</span> <span class="pre">&quot;user&quot;,</span> <span class="pre">content:</span> <span class="pre">[{</span> <span class="pre">type:</span> <span class="pre">&quot;text&quot;,</span> <span class="pre">text:</span> <span class="pre">&quot;hello&quot;</span> <span class="pre">}]</span> <span class="pre">}</span></code>.</p>
+<p class="sd-card-text">The cost is that every consumer must handle both shapes, and this narrowing appears all over pi:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">typeof</span><span class="w"> </span><span class="nx">message</span><span class="p">.</span><span class="nx">content</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">message.content</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">message.content.map</span><span class="p">((</span><span class="nx">c</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">text</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Note <code class="docutils literal notranslate"><span class="pre">typeof</span> <span class="pre">message.content</span> <span class="pre">===</span> <span class="pre">&quot;string&quot;</span></code> — that is TypeScript narrowing on a union of a primitive and an array, using
+<code class="docutils literal notranslate"><span class="pre">typeof</span></code> rather than a discriminant field. Primitives do not have a <code class="docutils literal notranslate"><span class="pre">type</span></code> field to check, so <code class="docutils literal notranslate"><span class="pre">typeof</span></code> is the tool.</p>
+<p class="sd-card-text">You will face the same choice in Project 2, and the Python is the same shape:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Whether the convenience is worth the branch is a real design question. pi decided yes for <code class="docutils literal notranslate"><span class="pre">UserMessage</span></code> — the one
+application code constructs by hand — and no for <code class="docutils literal notranslate"><span class="pre">AssistantMessage</span></code>, which pi itself builds from a stream and where the
+list is always the right shape.</p>
+</div>
+</details><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AssistantMessage</span></code> has both <code class="docutils literal notranslate"><span class="pre">stopReason:</span> <span class="pre">StopReason</span></code> and <code class="docutils literal notranslate"><span class="pre">rawStopReason?:</span> <span class="pre">string</span></code>. Why keep both?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">stopReason</span></code> is pi’s normalized vocabulary — one of seven known values that the agent loop can branch on. <code class="docutils literal notranslate"><span class="pre">rawStopReason</span></code>
+is whatever the provider actually said.</p>
+<p class="sd-card-text">You need the normalized one because the loop must make a decision, and it cannot have a branch for every string that
+forty providers might invent. You need the raw one because normalization loses information, and when a provider stops for
+a reason pi has never seen, <code class="docutils literal notranslate"><span class="pre">stopReason:</span> <span class="pre">&quot;stop&quot;</span></code> plus <code class="docutils literal notranslate"><span class="pre">rawStopReason:</span> <span class="pre">&quot;content_filter&quot;</span></code> is debuggable while <code class="docutils literal notranslate"><span class="pre">&quot;stop&quot;</span></code> alone
+is not.</p>
+<p class="sd-card-text">This is a general pattern for adapter layers: normalize for control flow, keep the original for diagnosis. You will see
+it again in Module 1, when we write the provider adapters that do the normalizing.</p>
+</div>
+</details></section>
+<hr class="docutils" />
+<section id="pass-6-tool-and-context-the-whole-interface-to-a-model-lines-576-621">
+<h2>Pass 6: Tool and Context — The Whole Interface to a Model (Lines 576-621)<a class="headerlink" href="#pass-6-tool-and-context-the-whole-interface-to-a-model-lines-576-621" title="Link to this heading"></a></h2>
+<p>Read lines 576-621. First, notice something odd on line 576:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">TSchema</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"typebox"</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>An <code class="docutils literal notranslate"><span class="pre">import</span></code> statement, 576 lines into the file. This is legal: ES module imports are <strong>hoisted</strong>, so their position in
+the file has no effect. It is unusual style, but it is not a bug, and it tells you something useful — imports in
+TypeScript are declarations, not statements that execute in order.</p>
+<p>(Do not confuse this with what pi’s <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> forbids. The banned thing is a <em>dynamic</em> import — <code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">import(&quot;pkg&quot;)</span></code>
+inside a function — which is a runtime call with real consequences for load order. A top-level import halfway down a file
+is still a top-level import.)</p>
+<p>Now the two interfaces:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">Tool</span><span class="o">&lt;</span><span class="nx">TParameters</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">TSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">TSchema</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">parameters</span><span class="o">:</span><span class="w"> </span><span class="kt">TParameters</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">constrainedSampling?</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">ConstrainedSamplingConfig</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">Context</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">systemPrompt?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="kt">Message</span><span class="p">[];</span>
+<span class="w">	</span><span class="nx">tools?</span><span class="o">:</span><span class="w"> </span><span class="kt">Tool</span><span class="p">[];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Context</span></code> is the entire input to a model.</strong> Three fields. A system prompt, a list of messages, a list of tools. That is
+everything a harness sends.</p>
+<p>Read the doc comment above it carefully, though, because it changes what <code class="docutils literal notranslate"><span class="pre">Context</span></code> <em>is</em>. <code class="docutils literal notranslate"><span class="pre">systemPrompt</span></code> and <code class="docutils literal notranslate"><span class="pre">tools</span></code> are
+<strong>shorthand</strong>. A function called <code class="docutils literal notranslate"><span class="pre">normalizeContext()</span></code> folds them into the leading <code class="docutils literal notranslate"><span class="pre">SystemMessage</span></code> from Pass 5, and what
+reaches a provider is a <code class="docutils literal notranslate"><span class="pre">TranscriptContext</span></code> — messages and nothing else:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kr">declare</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">transcriptContextBrand</span><span class="o">:</span><span class="w"> </span><span class="kt">unique</span><span class="w"> </span><span class="nx">symbol</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">TranscriptContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="kt">Message</span><span class="p">[];</span>
+<span class="w">	</span><span class="k">readonly</span><span class="w"> </span><span class="p">[</span><span class="nx">transcriptContextBrand</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>So there are really <em>two</em> context types, and the second one has a trick in it. <code class="docutils literal notranslate"><span class="pre">unique</span> <span class="pre">symbol</span></code> plus a <code class="docutils literal notranslate"><span class="pre">readonly</span></code>
+property nobody outside the module can produce is a <strong>branded type</strong>: structurally <code class="docutils literal notranslate"><span class="pre">TranscriptContext</span></code> is just
+<code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">messages</span> <span class="pre">}</span></code>, but you cannot write one by hand, because you cannot name the brand. Only <code class="docutils literal notranslate"><span class="pre">normalizeContext()</span></code> can
+return one. That makes “this context has been normalized” a fact the compiler checks, instead of a convention.</p>
+<p>Python’s answer is a plain <code class="docutils literal notranslate"><span class="pre">NewType</span></code> or a separate class, and it is less airtight — nothing stops you constructing the
+class directly. pi needs the brand because a raw <code class="docutils literal notranslate"><span class="pre">Context</span></code> reaching provider code is a silent bug: the system prompt
+would simply go missing. Every feature you have ever used in a coding agent — file reading, memory, skills, subagents,
+plan mode — ends up as text in one of those three fields. There is no fourth channel.</p>
+<p>Sit with that for a moment, because it is the most useful thing in this module. When you later wonder “how does feature X
+work,” the answer is always “it puts something in the system prompt, adds a message, or adds a tool.” The rest is
+plumbing.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Tool</span></code> is where types stop being enough.</strong> Look at <code class="docutils literal notranslate"><span class="pre">parameters:</span> <span class="pre">TParameters</span></code>, constrained by <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">TSchema</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TSchema</span></code> comes from <strong>TypeBox</strong>, a library for building JSON Schema objects that also produces TypeScript types from
+them. Why does pi need a schema library at all, when it has a type system?</p>
+<p>Because the model needs the parameter shape <strong>at runtime</strong>. pi has to serialize the tool’s parameters into JSON Schema
+and put it in the HTTP request, so the model knows what arguments to produce. A TypeScript <code class="docutils literal notranslate"><span class="pre">interface</span></code> cannot do that. It
+is erased. There is nothing left at runtime to serialize.</p>
+<p>So a tool carries its schema as a <strong>value</strong>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">writeSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Type</span><span class="p">.</span><span class="nb">Object</span><span class="p">({</span>
+<span class="w">	</span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="kt">Type.String</span><span class="p">({</span><span class="w"> </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s2">"Path to the file to write (relative or absolute)"</span><span class="w"> </span><span class="p">}),</span>
+<span class="w">	</span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">Type.String</span><span class="p">({</span><span class="w"> </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s2">"Content to write to the file"</span><span class="w"> </span><span class="p">}),</span>
+<span class="p">});</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">WriteToolInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Static</span><span class="o">&lt;</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">writeSchema</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Those two lines are from <a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/tools/write.ts#L8-L13"><code class="docutils literal notranslate"><span class="pre">write.ts</span></code></a>,
+which we read in Part B. <code class="docutils literal notranslate"><span class="pre">writeSchema</span></code> is a real object that exists at runtime and can be sent to a provider.
+<code class="docutils literal notranslate"><span class="pre">Static&lt;typeof</span> <span class="pre">writeSchema&gt;</span></code> derives the static type <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">path:</span> <span class="pre">string;</span> <span class="pre">content:</span> <span class="pre">string</span> <span class="pre">}</span></code> from it.</p>
+<p><strong>Python parallel:</strong> this is pydantic, and the parallel is unusually exact.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Python</p></th>
+<th class="head"><p>TypeScript</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Define once</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">WriteInput(BaseModel)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Type.Object({</span> <span class="pre">...</span> <span class="pre">})</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Get the runtime schema</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WriteInput.model_json_schema()</span></code></p></td>
+<td><p>the object itself</p></td>
+</tr>
+<tr class="row-even"><td><p>Get the static type</p></td>
+<td><p>the class is the type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Static&lt;typeof</span> <span class="pre">writeSchema&gt;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Validate a payload</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WriteInput(**data)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Value.Check(schema,</span> <span class="pre">data)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>The direction is what differs. In Python you write a class and <em>ask</em> it for a schema. In TypeScript you write a schema
+and <em>derive</em> a type from it. Same information, opposite starting point — because in Python the class survives to runtime,
+and in TypeScript only the schema does.</p>
+<p><code class="docutils literal notranslate"><span class="pre">typeof</span> <span class="pre">writeSchema</span></code> in a type position is the operator that crosses the boundary: it takes a <em>value</em> and gives you its
+<em>type</em>. There is no Python equivalent because Python does not need one.</p>
+<p><strong>Questions to answer:</strong></p>
+<ul class="simple">
+<li><p>Everything a harness can do reduces to three fields on <code class="docutils literal notranslate"><span class="pre">Context</span></code>. So how could a “memory” feature work?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">It has to be one of the three, and in practice it is a combination:</p>
+<p class="sd-card-text"><strong>As system prompt text.</strong> Read a <code class="docutils literal notranslate"><span class="pre">MEMORY.md</span></code> at startup and append its contents to <code class="docutils literal notranslate"><span class="pre">systemPrompt</span></code>. Cheap, always
+present, costs tokens on every single request.</p>
+<p class="sd-card-text"><strong>As a tool.</strong> Give the model <code class="docutils literal notranslate"><span class="pre">remember(fact)</span></code> and <code class="docutils literal notranslate"><span class="pre">recall(query)</span></code> tools. Costs nothing until used, but the model has to
+decide to use them, and it often will not.</p>
+<p class="sd-card-text"><strong>As messages.</strong> Inject prior facts as a synthetic user or tool-result message near the start of the transcript.</p>
+<p class="sd-card-text">Real harnesses use all three for different things, and the trade is always the same: system prompt is reliable but always
+paid for; tools are cheap but only work if the model reaches for them.</p>
+<p class="sd-card-text">The point of the exercise is that once you accept there are only three channels, the design space for any feature becomes
+small and concrete.</p>
+</div>
+</details><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">constrainedSampling?:</span> <span class="pre">false</span> <span class="pre">|</span> <span class="pre">ConstrainedSamplingConfig</span></code>. Why is <code class="docutils literal notranslate"><span class="pre">false</span></code> a valid value, when the property is already
+optional?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Because absent and <code class="docutils literal notranslate"><span class="pre">false</span></code> mean different things. Absent means “no preference, do whatever the default is.” <code class="docutils literal notranslate"><span class="pre">false</span></code> means
+“explicitly off, do not do this.”</p>
+<p class="sd-card-text">That distinction only matters if something else can supply a default — and it can. A provider or model entry can turn
+constrained sampling on for all its tools, and a single tool needs a way to opt out. <code class="docutils literal notranslate"><span class="pre">undefined</span></code> would be
+indistinguishable from “not configured,” and would inherit the default. <code class="docutils literal notranslate"><span class="pre">false</span></code> overrides it.</p>
+<p class="sd-card-text">This three-state pattern — absent, explicitly off, explicitly configured — shows up all over pi’s config types. Python
+often reaches for a sentinel object to get the same effect, because <code class="docutils literal notranslate"><span class="pre">None</span></code> is usually already spoken for.</p>
+<p class="sd-card-text">The feature itself, constrained sampling, is how you force a weak model to emit valid tool-call JSON by restricting what
+tokens it may produce. It matters most for small local models. We use it in Module 1.</p>
+</div>
+</details></section>
+<hr class="docutils" />
+<section id="pass-7-the-event-union-and-extract-lines-637-668">
+<h2>Pass 7: The Event Union, and <code class="docutils literal notranslate"><span class="pre">Extract</span></code> (Lines 637-668)<a class="headerlink" href="#pass-7-the-event-union-and-extract-lines-637-668" title="Link to this heading"></a></h2>
+<p>Read lines 652-668:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">AssistantMessageEvent</span><span class="w"> </span><span class="o">=</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"start"</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"text_start"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"text_delta"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">delta</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"text_end"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"thinking_start"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"thinking_delta"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">delta</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"thinking_end"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"toolcall_start"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"toolcall_delta"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">delta</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"toolcall_end"</span><span class="p">;</span><span class="w"> </span><span class="nx">contentIndex</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"> </span><span class="nx">toolCall</span><span class="o">:</span><span class="w"> </span><span class="kt">ToolCall</span><span class="p">;</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">reason</span><span class="o">:</span><span class="w"> </span><span class="kt">Extract</span><span class="o">&lt;</span><span class="nx">StopReason</span><span class="p">,</span><span class="w"> </span><span class="s2">"stop"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"length"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"toolUse"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"deferred"</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="p">;</span>
+<span class="w">	  </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">;</span><span class="w"> </span><span class="nx">reason</span><span class="o">:</span><span class="w"> </span><span class="kt">Extract</span><span class="o">&lt;</span><span class="nx">StopReason</span><span class="p">,</span><span class="w"> </span><span class="s2">"aborted"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"error"</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="kt">AssistantMessage</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+<p>Twelve members, written as <strong>inline object types</strong> rather than named interfaces. Same discriminated union pattern as
+Pass 3, spelled compactly because none of these shapes is needed by name elsewhere.</p>
+<p><strong>Read the doc comment above it (lines 637-651).</strong> It states a protocol: emit <code class="docutils literal notranslate"><span class="pre">start</span></code> first, then partial updates, then
+terminate with exactly one of <code class="docutils literal notranslate"><span class="pre">done</span></code> or <code class="docutils literal notranslate"><span class="pre">error</span></code>. That contract is not expressible in the type — nothing stops you from
+pushing two <code class="docutils literal notranslate"><span class="pre">done</span></code> events — so it is written in prose and enforced by the code that produces the stream. Worth noticing
+how often the interesting invariant is the one the type system cannot hold.</p>
+<p><strong>The shape of the protocol</strong> is three-phase per block: <code class="docutils literal notranslate"><span class="pre">*_start</span></code>, then many <code class="docutils literal notranslate"><span class="pre">*_delta</span></code>, then <code class="docutils literal notranslate"><span class="pre">*_end</span></code>. Repeated for text,
+thinking, and tool calls. Every event carries <code class="docutils literal notranslate"><span class="pre">contentIndex</span></code>, saying which block of <code class="docutils literal notranslate"><span class="pre">AssistantMessage.content</span></code> it is
+about — that is why content is a list (Pass 5).</p>
+<p>Every event also carries <code class="docutils literal notranslate"><span class="pre">partial:</span> <span class="pre">AssistantMessage</span></code>: the whole message as it stands so far. That is redundant with the
+deltas, and deliberately so. A consumer that wants to re-render everything (a TUI) uses <code class="docutils literal notranslate"><span class="pre">partial</span></code>. A consumer that wants
+to append (writing to stdout) uses <code class="docutils literal notranslate"><span class="pre">delta</span></code>. Neither has to keep its own copy.</p>
+<p>Redundant, but not free — <code class="docutils literal notranslate"><span class="pre">partial</span></code> grows with the message, and it is attached to every event. pi strips it before events
+go over a wire, in <a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/modes/json-event.ts"><code class="docutils literal notranslate"><span class="pre">json-event.ts</span></code></a>,
+which we come back to two sections below.</p>
+<p><strong>Now the new TypeScript.</strong> Look at the <code class="docutils literal notranslate"><span class="pre">done</span></code> member:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="nx">reason</span><span class="o">:</span><span class="w"> </span><span class="kt">Extract</span><span class="o">&lt;</span><span class="nx">StopReason</span><span class="p">,</span><span class="w"> </span><span class="s2">"stop"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"length"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"toolUse"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"deferred"</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Extract&lt;T,</span> <span class="pre">U&gt;</span></code> is a <strong>utility type</strong>: given a union <code class="docutils literal notranslate"><span class="pre">T</span></code>, it keeps only the members assignable to <code class="docutils literal notranslate"><span class="pre">U</span></code>. So this evaluates
+to <code class="docutils literal notranslate"><span class="pre">&quot;stop&quot;</span> <span class="pre">|</span> <span class="pre">&quot;length&quot;</span> <span class="pre">|</span> <span class="pre">&quot;toolUse&quot;</span> <span class="pre">|</span> <span class="pre">&quot;deferred&quot;</span></code> — the subset of <code class="docutils literal notranslate"><span class="pre">StopReason</span></code> that counts as a successful ending. The
+<code class="docutils literal notranslate"><span class="pre">error</span></code> member uses it to take <code class="docutils literal notranslate"><span class="pre">&quot;aborted&quot;</span> <span class="pre">|</span> <span class="pre">&quot;error&quot;</span></code> instead.</p>
+<p>Why not just write the four literals directly? Because <code class="docutils literal notranslate"><span class="pre">Extract</span></code> creates a <strong>dependency</strong>. If someone removes <code class="docutils literal notranslate"><span class="pre">&quot;deferred&quot;</span></code>
+from <code class="docutils literal notranslate"><span class="pre">StopReason</span></code>, this line becomes an error — <code class="docutils literal notranslate"><span class="pre">Extract</span></code> cannot find it. Hardcoded literals would silently disagree with
+<code class="docutils literal notranslate"><span class="pre">StopReason</span></code> forever.</p>
+<p>There is a family of these built in. The ones you will meet in pi:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Utility</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Rough Python analogue</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Extract&lt;T,</span> <span class="pre">U&gt;</span></code></p></td>
+<td><p>union members of <code class="docutils literal notranslate"><span class="pre">T</span></code> assignable to <code class="docutils literal notranslate"><span class="pre">U</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Exclude&lt;T,</span> <span class="pre">U&gt;</span></code></p></td>
+<td><p>union members of <code class="docutils literal notranslate"><span class="pre">T</span></code> <em>not</em> assignable to <code class="docutils literal notranslate"><span class="pre">U</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Omit&lt;T,</span> <span class="pre">K&gt;</span></code></p></td>
+<td><p>object type <code class="docutils literal notranslate"><span class="pre">T</span></code> without keys <code class="docutils literal notranslate"><span class="pre">K</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Pick&lt;T,</span> <span class="pre">K&gt;</span></code></p></td>
+<td><p>object type <code class="docutils literal notranslate"><span class="pre">T</span></code> with only keys <code class="docutils literal notranslate"><span class="pre">K</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Partial&lt;T&gt;</span></code></p></td>
+<td><p>all properties of <code class="docutils literal notranslate"><span class="pre">T</span></code> made optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total=False</span></code> TypedDict</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Record&lt;K,</span> <span class="pre">V&gt;</span></code></p></td>
+<td><p>object with keys <code class="docutils literal notranslate"><span class="pre">K</span></code> and values <code class="docutils literal notranslate"><span class="pre">V</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dict[K,</span> <span class="pre">V]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Only the last two have Python counterparts, and that is the honest summary: <strong>this is new muscle.</strong> Python has no way to
+compute a type by filtering another type’s members. Do not look for an analogy; there isn’t one. Read
+<code class="docutils literal notranslate"><span class="pre">Extract&lt;StopReason,</span> <span class="pre">&quot;stop&quot;</span> <span class="pre">|</span> <span class="pre">...&gt;</span></code> as a small expression evaluated by the compiler, whose result is a type.</p>
+<p>You can see both used in anger, in
+<a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/modes/json-event.ts#L4-L18"><code class="docutils literal notranslate"><span class="pre">json-event.ts</span></code></a>.
+<code class="docutils literal notranslate"><span class="pre">Extract</span></code> pulls one member out of a union, and <code class="docutils literal notranslate"><span class="pre">Exclude</span></code> puts a rewritten one back:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kr">type</span><span class="w"> </span><span class="nx">WithoutPartial</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">T</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">partial</span><span class="o">:</span><span class="w"> </span><span class="kt">unknown</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">Omit</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span><span class="w"> </span><span class="s2">"partial"</span><span class="o">&gt;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">T</span><span class="p">;</span>
+
+<span class="kr">type</span><span class="w"> </span><span class="nx">MessageUpdateEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Extract</span><span class="o">&lt;</span><span class="nx">AgentSessionEvent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"message_update"</span><span class="w"> </span><span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">JsonAgentSessionEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Exclude</span><span class="o">&lt;</span><span class="nx">AgentSessionEvent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"message_update"</span><span class="w"> </span><span class="p">}</span><span class="o">&gt;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">JsonMessageUpdateEvent</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">WithoutPartial&lt;T&gt;</span></code> is worth a second look: a conditional type doing a chore. “If <code class="docutils literal notranslate"><span class="pre">T</span></code> has a <code class="docutils literal notranslate"><span class="pre">partial</span></code> field, give me <code class="docutils literal notranslate"><span class="pre">T</span></code>
+without it; otherwise give me <code class="docutils literal notranslate"><span class="pre">T</span></code>.” That is the <code class="docutils literal notranslate"><span class="pre">partial</span></code>-stripping described above, written once as a type and applied
+to every event shape, instead of a dozen hand-written variants.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Exclude</span></code> also lets pi <em>replace</em> a union member. This is where <code class="docutils literal notranslate"><span class="pre">AgentSessionEvent</span></code> — the very type those lines filter —
+gets built, in
+<a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/src/core/agent-session.ts#L164-L171"><code class="docutils literal notranslate"><span class="pre">agent-session.ts</span></code></a>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="cm">/** Session-specific events that extend the core AgentEvent */</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">AgentSessionEvent</span><span class="w"> </span><span class="o">=</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="nx">Exclude</span><span class="o">&lt;</span><span class="nx">AgentEvent</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"agent_end"</span><span class="w"> </span><span class="p">}</span><span class="o">&gt;</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"agent_end"</span><span class="p">;</span>
+<span class="w">			</span><span class="nx">messages</span><span class="o">:</span><span class="w"> </span><span class="kt">AgentMessage</span><span class="p">[];</span>
+<span class="w">			</span><span class="nx">willRetry</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">	  </span><span class="p">}</span>
+<span class="w">	</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"agent_settled"</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Read the <code class="docutils literal notranslate"><span class="pre">Exclude</span></code> line together with the <code class="docutils literal notranslate"><span class="pre">agent_end</span></code> block under it as one sentence: “every core agent event except
+<code class="docutils literal notranslate"><span class="pre">agent_end</span></code>, plus my extended version of <code class="docutils literal notranslate"><span class="pre">agent_end</span></code>.” That is a type-level <code class="docutils literal notranslate"><span class="pre">replace</span></code>, and it stays correct as events are
+added.</p>
+<p><strong>Questions to answer:</strong></p>
+<ul class="simple">
+<li><p>Every event carries <code class="docutils literal notranslate"><span class="pre">partial:</span> <span class="pre">AssistantMessage</span></code>. What is the cost, and why is it worth paying anyway?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The cost is quadratic in message size. Each event holds the full message so far, so streaming a 10,000-token reply one
+delta at a time means the sum of all <code class="docutils literal notranslate"><span class="pre">partial</span></code> snapshots is enormous. In-process this is cheap — <code class="docutils literal notranslate"><span class="pre">partial</span></code> is the <em>same
+object</em> by reference, not a copy, so it costs one pointer per event. That is the key detail.</p>
+<p class="sd-card-text">It becomes expensive the moment events cross a process boundary, because serialization copies. That is exactly why
+<code class="docutils literal notranslate"><span class="pre">json-event.ts</span></code> exists: it strips <code class="docutils literal notranslate"><span class="pre">partial</span></code> for the wire, keeping only the constant-size pieces (usage, tool-call ids,
+names). Its doc comment spells out the reasoning.</p>
+<p class="sd-card-text">So the answer is: in-process it is nearly free and saves every consumer from maintaining its own accumulator; across a
+wire it is unaffordable and gets removed. The design pays the cost only where it is cheap.</p>
+</div>
+</details><ul class="simple">
+<li><p>What breaks if a stream emits <code class="docutils literal notranslate"><span class="pre">done</span></code> and then keeps pushing <code class="docutils literal notranslate"><span class="pre">text_delta</span></code> events?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Nothing in the type system — the union permits any sequence. The breakage is at runtime, and it depends on the consumer.</p>
+<p class="sd-card-text">In pi it is handled structurally rather than defended against. <code class="docutils literal notranslate"><span class="pre">EventStream</span></code> (Part B of Module 0’s Concept 5, and read in
+full there) has a <code class="docutils literal notranslate"><span class="pre">done</span></code> flag: <code class="docutils literal notranslate"><span class="pre">push()</span></code> returns immediately once a terminal event has arrived. So late events are silently
+dropped rather than corrupting anything.</p>
+<p class="sd-card-text">That is the general shape of the answer for protocols a type system cannot express: you cannot make the illegal state
+unrepresentable, so you make it harmless. Either ignore it, or throw loudly. Choosing to ignore is only safe when the
+sender is code you control.</p>
+</div>
+</details></section>
+<hr class="docutils" />
+<section id="pass-8-model-compat-a-conditional-type-lines-982-1016">
+<h2>Pass 8: <code class="docutils literal notranslate"><span class="pre">Model.compat</span></code> — A Conditional Type (Lines 982-1016)<a class="headerlink" href="#pass-8-model-compat-a-conditional-type-lines-982-1016" title="Link to this heading"></a></h2>
+<p>This pass is a <strong>preview</strong>, and the one construct in this module you will never write. Read it to recognize it, and to
+understand the problem it solves — you will solve the same problem far more simply in Module 1. Do not try to reproduce
+it in Python; there is no way to, and no reason to.</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">Model</span><span class="o">&lt;</span><span class="nx">TApi</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Api</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">api</span><span class="o">:</span><span class="w"> </span><span class="kt">TApi</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">provider</span><span class="o">:</span><span class="w"> </span><span class="kt">ProviderId</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">baseUrl</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">reasoning</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">thinkingLevelMap?</span><span class="o">:</span><span class="w"> </span><span class="kt">ThinkingLevelMap</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">input</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="s2">"text"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"image"</span><span class="p">)[];</span>
+<span class="w">	</span><span class="nx">inputLimits?</span><span class="o">:</span><span class="w"> </span><span class="kt">ModelInputLimits</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">cost</span><span class="o">:</span><span class="w"> </span><span class="kt">ModelCost</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">promptCache?</span><span class="o">:</span><span class="w"> </span><span class="kt">ModelPromptCache</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">contextWindow</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">maxTokens</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">samplingParams?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">unknown</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">headers?</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">compat?</span><span class="o">:</span><span class="w"> </span><span class="kt">TApi</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="s2">"openai-completions"</span>
+<span class="w">		</span><span class="o">?</span><span class="w"> </span><span class="nx">OpenAICompletionsCompat</span>
+<span class="w">		</span><span class="o">:</span><span class="w"> </span><span class="kt">TApi</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="s2">"openai-responses"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"azure-openai-responses"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"openai-codex-responses"</span>
+<span class="w">			</span><span class="o">?</span><span class="w"> </span><span class="nx">OpenAIResponsesCompat</span>
+<span class="w">			</span><span class="o">:</span><span class="w"> </span><span class="kt">TApi</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="s2">"anthropic-messages"</span>
+<span class="w">				</span><span class="o">?</span><span class="w"> </span><span class="nx">AnthropicMessagesCompat</span>
+<span class="w">				</span><span class="o">:</span><span class="w"> </span><span class="kt">TApi</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="s2">"bedrock-converse-stream"</span>
+<span class="w">					</span><span class="o">?</span><span class="w"> </span><span class="nx">BedrockCompat</span>
+<span class="w">					</span><span class="o">:</span><span class="w"> </span><span class="kt">TApi</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="s2">"mistral-conversations"</span>
+<span class="w">						</span><span class="o">?</span><span class="w"> </span><span class="nx">MistralConversationsCompat</span>
+<span class="w">						</span><span class="o">:</span><span class="w"> </span><span class="kt">never</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Ignore everything except <code class="docutils literal notranslate"><span class="pre">compat</span></code>. That is a <strong>conditional type</strong>: a chain of <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">extends</span> <span class="pre">X</span> <span class="pre">?</span> <span class="pre">A</span> <span class="pre">:</span> <span class="pre">B</span></code> at the type level. It
+reads as a ladder of if/else, evaluated by the compiler:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span>    <span class="n">TApi</span> <span class="ow">is</span> <span class="s2">"openai-completions"</span>                    <span class="o">-&gt;</span> <span class="n">compat</span> <span class="ow">is</span> <span class="n">OpenAICompletionsCompat</span>
+<span class="k">elif</span>  <span class="n">TApi</span> <span class="ow">is</span> <span class="n">one</span> <span class="n">of</span> <span class="n">the</span> <span class="n">three</span> <span class="n">responses</span> <span class="n">APIs</span>         <span class="o">-&gt;</span> <span class="n">compat</span> <span class="ow">is</span> <span class="n">OpenAIResponsesCompat</span>
+<span class="k">elif</span>  <span class="n">TApi</span> <span class="ow">is</span> <span class="s2">"anthropic-messages"</span>                    <span class="o">-&gt;</span> <span class="n">compat</span> <span class="ow">is</span> <span class="n">AnthropicMessagesCompat</span>
+<span class="k">elif</span>  <span class="n">TApi</span> <span class="ow">is</span> <span class="s2">"bedrock-converse-stream"</span>               <span class="o">-&gt;</span> <span class="n">compat</span> <span class="ow">is</span> <span class="n">BedrockCompat</span>
+<span class="k">elif</span>  <span class="n">TApi</span> <span class="ow">is</span> <span class="s2">"mistral-conversations"</span>                 <span class="o">-&gt;</span> <span class="n">compat</span> <span class="ow">is</span> <span class="n">MistralConversationsCompat</span>
+<span class="k">else</span>                                                  <span class="o">-&gt;</span> <span class="n">compat</span> <span class="ow">is</span> <span class="n">never</span>
+</pre></div>
+</div>
+<p>Notice that the ladder grew a rung since the last release. That is the pattern’s real selling point: adding a wire
+format is one more <code class="docutils literal notranslate"><span class="pre">extends</span></code> branch and one more <code class="docutils literal notranslate"><span class="pre">Compat</span></code> interface, and every <code class="docutils literal notranslate"><span class="pre">Model</span></code> typed with that <code class="docutils literal notranslate"><span class="pre">api</span></code> value
+picks it up automatically.</p>
+<p><code class="docutils literal notranslate"><span class="pre">never</span></code> is the empty type: no value inhabits it. Landing on <code class="docutils literal notranslate"><span class="pre">never</span></code> means the property cannot be given any value at all.
+So for a model whose <code class="docutils literal notranslate"><span class="pre">api</span></code> is anything else, <code class="docutils literal notranslate"><span class="pre">compat</span></code> is unusable — which is the intended message: there are no
+compatibility flags defined for that wire format.</p>
+<p><strong>Python has no counterpart.</strong> Not <code class="docutils literal notranslate"><span class="pre">Union</span></code>, not <code class="docutils literal notranslate"><span class="pre">overload</span></code>, not <code class="docutils literal notranslate"><span class="pre">TypeVar</span></code> bounds. A type whose <em>shape</em> is computed from
+another type’s <em>value</em> is genuinely absent from Python. Flag this as new, do not analogize it.</p>
+<p><strong>Why it is here</strong> is the interesting part, and it is the thread that runs through Module 1.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Model&lt;TApi&gt;</span></code> describes one model you can talk to. <code class="docutils literal notranslate"><span class="pre">compat</span></code> holds the flags for “this server is <em>almost</em>
+OpenAI-compatible, but it differs in these ways.” Read the fields of <code class="docutils literal notranslate"><span class="pre">OpenAICompletionsCompat</span></code> (lines 674-751) — there are
+dozens: <code class="docutils literal notranslate"><span class="pre">supportsStore</span></code>, <code class="docutils literal notranslate"><span class="pre">supportsDeveloperRole</span></code>, <code class="docutils literal notranslate"><span class="pre">supportsReasoningEffort</span></code>, <code class="docutils literal notranslate"><span class="pre">supportsMidConvoSystemMessages</span></code>, and so on.</p>
+<p>Those flags are what make a harness work against a server it has never seen. A local Ollama or vLLM instance speaks
+something <em>close</em> to the OpenAI completions API, and diverges in small ways. Each divergence is a flag. From pi’s
+<a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/coding-agent/docs/models.md">models doc</a>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"providers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"ollama"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"baseUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:11434/v1"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openai-completions"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ollama"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"compat"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"supportsDeveloperRole"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">"supportsReasoningEffort"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"models"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gpt-oss:20b"</span><span class="p">,</span><span class="w"> </span><span class="nt">"reasoning"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The conditional type is what makes that config typo-proof. Because <code class="docutils literal notranslate"><span class="pre">api</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;openai-completions&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">TApi</span></code> is that
+literal, and <code class="docutils literal notranslate"><span class="pre">compat</span></code> resolves to <code class="docutils literal notranslate"><span class="pre">OpenAICompletionsCompat</span></code> — so an Anthropic-only flag in that block is a compile error,
+not a silently ignored key.</p>
+<p><strong>One question to answer:</strong></p>
+<ul class="simple">
+<li><p>What is the practical benefit over just making <code class="docutils literal notranslate"><span class="pre">compat</span></code> a big optional object with every provider’s flags in it?</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">A single flat object would type-check a config that mixes flags from different wire formats. You could write an
+Anthropic-specific flag on an OpenAI model, and nothing would complain — it would just be ignored at runtime, silently,
+and you would spend an hour wondering why your setting has no effect.</p>
+<p class="sd-card-text">The conditional type moves that from a silent runtime no-op to a compile error, and it does it without pi having to write
+a separate <code class="docutils literal notranslate"><span class="pre">OpenAIModel</span></code> / <code class="docutils literal notranslate"><span class="pre">AnthropicModel</span></code> / <code class="docutils literal notranslate"><span class="pre">BedrockModel</span></code> interface for every wire format. One interface, one type
+parameter, and each instantiation gets exactly the right flag set.</p>
+<p class="sd-card-text">That is the real argument for conditional types in general: they let one generic definition stand in for what would
+otherwise be N hand-written variants that drift apart.</p>
+</div>
+</details></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Module 0: Ground Floor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="part_b_files.html" class="btn btn-neutral float-right" title="Part B: Guided Reading of Three Complete Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Dimitris Poulopoulos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

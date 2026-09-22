@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 0: Ground Floor &mdash; Build Your Own Harness 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b20a9e2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=6dbb43f8"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Part A: Guided Reading of types.ts" href="part_a_types.html" />
+    <link rel="prev" title="Build Your Own Harness" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Build Your Own Harness
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module 0: Ground Floor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-deal">The Deal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-module-in-order">The Module in Order</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="part_a_types.html">Part A: Guided Reading of types.ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="part_b_files.html">Part B: Guided Reading of Three Complete Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="part_c_concepts.html">Part C: Key Concepts Deep Dive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="project_1_run_pi.html">Project 1: Build and Run pi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="project_2_scaffold.html">Project 2: Scaffold Your Harness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="checklist.html">Self-Assessment Checklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="what_next.html">What is Next</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#who-this-is-for">Who This Is For</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-you-will-learn">What You Will Learn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-this-matters">Why This Matters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-use-this-guide">How to Use This Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#time-estimate">Time Estimate</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Build Your Own Harness</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Module 0: Ground Floor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/module_0/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-0-ground-floor">
+<h1>Module 0: Ground Floor<a class="headerlink" href="#module-0-ground-floor" title="Link to this heading"></a></h1>
+<p>Welcome to Module 0. By the end of this module you will have built pi from source, watched a real agent session run end
+to end, and scaffolded your own Python harness that type-checks, runs, and prints a conversation.</p>
+<p>More importantly, you will be able to <strong>read</strong> TypeScript — the kind that production agents are written in — well enough
+to learn from it and judge it.</p>
+<hr class="docutils" />
+<section id="the-deal">
+<h2>The Deal<a class="headerlink" href="#the-deal" title="Link to this heading"></a></h2>
+<p><strong>pi is a reference, not a blueprint.</strong> You are not here to port it.</p>
+<p>The goal is to understand what an agent harness <em>is</em>: what problems it has to solve, and what the available answers cost.
+pi is how you get at that. It is about 190,000 lines of TypeScript, it has been in real use long enough to have met the
+hard problems, and its reasoning is legible in the code. That makes it the best worked example available — a place to
+watch someone else’s decisions, not a specification to satisfy.</p>
+<p>You read TypeScript. You write Python. And where pi’s answer is one option among several, the course puts the others
+next to it.</p>
+<p>Every module works in three steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Read</strong> the pi code that handles something, and work out what the underlying problem actually is.</p></li>
+<li><p><strong>Judge</strong> the answer. Why this way? What did it cost them? Does that reasoning hold for you?</p></li>
+<li><p><strong>Decide and build</strong> your version in Python. Sometimes the same shape. Sometimes not.</p></li>
+</ol>
+<p>Step 2 is where the learning is. If you skip it you get a Python transcription of someone else’s architecture, which
+teaches you almost nothing — you would be inheriting their constraints without knowing what they were.</p>
+<p>Your harness will part company with pi’s, probably early. Three situations where it is worth stopping to weigh the
+options:</p>
+<p><strong>A pattern exists only because TypeScript erases its types.</strong> Carried into Python it solves a problem you do not have.
+You will meet three of these in this module alone, each with the Python alternative set beside it.</p>
+<p><strong>Python has an answer of its own.</strong> Cancellation and schemas are both cases where the language does work pi has to do
+by hand. The course shows you both versions and what each one costs. Both are in Part C.</p>
+<p><strong>Your constraints are genuinely different.</strong> pi ships to thousands of users across forty providers and two runtimes.
+Generality you do not need is a cost, not a feature. Every module points out where pi is paying for a requirement you
+might not have, and what you would get back by dropping it.</p>
+<p>The only choice worth avoiding is the one you make by accident, or because something looked like too much work. Every
+decision here is yours. The course’s job is to have the alternatives in front of you before you make it.</p>
+</section>
+<hr class="docutils" />
+<section id="the-module-in-order">
+<h2>The Module in Order<a class="headerlink" href="#the-module-in-order" title="Link to this heading"></a></h2>
+<p>Work through these in sequence. Parts A and B are reading; the projects are where you build.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="part_a_types.html">Part A: Guided Reading of types.ts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="part_a_types.html#pass-1-the-import-block-lines-1-15">Pass 1: The Import Block (Lines 1-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_a_types.html#pass-2-the-open-union-trick-lines-17-29">Pass 2: The Open Union Trick (Lines 17-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_a_types.html#pass-3-content-blocks-the-discriminated-union-lines-364-394">Pass 3: Content Blocks — The Discriminated Union (Lines 364-394)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_a_types.html#pass-4-usage-and-why-a-harness-counts-tokens-lines-396-419">Pass 4: Usage, and Why a Harness Counts Tokens (Lines 396-419)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_a_types.html#pass-5-the-four-messages-lines-491-553">Pass 5: The Four Messages (Lines 491-553)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_a_types.html#pass-6-tool-and-context-the-whole-interface-to-a-model-lines-576-621">Pass 6: Tool and Context — The Whole Interface to a Model (Lines 576-621)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_a_types.html#pass-7-the-event-union-and-extract-lines-637-668">Pass 7: The Event Union, and <code class="docutils literal notranslate"><span class="pre">Extract</span></code> (Lines 637-668)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_a_types.html#pass-8-model-compat-a-conditional-type-lines-982-1016">Pass 8: <code class="docutils literal notranslate"><span class="pre">Model.compat</span></code> — A Conditional Type (Lines 982-1016)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="part_b_files.html">Part B: Guided Reading of Three Complete Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="part_b_files.html#file-1-system-prompt-ts-34-lines">File 1: system-prompt.ts (34 lines)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_b_files.html#file-2-write-ts-44-lines">File 2: write.ts (44 lines)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_b_files.html#file-3-01-minimal-ts-26-lines">File 3: 01-minimal.ts (26 lines)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="part_c_concepts.html">Part C: Key Concepts Deep Dive</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="part_c_concepts.html#concept-1-how-to-read-typescript">Concept 1: How to Read TypeScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_c_concepts.html#concept-2-types-are-erased">Concept 2: Types Are Erased</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_c_concepts.html#concept-3-absent-null-and-set-reading-pi-s-optional-fields">Concept 3: Absent, Null, and Set — Reading pi’s Optional Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_c_concepts.html#concept-4-result-instead-of-exceptions">Concept 4: Result Instead of Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_c_concepts.html#concept-5-async-streams-and-cancellation">Concept 5: Async, Streams, and Cancellation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="part_c_concepts.html#concept-6-the-twelve-packages">Concept 6: The Twelve Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="project_1_run_pi.html">Project 1: Build and Run pi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="project_1_run_pi.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_1_run_pi.html#step-1-clone-and-install">Step 1: Clone and Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_1_run_pi.html#step-2-type-check">Step 2: Type-check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_1_run_pi.html#step-3-run-pi-from-source">Step 3: Run pi from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_1_run_pi.html#step-4-point-pi-at-a-local-model-optional">Step 4: Point pi at a Local Model (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_1_run_pi.html#step-5-watch-a-session-end-to-end">Step 5: Watch a Session End to End</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_1_run_pi.html#step-6-try-the-sdk-example">Step 6: Try the SDK Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_1_run_pi.html#experiments-to-try">Experiments to Try</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="project_2_scaffold.html">Project 2: Scaffold Your Harness</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="project_2_scaffold.html#step-0-create-the-directories">Step 0: Create the Directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_2_scaffold.html#step-1-the-workspace-root">Step 1: The Workspace Root</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_2_scaffold.html#step-2-the-two-package-manifests">Step 2: The Two Package Manifests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_2_scaffold.html#step-3-the-message-union">Step 3: The Message Union</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_2_scaffold.html#step-4-the-exhaustive-renderer">Step 4: The Exhaustive Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_2_scaffold.html#step-5-run-it">Step 5: Run It</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_2_scaffold.html#step-6-break-it-on-purpose">Step 6: Break It on Purpose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_2_scaffold.html#bonus-challenges">Bonus Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="checklist.html">Self-Assessment Checklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#reading-typescript">Reading TypeScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#why-pi-looks-the-way-it-does">Why pi Looks the Way It Does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#building-in-python">Building in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#honest-check">Honest Check</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="what_next.html">What is Next</a></li>
+</ul>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Page</p></th>
+<th class="head"><p>What it is</p></th>
+<th class="head"><p>Time</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="part_a_types.html"><span class="std std-doc">Part A</span></a></p></td>
+<td><p>Eight guided passes over pi’s <code class="docutils literal notranslate"><span class="pre">types.ts</span></code></p></td>
+<td><p>2-3 h</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="part_b_files.html"><span class="std std-doc">Part B</span></a></p></td>
+<td><p>Three complete pi files, read line by line</p></td>
+<td><p>45-60 min</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="part_c_concepts.html"><span class="std std-doc">Part C</span></a></p></td>
+<td><p>The six ideas underneath, including how to read TypeScript</p></td>
+<td><p>2 h</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="project_1_run_pi.html"><span class="std std-doc">Project 1</span></a></p></td>
+<td><p>Build pi, run it, watch a real session</p></td>
+<td><p>1 h</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="project_2_scaffold.html"><span class="std std-doc">Project 2</span></a></p></td>
+<td><p>Scaffold your Python harness</p></td>
+<td><p>2-3 h</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="checklist.html"><span class="std std-doc">Checklist</span></a></p></td>
+<td><p>Am I ready for Module 1?</p></td>
+<td><p>15 min</p></td>
+</tr>
+</tbody>
+</table>
+<p>If you are looking for the TypeScript cheat sheet, it is
+<a class="reference internal" href="part_c_concepts.html#concept-1-how-to-read-typescript"><span class="std std-ref">Concept 1</span></a>. You will come back to it.</p>
+<p>Also on this page: <a class="reference internal" href="#who-this-is-for">Who This Is For</a>, <a class="reference internal" href="#what-you-will-learn">What You Will Learn</a>,
+<a class="reference internal" href="#why-this-matters">Why This Matters</a>, <a class="reference internal" href="#how-to-use-this-guide">How to Use This Guide</a>, and a
+<a class="reference internal" href="#time-estimate">Time Estimate</a>.</p>
+</section>
+<hr class="docutils" />
+<section id="who-this-is-for">
+<h2>Who This Is For<a class="headerlink" href="#who-this-is-for" title="Link to this heading"></a></h2>
+<p>You are a Python engineer. You write <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span></code> without thinking about it. You have used pydantic to validate a
+payload. You know what a <code class="docutils literal notranslate"><span class="pre">Protocol</span></code> is. But when you open a <code class="docutils literal notranslate"><span class="pre">.ts</span></code> file, you see braces, <code class="docutils literal notranslate"><span class="pre">interface</span></code>, and a lot of
+<code class="docutils literal notranslate"><span class="pre">?</span></code> marks, and you are not sure which parts are real code and which parts are decoration.</p>
+<p>This guide assumes:</p>
+<ul class="simple">
+<li><p>Strong Python skills (<code class="docutils literal notranslate"><span class="pre">asyncio</span></code>, type hints, pydantic, <code class="docutils literal notranslate"><span class="pre">match</span></code>)</p></li>
+<li><p>Python 3.13 or newer, and <a class="reference external" href="https://docs.astral.sh/uv/">uv</a></p></li>
+<li><p>You have used a coding agent at least once, so the words “tool call” and “context window” mean something</p></li>
+<li><p>Node.js 22.19 or newer — used <strong>only</strong> to build and run pi itself, never for your own code</p></li>
+<li><p>No prior TypeScript experience</p></li>
+</ul>
+</section>
+<section id="what-you-will-learn">
+<h2>What You Will Learn<a class="headerlink" href="#what-you-will-learn" title="Link to this heading"></a></h2>
+<p>After completing this module, you will be able to:</p>
+<ol class="arabic simple">
+<li><p><strong>Read a TypeScript module</strong> — Know what <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">export</span></code>, <code class="docutils literal notranslate"><span class="pre">interface</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code>, and <code class="docutils literal notranslate"><span class="pre">?</span></code> mean, and which parts
+of a line are erased before it runs</p></li>
+<li><p><strong>Explain why pi looks the way it does</strong> — TypeScript deletes its types before execution, and three of pi’s most
+distinctive habits fall directly out of that one fact</p></li>
+<li><p><strong>Read a discriminated union</strong> — pi’s single most used pattern, and the reason it has almost no classes</p></li>
+<li><p><strong>Model the same thing in Python</strong> — a pydantic discriminated union that round-trips through JSON</p></li>
+<li><p><strong>Prove a <code class="docutils literal notranslate"><span class="pre">match</span></code> is exhaustive</strong> — <code class="docutils literal notranslate"><span class="pre">assert_never</span></code>, and what your type checker does with it</p></li>
+<li><p><strong>Read pi’s async streaming code</strong> — <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">function*</span></code>, <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">await</span></code>, <code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code>, and the two places Python’s
+model does not transfer</p></li>
+<li><p><strong>Know where Python wins</strong> — <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> cancellation and pydantic both remove work pi has to do by hand</p></li>
+<li><p><strong>Name the parts of a harness</strong> — point at where pi keeps the loop, the tools, the transcript, and the terminal</p></li>
+<li><p><strong>Set up a Python monorepo</strong> — <code class="docutils literal notranslate"><span class="pre">uv</span></code> workspaces, cross-package imports, ruff, and a strict type checker</p></li>
+<li><p><strong>Tell a real constraint from an inherited one</strong> — recognize when pi is solving a TypeScript problem, or serving a
+requirement you do not have, and say so before writing any code</p></li>
+</ol>
+</section>
+<section id="why-this-matters">
+<h2>Why This Matters<a class="headerlink" href="#why-this-matters" title="Link to this heading"></a></h2>
+<p>Every part of this course rests on one idea: <strong>a harness is a loop, a set of tools, and a context you keep editing.</strong>
+Everything else is comfort.</p>
+<p>That sounds simple enough to build in an afternoon. It is not, and the reason is worth understanding before you write
+any code. A real harness has to answer questions like: what happens when the user presses Ctrl-C halfway through a tool
+call? What happens when the transcript outgrows the context window? What happens when the model returns malformed JSON
+for a tool call? What happens when the process dies mid-edit?</p>
+<p>pi has an answer to every one of those, arrived at under real use. Reading those answers is far faster than
+rediscovering the questions — which is the actual value here. Knowing that a problem exists is most of the work; you can
+then decide how <em>you</em> want to handle it, and you will sometimes decide differently.</p>
+<p>The reason this module spends its time on reading rather than building is simple: you cannot learn from a codebase you
+cannot read, and you certainly cannot judge it. Once pi is legible to you, the remaining six modules are about
+architecture and trade-offs — which is the part worth having.</p>
+</section>
+<section id="how-to-use-this-guide">
+<h2>How to Use This Guide<a class="headerlink" href="#how-to-use-this-guide" title="Link to this heading"></a></h2>
+<p>For every concept in this module, you will:</p>
+<ol class="arabic simple">
+<li><p><strong>Read</strong> — Open the actual source file and read it. Not a tutorial. Real code from pi.</p></li>
+<li><p><strong>Ask what problem it solves.</strong> Before wondering how to write it in Python, be able to say what would break without
+it. If you cannot, you are not ready to decide whether you need it.</p></li>
+<li><p><strong>Judge it.</strong> Does pi’s reason apply to you? Say yes or no, and why.</p></li>
+<li><p><strong>Build</strong> — Write your Python. Same shape or different, but on purpose.</p></li>
+<li><p><strong>Debug</strong> — When your code does not work (it won’t, at first), read the error and fix it.</p></li>
+</ol>
+<p>The single most useful habit in this course: <strong>when a claim in this guide surprises you, verify it.</strong> Open a file, make
+the change, run the checker. Both languages have unusually good error messages. They are the best teacher here.</p>
+</section>
+<section id="time-estimate">
+<h2>Time Estimate<a class="headerlink" href="#time-estimate" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Part A (reading <a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts"><code class="docutils literal notranslate"><span class="pre">types.ts</span></code></a>): 2-3 hours</p></li>
+<li><p>Part B (three small complete files): 45-60 minutes</p></li>
+<li><p>Part C (concepts deep dive): 2 hours</p></li>
+<li><p>Project 1 (build and run pi): 1 hour</p></li>
+<li><p>Project 2 (scaffold your harness): 2-3 hours</p></li>
+</ul>
+<p>Total: roughly 8-11 hours, spread across several sessions. Part A is the long pole and the one that pays off; do not rush
+it.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Build Your Own Harness" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="part_a_types.html" class="btn btn-neutral float-right" title="Part A: Guided Reading of types.ts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Dimitris Poulopoulos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

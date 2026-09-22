@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project 2: Scaffold Your Harness &mdash; Build Your Own Harness 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b20a9e2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=6dbb43f8"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Self-Assessment Checklist" href="checklist.html" />
+    <link rel="prev" title="Project 1: Build and Run pi" href="project_1_run_pi.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Build Your Own Harness
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Module 0: Ground Floor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#the-deal">The Deal</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#the-module-in-order">The Module in Order</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="part_a_types.html">Part A: Guided Reading of types.ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="part_b_files.html">Part B: Guided Reading of Three Complete Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="part_c_concepts.html">Part C: Key Concepts Deep Dive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="project_1_run_pi.html">Project 1: Build and Run pi</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Project 2: Scaffold Your Harness</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-0-create-the-directories">Step 0: Create the Directories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-the-workspace-root">Step 1: The Workspace Root</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-the-two-package-manifests">Step 2: The Two Package Manifests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-the-message-union">Step 3: The Message Union</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-the-exhaustive-renderer">Step 4: The Exhaustive Renderer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-run-it">Step 5: Run It</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-break-it-on-purpose">Step 6: Break It on Purpose</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bonus-challenges">Bonus Challenges</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="checklist.html">Self-Assessment Checklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="what_next.html">What is Next</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#who-this-is-for">Who This Is For</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#what-you-will-learn">What You Will Learn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#why-this-matters">Why This Matters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#how-to-use-this-guide">How to Use This Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#time-estimate">Time Estimate</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Build Your Own Harness</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module 0: Ground Floor</a></li>
+      <li class="breadcrumb-item active">Project 2: Scaffold Your Harness</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/module_0/project_2_scaffold.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="project-2-scaffold-your-harness">
+<h1>Project 2: Scaffold Your Harness<a class="headerlink" href="#project-2-scaffold-your-harness" title="Link to this heading"></a></h1>
+<p>This is the project you keep. Every module from here on adds to it. By Module 6 it will be a working coding agent.</p>
+<p>Today you build the skeleton and one real thing: pi’s <code class="docutils literal notranslate"><span class="pre">Message</span></code> union in pydantic, and a renderer your type checker
+proves is exhaustive.</p>
+<section id="step-0-create-the-directories">
+<h2>Step 0: Create the Directories<a class="headerlink" href="#step-0-create-the-directories" title="Link to this heading"></a></h2>
+<p>Build this outside the pi checkout. You are writing your own project.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/myharness/packages/ai/src/myharness_ai
+mkdir<span class="w"> </span>-p<span class="w"> </span>~/myharness/packages/agent/src/myharness_agent
+<span class="nb">cd</span><span class="w"> </span>~/myharness
+git<span class="w"> </span>init
+</pre></div>
+</div>
+<p>The directory names match pi’s — <code class="docutils literal notranslate"><span class="pre">packages/ai</span></code> and <code class="docutils literal notranslate"><span class="pre">packages/agent</span></code> — and that is worth doing <strong>while you are
+learning</strong>, for one narrow reason: you will be reading the two trees side by side constantly, and a shared vocabulary
+makes “where does pi put this?” a question with an obvious answer.</p>
+<p>It is scaffolding, not architecture. Once you have opinions of your own about where things belong, rename freely. A
+package boundary you disagree with is worse than an unfamiliar name.</p>
+<p>Why a monorepo at all, when one package would do? Because the layering from
+<a class="reference internal" href="part_c_concepts.html#concept-6-the-twelve-packages"><span class="std std-ref">Concept 6</span></a> only means something if it is enforced. <code class="docutils literal notranslate"><span class="pre">agent</span></code> may import <code class="docutils literal notranslate"><span class="pre">ai</span></code>; <code class="docutils literal notranslate"><span class="pre">ai</span></code> must never
+import <code class="docutils literal notranslate"><span class="pre">agent</span></code>. Separate packages make the illegal direction a dependency error instead of a bad habit.</p>
+</section>
+<section id="step-1-the-workspace-root">
+<h2>Step 1: The Workspace Root<a class="headerlink" href="#step-1-the-workspace-root" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[project]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"myharness"</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.1"</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&gt;=3.13"</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"myharness-ai"</span><span class="p">,</span><span class="w"> </span><span class="s2">"myharness-agent"</span><span class="p">]</span>
+
+<span class="k">[tool.uv.workspace]</span>
+<span class="n">members</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"packages/*"</span><span class="p">]</span>
+
+<span class="k">[tool.uv.sources]</span>
+<span class="n">myharness-ai</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">workspace</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="n">myharness-agent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">workspace</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+
+<span class="k">[dependency-groups]</span>
+<span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"mypy&gt;=1.14"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ruff&gt;=0.9"</span><span class="p">,</span><span class="w"> </span><span class="s2">"pytest&gt;=8"</span><span class="p">]</span>
+
+<span class="k">[tool.ruff]</span>
+<span class="n">line-length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">120</span>
+
+<span class="k">[tool.mypy]</span>
+<span class="n">strict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+</pre></div>
+</div>
+<p>Three parts matter:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[tool.uv.workspace]</span></code> with <code class="docutils literal notranslate"><span class="pre">members</span> <span class="pre">=</span> <span class="pre">[&quot;packages/*&quot;]</span></code> — the direct equivalent of npm’s <code class="docutils literal notranslate"><span class="pre">&quot;workspaces&quot;:</span> <span class="pre">[&quot;packages/*&quot;]</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[tool.uv.sources]</span></code> with <code class="docutils literal notranslate"><span class="pre">workspace</span> <span class="pre">=</span> <span class="pre">true</span></code> — resolve these from the local tree, not from PyPI. Without this, <code class="docutils literal notranslate"><span class="pre">uv</span></code>
+goes looking for a package called <code class="docutils literal notranslate"><span class="pre">myharness-ai</span></code> on the index and fails.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">strict</span> <span class="pre">=</span> <span class="pre">true</span></code> for mypy. Same spirit as pi’s <code class="docutils literal notranslate"><span class="pre">strict</span></code> in <code class="docutils literal notranslate"><span class="pre">tsconfig.base.json</span></code>, and just as non-negotiable. Turn it on
+now while the project is two files, not later when it is two hundred.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">line-length</span> <span class="pre">=</span> <span class="pre">120</span></code> matches pi’s Biome setting. Handy while you are reading pi side by side with your own code.</p>
+</section>
+<section id="step-2-the-two-package-manifests">
+<h2>Step 2: The Two Package Manifests<a class="headerlink" href="#step-2-the-two-package-manifests" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">packages/ai/pyproject.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[project]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"myharness-ai"</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.1"</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&gt;=3.13"</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"pydantic&gt;=2.10"</span><span class="p">]</span>
+
+<span class="k">[build-system]</span>
+<span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"uv_build&gt;=0.9,&lt;0.12"</span><span class="p">]</span>
+<span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"uv_build"</span>
+
+<span class="k">[tool.uv.build-backend]</span>
+<span class="n">module-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"myharness_ai"</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">packages/agent/pyproject.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[project]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"myharness-agent"</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.0.1"</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&gt;=3.13"</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"myharness-ai"</span><span class="p">]</span>
+
+<span class="k">[build-system]</span>
+<span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"uv_build&gt;=0.9,&lt;0.12"</span><span class="p">]</span>
+<span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"uv_build"</span>
+
+<span class="k">[tool.uv.build-backend]</span>
+<span class="n">module-name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"myharness_agent"</span>
+
+<span class="k">[tool.uv.sources]</span>
+<span class="n">myharness-ai</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">workspace</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> line on <code class="docutils literal notranslate"><span class="pre">agent</span></code> is the layering rule, written down. <code class="docutils literal notranslate"><span class="pre">agent</span></code> declares that it may use <code class="docutils literal notranslate"><span class="pre">ai</span></code>. <code class="docutils literal notranslate"><span class="pre">ai</span></code>
+declares only pydantic, so it can never reach back.</p>
+<p><code class="docutils literal notranslate"><span class="pre">module-name</span></code> is needed because the distribution name has a hyphen (<code class="docutils literal notranslate"><span class="pre">myharness-ai</span></code>) and the import name has an
+underscore (<code class="docutils literal notranslate"><span class="pre">myharness_ai</span></code>). Python cannot import a hyphen, so the two differ and the build backend needs telling.</p>
+<p>Now link them:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>sync
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">uv</span></code> creates one <code class="docutils literal notranslate"><span class="pre">.venv</span></code> at the root, installs pydantic, and installs both of your packages in editable mode. This is
+the same trick as npm hoisting: one environment, your packages symlinked into it so they can import each other by name.</p>
+</section>
+<section id="step-3-the-message-union">
+<h2>Step 3: The Message Union<a class="headerlink" href="#step-3-the-message-union" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">packages/ai/src/myharness_ai/types.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""The vocabulary of a turn. Mirrors pi's packages/ai/src/types.ts."""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Literal</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TextContent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A block of plain text."""</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"text"</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ToolCall</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A request from the model to run a tool."""</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"toolCall"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"toolCall"</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">arguments</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span>
+
+
+<span class="n">ContentBlock</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">TextContent</span> <span class="o">|</span> <span class="n">ToolCall</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">"type"</span><span class="p">)]</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Usage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">total_tokens</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="n">StopReason</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"stop"</span><span class="p">,</span> <span class="s2">"length"</span><span class="p">,</span> <span class="s2">"toolUse"</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">,</span> <span class="s2">"aborted"</span><span class="p">]</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UserMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"user"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"user"</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">TextContent</span><span class="p">]</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AssistantMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"assistant"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"assistant"</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ContentBlock</span><span class="p">]</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">usage</span><span class="p">:</span> <span class="n">Usage</span>
+    <span class="n">stop_reason</span><span class="p">:</span> <span class="n">StopReason</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ToolResultMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"toolResult"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"toolResult"</span>
+    <span class="n">tool_call_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">TextContent</span><span class="p">]</span>
+    <span class="n">is_error</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="n">Message</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
+    <span class="n">UserMessage</span> <span class="o">|</span> <span class="n">AssistantMessage</span> <span class="o">|</span> <span class="n">ToolResultMessage</span><span class="p">,</span>
+    <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">"role"</span><span class="p">),</span>
+<span class="p">]</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Context</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">system_prompt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Message</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Read that against
+<a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/types.ts#L491-L553">pi’s lines 491-553</a>
+and notice how close it is. Same discriminant, same content-blocks-not-a-string decision.</p>
+<p>One difference is deliberate. pi’s union has <strong>four</strong> members; this scaffold has three, because it leaves out
+<code class="docutils literal notranslate"><span class="pre">SystemMessage</span></code> and keeps the prompt as <code class="docutils literal notranslate"><span class="pre">Context.system_prompt</span></code>. That is fine for a transcript you only print, and it is
+the wrong answer the moment the prompt or the tool set can change mid-conversation — which is exactly why pi moved it
+into the transcript. Note the gap now, and decide in Module 3 whether to close it.</p>
+<p><strong>Three translation notes.</strong></p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Field(discriminator=&quot;role&quot;)</span></code> is the whole trick.</strong> It tells pydantic to read <code class="docutils literal notranslate"><span class="pre">role</span></code> first and pick the matching class,
+instead of trying all three and reporting a confusing union error. It is the runtime half of what TypeScript’s narrowing
+does at compile time — and unlike TypeScript, you get both halves from the same declaration.</p>
+<p><strong>The discriminant values keep pi’s exact spelling</strong> — <code class="docutils literal notranslate"><span class="pre">&quot;toolCall&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;toolResult&quot;</span></code>, camelCase, not snake_case. That
+is deliberate. Those strings go on the wire and into session files, so they are a format, not a naming choice. The field
+<em>names</em> are snake_case because those are yours.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">object]</span></code>, not <code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">Any]</span></code>.</strong> pi writes <code class="docutils literal notranslate"><span class="pre">JsonObject</span></code> here, its own alias for a JSON-shaped object.
+<code class="docutils literal notranslate"><span class="pre">object</span></code> forces you to narrow before
+using a value; <code class="docutils literal notranslate"><span class="pre">Any</span></code> switches the checker off. The scaffold uses <code class="docutils literal notranslate"><span class="pre">object</span></code> and pays the narrowing cost, on the grounds
+that <code class="docutils literal notranslate"><span class="pre">Any</span></code> should be a decision rather than a default.</p>
+<p><code class="docutils literal notranslate"><span class="pre">packages/ai/src/myharness_ai/__init__.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">myharness_ai.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AssistantMessage</span><span class="p">,</span>
+    <span class="n">ContentBlock</span><span class="p">,</span>
+    <span class="n">Context</span><span class="p">,</span>
+    <span class="n">Message</span><span class="p">,</span>
+    <span class="n">StopReason</span><span class="p">,</span>
+    <span class="n">TextContent</span><span class="p">,</span>
+    <span class="n">ToolCall</span><span class="p">,</span>
+    <span class="n">ToolResultMessage</span><span class="p">,</span>
+    <span class="n">Usage</span><span class="p">,</span>
+    <span class="n">UserMessage</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"AssistantMessage"</span><span class="p">,</span>
+    <span class="s2">"ContentBlock"</span><span class="p">,</span>
+    <span class="s2">"Context"</span><span class="p">,</span>
+    <span class="s2">"Message"</span><span class="p">,</span>
+    <span class="s2">"StopReason"</span><span class="p">,</span>
+    <span class="s2">"TextContent"</span><span class="p">,</span>
+    <span class="s2">"ToolCall"</span><span class="p">,</span>
+    <span class="s2">"ToolResultMessage"</span><span class="p">,</span>
+    <span class="s2">"Usage"</span><span class="p">,</span>
+    <span class="s2">"UserMessage"</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>This is the package’s public surface — the same job as pi’s <code class="docutils literal notranslate"><span class="pre">index.ts</span></code> re-export block from Pass 1. <code class="docutils literal notranslate"><span class="pre">__all__</span></code> is what
+makes it explicit.</p>
+</section>
+<section id="step-4-the-exhaustive-renderer">
+<h2>Step 4: The Exhaustive Renderer<a class="headerlink" href="#step-4-the-exhaustive-renderer" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">packages/agent/src/myharness_agent/render.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">assert_never</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">myharness_ai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AssistantMessage</span><span class="p">,</span> <span class="n">Message</span><span class="p">,</span> <span class="n">ToolResultMessage</span><span class="p">,</span> <span class="n">UserMessage</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">render_message</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Collapse a message to one line. Every branch of Message must be handled."""</span>
+    <span class="k">match</span> <span class="n">message</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">UserMessage</span><span class="p">():</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"user&gt; </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">case</span> <span class="n">AssistantMessage</span><span class="p">():</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"text"</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"[call </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">arguments</span><span class="si">}</span><span class="s2">)]"</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">]</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"model&gt; </span><span class="si">{</span><span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">usage</span><span class="o">.</span><span class="n">total_tokens</span><span class="si">}</span><span class="s2"> tokens, </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">stop_reason</span><span class="si">}</span><span class="s2">)"</span>
+        <span class="k">case</span> <span class="n">ToolResultMessage</span><span class="p">():</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s2">"error"</span> <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">is_error</span> <span class="k">else</span> <span class="s2">"tool"</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&gt; </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="n">assert_never</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong><code class="docutils literal notranslate"><span class="pre">assert_never(message)</span></code> in the final case is the whole point of this step.</strong></p>
+<p>By the time control reaches <code class="docutils literal notranslate"><span class="pre">case</span> <span class="pre">_</span></code>, the checker has narrowed <code class="docutils literal notranslate"><span class="pre">message</span></code> past all three classes. If the <code class="docutils literal notranslate"><span class="pre">match</span></code> covered
+every member of the union, the only type left is <code class="docutils literal notranslate"><span class="pre">Never</span></code> — the empty type — and passing <code class="docutils literal notranslate"><span class="pre">Never</span></code> to <code class="docutils literal notranslate"><span class="pre">assert_never</span></code> is
+fine. If a case is <em>missing</em>, the leftover type is that class, and passing it to <code class="docutils literal notranslate"><span class="pre">assert_never</span></code> is an error.</p>
+<p>This is the exact equivalent of the <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">unreachable:</span> <span class="pre">never</span> <span class="pre">=</span> <span class="pre">message</span></code> trick pi uses in its <code class="docutils literal notranslate"><span class="pre">switch</span></code> statements. Same
+proof, different spelling. Python got the better syntax here.</p>
+<p>Note also that <code class="docutils literal notranslate"><span class="pre">b.type</span> <span class="pre">==</span> <span class="pre">&quot;text&quot;</span></code> narrows <code class="docutils literal notranslate"><span class="pre">b</span></code> from <code class="docutils literal notranslate"><span class="pre">TextContent</span> <span class="pre">|</span> <span class="pre">ToolCall</span></code> down to <code class="docutils literal notranslate"><span class="pre">TextContent</span></code>, so <code class="docutils literal notranslate"><span class="pre">b.text</span></code> is
+allowed and <code class="docutils literal notranslate"><span class="pre">b.name</span></code> would not be. That is the same discriminant narrowing from Pass 3, and your type checker does it
+just as TypeScript’s does.</p>
+<p><code class="docutils literal notranslate"><span class="pre">packages/agent/src/myharness_agent/__init__.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">myharness_agent.render</span><span class="w"> </span><span class="kn">import</span> <span class="n">render_message</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"render_message"</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="step-5-run-it">
+<h2>Step 5: Run It<a class="headerlink" href="#step-5-run-it" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">packages/agent/src/myharness_agent/main.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">myharness_ai</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AssistantMessage</span><span class="p">,</span>
+    <span class="n">Message</span><span class="p">,</span>
+    <span class="n">TextContent</span><span class="p">,</span>
+    <span class="n">ToolCall</span><span class="p">,</span>
+    <span class="n">ToolResultMessage</span><span class="p">,</span>
+    <span class="n">Usage</span><span class="p">,</span>
+    <span class="n">UserMessage</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">myharness_agent.render</span><span class="w"> </span><span class="kn">import</span> <span class="n">render_message</span>
+
+<span class="n">transcript</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Message</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">UserMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">"What files are here?"</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">AssistantMessage</span><span class="p">(</span>
+        <span class="n">content</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">TextContent</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Let me look."</span><span class="p">),</span>
+            <span class="n">ToolCall</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">"call_1"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"ls"</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">"path"</span><span class="p">:</span> <span class="s2">"."</span><span class="p">}),</span>
+        <span class="p">],</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">"qwen3-coder"</span><span class="p">,</span>
+        <span class="n">usage</span><span class="o">=</span><span class="n">Usage</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="mi">412</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span> <span class="n">total_tokens</span><span class="o">=</span><span class="mi">440</span><span class="p">),</span>
+        <span class="n">stop_reason</span><span class="o">=</span><span class="s2">"toolUse"</span><span class="p">,</span>
+        <span class="n">timestamp</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">ToolResultMessage</span><span class="p">(</span>
+        <span class="n">tool_call_id</span><span class="o">=</span><span class="s2">"call_1"</span><span class="p">,</span>
+        <span class="n">tool_name</span><span class="o">=</span><span class="s2">"ls"</span><span class="p">,</span>
+        <span class="n">content</span><span class="o">=</span><span class="p">[</span><span class="n">TextContent</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"README.md  src/"</span><span class="p">)],</span>
+        <span class="n">is_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">timestamp</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">transcript</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">render_message</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>That list is a complete agent turn, hand-written: the user asks, the model answers and calls a tool, the tool returns.
+Exactly the sequence you watched in Project 1, Step 5.</p>
+<p><strong>The annotation on <code class="docutils literal notranslate"><span class="pre">transcript</span></code> is load-bearing.</strong> Write it as a bare <code class="docutils literal notranslate"><span class="pre">transcript</span> <span class="pre">=</span> <span class="pre">[...]</span></code> and mypy infers
+<code class="docutils literal notranslate"><span class="pre">list[BaseModel]</span></code> — the nearest common ancestor of the three classes — and then rejects every call to <code class="docutils literal notranslate"><span class="pre">render_message</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="p">:</span> <span class="n">Argument</span> <span class="mi">1</span> <span class="n">to</span> <span class="s2">"render_message"</span> <span class="n">has</span> <span class="n">incompatible</span> <span class="nb">type</span> <span class="s2">"BaseModel"</span><span class="p">;</span> <span class="n">expected</span> <span class="s2">"UserMessage | ..."</span>
+</pre></div>
+</div>
+<p>You have to say <code class="docutils literal notranslate"><span class="pre">list[Message]</span></code>. TypeScript infers the union here and Python does not, and this is the most common way
+this project fails to type-check on the first attempt.</p>
+<p>Check and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>mypy<span class="w"> </span>packages
+uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>packages
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>myharness_agent.main
+</pre></div>
+</div>
+<p>Expected output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user&gt; What files are here?
+model&gt; Let me look. [call ls({'path': '.'})] (440 tokens, toolUse)
+tool&gt; ls: README.md  src/
+</pre></div>
+</div>
+<p>If you see those three lines with mypy clean, the workspace works, the union is right, and the renderer is exhaustive.</p>
+</section>
+<section id="step-6-break-it-on-purpose">
+<h2>Step 6: Break It on Purpose<a class="headerlink" href="#step-6-break-it-on-purpose" title="Link to this heading"></a></h2>
+<p>This step matters more than Step 5. You are checking that the safety net is real. Each break has an exact error; read
+it before restoring.</p>
+<p><strong>Break 1 — remove a case.</strong> Delete the whole <code class="docutils literal notranslate"><span class="pre">case</span> <span class="pre">ToolResultMessage():</span></code> block from <code class="docutils literal notranslate"><span class="pre">render.py</span></code>, then
+<code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">mypy</span> <span class="pre">packages</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="p">:</span> <span class="n">Argument</span> <span class="mi">1</span> <span class="n">to</span> <span class="s2">"assert_never"</span> <span class="n">has</span> <span class="n">incompatible</span> <span class="nb">type</span> <span class="s2">"ToolResultMessage"</span><span class="p">;</span> <span class="n">expected</span> <span class="s2">"Never"</span>  <span class="p">[</span><span class="n">arg</span><span class="o">-</span><span class="nb">type</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Read that until it is obvious. It says: “you promised nothing could reach here, but a <code class="docutils literal notranslate"><span class="pre">ToolResultMessage</span></code> can.” This is
+the Python twin of the <code class="docutils literal notranslate"><span class="pre">TS2322</span></code> error pi’s <code class="docutils literal notranslate"><span class="pre">switch</span></code> statements produce. Restore the case.</p>
+<p><strong>Break 2 — a bad discriminant at runtime.</strong> This one has no TypeScript equivalent, and it is the payoff for using
+pydantic. Try parsing a message with a role that does not exist:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAdapter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">myharness_ai</span><span class="w"> </span><span class="kn">import</span> <span class="n">Message</span>
+
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">TypeAdapter</span><span class="p">(</span><span class="n">Message</span><span class="p">)</span>
+<span class="n">adapter</span><span class="o">.</span><span class="n">validate_json</span><span class="p">(</span><span class="s1">'{"role": "wizard", "content": "x", "timestamp": 1}'</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">union_tag_invalid</span>
+</pre></div>
+</div>
+<p>pydantic read the <code class="docutils literal notranslate"><span class="pre">role</span></code> tag, found no matching class, and refused. <strong>pi cannot do this.</strong> Its types are erased, so
+validating a session file or a provider response needs a separate TypeBox schema carried alongside the type. Your
+pydantic model is both at once. That is <a class="reference internal" href="part_c_concepts.html#concept-2-types-are-erased"><span class="std std-ref">Concept 2</span></a> paying you back.</p>
+<p><strong>Break 3 — a missing required field.</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">adapter</span><span class="o">.</span><span class="n">validate_json</span><span class="p">(</span><span class="s1">'{"role": "assistant", "content": [], "timestamp": 1}'</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">missing</span> <span class="n">at</span> <span class="p">[</span><span class="s1">'assistant'</span><span class="p">,</span> <span class="s1">'model'</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Note the path: it tells you the discriminator picked <code class="docutils literal notranslate"><span class="pre">assistant</span></code>, and then which field was absent. That precision is
+what you get from declaring the discriminator explicitly.</p>
+<p><strong>Break 4 — add a fourth message type.</strong> In <code class="docutils literal notranslate"><span class="pre">types.py</span></code>, add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SystemMessage</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"system"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"system"</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>and extend the union:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Message</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
+    <span class="n">UserMessage</span> <span class="o">|</span> <span class="n">AssistantMessage</span> <span class="o">|</span> <span class="n">ToolResultMessage</span> <span class="o">|</span> <span class="n">SystemMessage</span><span class="p">,</span>
+    <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">"role"</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">mypy</span> <span class="pre">packages</span></code>. <code class="docutils literal notranslate"><span class="pre">render.py</span></code> fails at the <code class="docutils literal notranslate"><span class="pre">assert_never</span></code> line, without you touching that file.</p>
+<p>This is the payoff of the pattern: <strong>the type checker found every place that needs updating.</strong> In a real codebase that
+is forty files, and it lists all of them.</p>
+<p>Now decide what to do about it, and note that pi has answered this question <strong>both ways</strong>. Older versions kept the
+system prompt on <code class="docutils literal notranslate"><span class="pre">Context</span></code> only, as a property of the conversation rather than a turn within it — which is what this
+scaffold still does. Current pi has a <code class="docutils literal notranslate"><span class="pre">SystemMessage</span></code> in the union (Pass 5), because a prompt and a tool set can change
+mid-conversation, and a transcript that cannot record the change can no longer explain itself.</p>
+<p>So this break is not a mistake to revert. It is the real design decision, and you have just done the work of making it:
+the checker listed every site that has to care. Keep the fourth member if you want the pi shape, handle it in
+<code class="docutils literal notranslate"><span class="pre">render.py</span></code>, and drop <code class="docutils literal notranslate"><span class="pre">system_prompt</span></code> from <code class="docutils literal notranslate"><span class="pre">Context</span></code> once it is redundant. Revert it if you would rather stay minimal
+until Module 3 needs it. Either is defensible — write down which one you chose and why.</p>
+</section>
+<section id="bonus-challenges">
+<h2>Bonus Challenges<a class="headerlink" href="#bonus-challenges" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Round-trip through JSON.</strong> Use <code class="docutils literal notranslate"><span class="pre">TypeAdapter(Message)</span></code> to serialize your transcript to JSON lines and read it back.
+Confirm each line comes back as the right class. This is the mechanism behind pi’s session files, and it is Module 3.</p></li>
+<li><p><strong>The three-state field.</strong> Add pi’s <code class="docutils literal notranslate"><span class="pre">ThinkingLevelMap</span></code> idea from <a class="reference internal" href="part_c_concepts.html#concept-3-absent-null-and-set-reading-pi-s-optional-fields"><span class="std std-ref">Concept 3</span></a>:
+a field where absent, <code class="docutils literal notranslate"><span class="pre">None</span></code>, and a value all mean different things. Use <code class="docutils literal notranslate"><span class="pre">model_fields_set</span></code> to tell absent from
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, then write a test proving all three are distinguishable.</p></li>
+<li><p><strong>Cost accounting.</strong> Extend <code class="docutils literal notranslate"><span class="pre">Usage</span></code> with a nested <code class="docutils literal notranslate"><span class="pre">cost</span></code> model like pi’s (Pass 4) and make <code class="docutils literal notranslate"><span class="pre">render_message</span></code> print
+dollars. Then add pi’s <code class="docutils literal notranslate"><span class="pre">reasoning:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code> and write a comment explaining why adding it to <code class="docutils literal notranslate"><span class="pre">output</span></code> would be
+double counting.</p></li>
+<li><p><strong>Read the TypeScript back.</strong> Open pi’s <code class="docutils literal notranslate"><span class="pre">types.ts</span></code> at line 491 next to your <code class="docutils literal notranslate"><span class="pre">types.py</span></code>. For each difference, work out
+which of three things it is: pi solving a TypeScript problem you do not have, pi serving a requirement you do not
+have, or you having missed something. Only the third calls for a change. Write down the first two — that list is the
+beginning of your own design, and it is worth keeping as the course goes on.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="project_1_run_pi.html" class="btn btn-neutral float-left" title="Project 1: Build and Run pi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="checklist.html" class="btn btn-neutral float-right" title="Self-Assessment Checklist" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Dimitris Poulopoulos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

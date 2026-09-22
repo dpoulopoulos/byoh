@@ -1,0 +1,829 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Part C: Key Concepts Deep Dive &mdash; Build Your Own Harness 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b20a9e2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=6dbb43f8"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Project 1: Build and Run pi" href="project_1_run_pi.html" />
+    <link rel="prev" title="Part B: Guided Reading of Three Complete Files" href="part_b_files.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Build Your Own Harness
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Module 0: Ground Floor</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#the-deal">The Deal</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#the-module-in-order">The Module in Order</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="part_a_types.html">Part A: Guided Reading of types.ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="part_b_files.html">Part B: Guided Reading of Three Complete Files</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Part C: Key Concepts Deep Dive</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#concept-1-how-to-read-typescript">Concept 1: How to Read TypeScript</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#concept-2-types-are-erased">Concept 2: Types Are Erased</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#concept-3-absent-null-and-set-reading-pi-s-optional-fields">Concept 3: Absent, Null, and Set — Reading pi’s Optional Fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#concept-4-result-instead-of-exceptions">Concept 4: Result Instead of Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#concept-5-async-streams-and-cancellation">Concept 5: Async, Streams, and Cancellation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#concept-6-the-twelve-packages">Concept 6: The Twelve Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="project_1_run_pi.html">Project 1: Build and Run pi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="project_2_scaffold.html">Project 2: Scaffold Your Harness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="checklist.html">Self-Assessment Checklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="what_next.html">What is Next</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#who-this-is-for">Who This Is For</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#what-you-will-learn">What You Will Learn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#why-this-matters">Why This Matters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#how-to-use-this-guide">How to Use This Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#time-estimate">Time Estimate</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Build Your Own Harness</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module 0: Ground Floor</a></li>
+      <li class="breadcrumb-item active">Part C: Key Concepts Deep Dive</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/module_0/part_c_concepts.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="part-c-key-concepts-deep-dive">
+<h1>Part C: Key Concepts Deep Dive<a class="headerlink" href="#part-c-key-concepts-deep-dive" title="Link to this heading"></a></h1>
+<p>Part A and Part B showed the code. This part explains the six ideas underneath it. Concept 2 is the one that pays for
+this whole module.</p>
+<section id="concept-1-how-to-read-typescript">
+<h2>Concept 1: How to Read TypeScript<a class="headerlink" href="#concept-1-how-to-read-typescript" title="Link to this heading"></a></h2>
+<p>You do not need to write TypeScript. You need to read it fast enough that pi stops being an obstacle. This section is
+the survival kit. Come back to it whenever a line in pi looks like noise.</p>
+<p><strong>The single most useful habit: mentally delete the types.</strong> Everything between a <code class="docutils literal notranslate"><span class="pre">:</span></code> and the next <code class="docutils literal notranslate"><span class="pre">,</span></code> <code class="docutils literal notranslate"><span class="pre">)</span></code> <code class="docutils literal notranslate"><span class="pre">=</span></code> or
+newline is annotation. Everything inside <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code> is a type argument. Delete all of it and what remains is ordinary code
+that looks a lot like Python without the colons.</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">createWriteTool</span><span class="o">&lt;</span><span class="nx">TContext</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">ExecutionToolContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ExecutionToolContext</span><span class="o">&gt;</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nx">AgentHarnessTool</span><span class="o">&lt;</span>
+<span class="w">	</span><span class="nx">TContext</span><span class="p">,</span>
+<span class="w">	</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">writeSchema</span><span class="p">,</span>
+<span class="w">	</span><span class="kc">undefined</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+</pre></div>
+</div>
+<p>Delete the annotations and it is just <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">create_write_tool():</span></code>. That is genuinely all it says. The other 90 characters
+are the return type.</p>
+<p><strong>Syntax you will meet, and what it means:</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>TypeScript</p></th>
+<th class="head"><p>Means</p></th>
+<th class="head"><p>Python</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">string</span></code></p></td>
+<td><p>annotation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">str</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x?:</span> <span class="pre">string</span></code></p></td>
+<td><p>property may be absent</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></code>, roughly</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">string</span> <span class="pre">|</span> <span class="pre">undefined</span></code></p></td>
+<td><p>present, may be <code class="docutils literal notranslate"><span class="pre">undefined</span></code></p></td>
+<td><p>required, may be <code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">interface</span> <span class="pre">Foo</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></p></td>
+<td><p>a structural shape, erased</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Protocol</span></code> or a pydantic model</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">Foo</span> <span class="pre">=</span> <span class="pre">A</span> <span class="pre">|</span> <span class="pre">B</span></code></p></td>
+<td><p>a union alias</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Foo</span> <span class="pre">=</span> <span class="pre">A</span> <span class="pre">|</span> <span class="pre">B</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;text&quot;</span></code> as a type</p></td>
+<td><p>a one-value type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Literal[&quot;text&quot;]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">readonly</span></code></p></td>
+<td><p>cannot reassign</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Final</span></code>, roughly</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Foo[]</span></code></p></td>
+<td><p>list</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list[Foo]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Record&lt;string,</span> <span class="pre">T&gt;</span></code></p></td>
+<td><p>mapping</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">T]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Partial&lt;T&gt;</span></code></p></td>
+<td><p>all fields optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">total=False</span></code> TypedDict</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Extract&lt;T,</span> <span class="pre">U&gt;</span></code> / <code class="docutils literal notranslate"><span class="pre">Exclude&lt;T,</span> <span class="pre">U&gt;</span></code></p></td>
+<td><p>filter a union</p></td>
+<td><p>no equivalent</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Omit&lt;T,</span> <span class="pre">K&gt;</span></code> / <code class="docutils literal notranslate"><span class="pre">Pick&lt;T,</span> <span class="pre">K&gt;</span></code></p></td>
+<td><p>drop / keep fields</p></td>
+<td><p>no equivalent</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">typeof</span> <span class="pre">x</span></code> in a type position</p></td>
+<td><p>the type of value <code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p>no equivalent</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">extends</span> <span class="pre">B</span> <span class="pre">?</span> <span class="pre">C</span> <span class="pre">:</span> <span class="pre">D</span></code></p></td>
+<td><p>if/else at type level</p></td>
+<td><p>no equivalent</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">as</span> <span class="pre">T</span></code></p></td>
+<td><p>trust me, it is a <code class="docutils literal notranslate"><span class="pre">T</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">typing.cast</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x!</span></code></p></td>
+<td><p>trust me, not null</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">x</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code>, silently</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x?.y</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">y</span></code> if <code class="docutils literal notranslate"><span class="pre">x</span></code> is set, else <code class="docutils literal notranslate"><span class="pre">undefined</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x.y</span> <span class="pre">if</span> <span class="pre">x</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span> <span class="pre">else</span> <span class="pre">None</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">??</span> <span class="pre">y</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">y</span></code> only if <code class="docutils literal notranslate"><span class="pre">x</span></code> is null/undefined</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">if</span> <span class="pre">x</span> <span class="pre">is</span> <span class="pre">None</span> <span class="pre">else</span> <span class="pre">x</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">=&gt;</span> <span class="pre">expr</span></code></p></td>
+<td><p>lambda, but can have a body</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">x:</span> <span class="pre">expr</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">`a</span> <span class="pre">${b}`</span></code></p></td>
+<td><p>interpolation</p></td>
+<td><p>f-string</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">promise</span></code></p></td>
+<td><p>deliberately not awaited</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">asyncio.create_task</span></code>, roughly</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">function*</span></code></p></td>
+<td><p>async generator</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">...</span> <span class="pre">yield</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">await</span> <span class="pre">(const</span> <span class="pre">x</span> <span class="pre">of</span> <span class="pre">it)</span></code></p></td>
+<td><p>async iteration</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">it</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Things you can skip on a first read.</strong> Being selective is the skill:</p>
+<ul class="simple">
+<li><p>Long generic parameter lists. Read the function name and the body; come back if the body confuses you.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Extract</span></code>, <code class="docutils literal notranslate"><span class="pre">Exclude</span></code>, <code class="docutils literal notranslate"><span class="pre">Omit</span></code> chains. Read them as “some subset of that other type” and move on.</p></li>
+<li><p>Anything of the shape <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">extends</span> <span class="pre">B</span> <span class="pre">?</span> <span class="pre">C</span> <span class="pre">:</span> <span class="pre">D</span></code>. It computes a type. You will meet exactly one that matters
+(<code class="docutils literal notranslate"><span class="pre">Model.compat</span></code>, Pass 8) and this guide explains it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">type</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span> <span class="pre">from</span> <span class="pre">&quot;...&quot;</span></code> lines. Plumbing, equivalent to re-exports in an <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>.</p></li>
+</ul>
+<p><strong>Two structural facts to know.</strong></p>
+<p><strong>Files are modules, and imports are hoisted.</strong> A <code class="docutils literal notranslate"><span class="pre">.ts</span></code> file is a module the moment it uses <code class="docutils literal notranslate"><span class="pre">import</span></code> or <code class="docutils literal notranslate"><span class="pre">export</span></code>, with
+no <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> equivalent. <code class="docutils literal notranslate"><span class="pre">export</span></code> is what makes a name public; without it a name is genuinely unreachable from
+outside the file, not private-by-convention. And an <code class="docutils literal notranslate"><span class="pre">import</span></code> statement can legally appear anywhere in the file — you
+saw one at line 576 of <code class="docutils literal notranslate"><span class="pre">types.ts</span></code> — because imports are declarations, not statements that run in order.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">type</span></code> is deleted; <code class="docutils literal notranslate"><span class="pre">import</span></code> is not.</strong> This is the distinction to actually internalize, because it tells you at
+a glance which names in a file are real at runtime:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">AssistantMessage</span><span class="p">,</span><span class="w"> </span><span class="nx">EventStream</span><span class="p">,</span><span class="w"> </span><span class="nx">validateToolArguments</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@earendil-works/pi-ai"</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">EventStream</span></code> and <code class="docutils literal notranslate"><span class="pre">validateToolArguments</span></code> exist when the program runs. <code class="docutils literal notranslate"><span class="pre">AssistantMessage</span></code> does not — it is a type, and
+the <code class="docutils literal notranslate"><span class="pre">type</span></code> keyword marks it for deletion. This is Python’s <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">TYPE_CHECKING:</span></code> block, made per-symbol and mandatory.</p>
+<p><strong>How pi is built and run</strong>, which you need for Project 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                      <span class="o">.</span><span class="n">ts</span> <span class="n">source</span>
+                     <span class="o">/</span>          \
+     <span class="p">[</span><span class="n">tsc</span> <span class="o">/</span> <span class="n">tsgo</span><span class="p">]</span>   <span class="o">/</span>            \   <span class="p">[</span><span class="n">tsx</span><span class="p">]</span>
+                   <span class="n">v</span>              <span class="n">v</span>
+        <span class="o">.</span><span class="n">js</span> <span class="n">written</span> <span class="n">to</span> <span class="n">dist</span><span class="o">/</span>    <span class="n">types</span> <span class="n">stripped</span> <span class="ow">in</span> <span class="n">memory</span>
+        <span class="p">(</span><span class="n">what</span> <span class="n">gets</span> <span class="n">published</span><span class="p">)</span>   <span class="ow">and</span> <span class="n">run</span> <span class="n">immediately</span>
+</pre></div>
+</div>
+<p>Two commands matter. <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">run</span> <span class="pre">check</span></code> type-checks without producing files. <code class="docutils literal notranslate"><span class="pre">./pi-test.sh</span></code> runs the TypeScript directly
+through <code class="docutils literal notranslate"><span class="pre">tsx</span></code>, which strips the types and executes — fast, and with <strong>no type checking at all</strong>. Type checking and
+running are separate activities in TypeScript, which is the opposite of your instinct from <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">script.py</span></code>.</p>
+<p><strong>One flag worth knowing, because it explains something you will notice.</strong> pi’s <code class="docutils literal notranslate"><span class="pre">tsconfig.base.json</span></code> sets
+<code class="docutils literal notranslate"><span class="pre">erasableSyntaxOnly:</span> <span class="pre">true</span></code>, which forbids any TypeScript syntax that cannot be removed by deleting characters. That
+outlaws <code class="docutils literal notranslate"><span class="pre">enum</span></code>, <code class="docutils literal notranslate"><span class="pre">namespace</span></code>, and constructor parameter properties. It is why pi has <strong>no enums anywhere</strong> and uses string
+literal unions instead — a habit that maps directly onto your <code class="docutils literal notranslate"><span class="pre">Literal[...]</span></code>.</p>
+</section>
+<section id="concept-2-types-are-erased">
+<h2>Concept 2: Types Are Erased<a class="headerlink" href="#concept-2-types-are-erased" title="Link to this heading"></a></h2>
+<p>This is the concept that explains pi’s design, so it gets the most space.</p>
+<p><strong>Python:</strong> type hints survive to runtime. They are stored in <code class="docutils literal notranslate"><span class="pre">__annotations__</span></code>, readable with
+<code class="docutils literal notranslate"><span class="pre">typing.get_type_hints()</span></code>, and that is precisely how pydantic works — it reads the annotations of your class and builds a
+validator from them.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">WriteInput</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="n">WriteInput</span><span class="o">.</span><span class="n">model_json_schema</span><span class="p">()</span>   <span class="c1"># works: the annotations are still there</span>
+<span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">WriteInput</span><span class="p">)</span>        <span class="c1"># works: the class is a real object</span>
+</pre></div>
+</div>
+<p><strong>TypeScript:</strong> annotations are deleted. Completely. After compilation there is no trace.</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">interface</span><span class="w"> </span><span class="nx">WriteInput</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">	</span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>compiles to… nothing. Not an empty object. The declaration is gone. There is no value named <code class="docutils literal notranslate"><span class="pre">WriteInput</span></code> at runtime,
+which means:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// None of these can exist:</span>
+<span class="nx">WriteInput</span><span class="p">.</span><span class="nx">jsonSchema</span><span class="p">();</span><span class="w">          </span><span class="c1">// no such value</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="nx">WriteInput</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w">   </span><span class="c1">// no such value</span>
+<span class="ow">typeof</span><span class="w"> </span><span class="nx">WriteInput</span><span class="p">;</span><span class="w">                </span><span class="c1">// no such value</span>
+</pre></div>
+</div>
+<p><strong>Three consequences follow, and they shape everything.</strong></p>
+<p><strong>Consequence 1: no runtime validation for free.</strong> You cannot ask a type to validate data. Anything crossing a trust
+boundary — an HTTP response, a file on disk, a tool call from a model — needs a separate runtime schema. That is why
+TypeBox is a dependency and why every tool in pi carries a <code class="docutils literal notranslate"><span class="pre">parameters</span></code> schema object.</p>
+<p>This is the reason for the direction reversal noted in Pass 6. In Python, class first, schema derived. In TypeScript,
+schema first, type derived. The schema must be the source of truth, because it is the only part that survives.</p>
+<p><strong>Consequence 2: no <code class="docutils literal notranslate"><span class="pre">isinstance</span></code> for interfaces.</strong> You cannot ask whether a value satisfies an interface, because the
+interface is not there to ask. So you check the data instead:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">role</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"assistant"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* narrowed */</span><span class="w"> </span><span class="p">}</span><span class="w">        </span><span class="c1">// check a discriminant field</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">content</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"string"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* narrowed */</span><span class="w"> </span><span class="p">}</span><span class="w">          </span><span class="c1">// check a primitive's type</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s2">"partial"</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* narrowed */</span><span class="w"> </span><span class="p">}</span><span class="w">                   </span><span class="c1">// check a key exists</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="ne">Error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* narrowed */</span><span class="w"> </span><span class="p">}</span><span class="w">               </span><span class="c1">// works: Error is a real class</span>
+</pre></div>
+</div>
+<p>The first three inspect <strong>data</strong>. Only the fourth uses <code class="docutils literal notranslate"><span class="pre">instanceof</span></code>, and only because <code class="docutils literal notranslate"><span class="pre">Error</span></code> is an actual runtime class.</p>
+<p>This is the real reason pi’s data model is discriminated unions rather than class hierarchies. It is not taste. A class
+hierarchy is unusable for anything that gets serialized, because <code class="docutils literal notranslate"><span class="pre">JSON.parse</span></code> gives you plain objects and <code class="docutils literal notranslate"><span class="pre">instanceof</span></code>
+returns <code class="docutils literal notranslate"><span class="pre">false</span></code> on all of them. A discriminated union round-trips through JSON perfectly, because its tag is data.</p>
+<p>When you need a reusable check, write a <strong>type predicate</strong>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">isToolCall</span><span class="p">(</span><span class="nx">block</span><span class="o">:</span><span class="w"> </span><span class="kt">unknown</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">block</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="nx">ToolCall</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="ow">typeof</span><span class="w"> </span><span class="nx">block</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"object"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">block</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="nx">block</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="nx">?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}).</span><span class="kr">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"toolCall"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The return type <code class="docutils literal notranslate"><span class="pre">block</span> <span class="pre">is</span> <span class="pre">ToolCall</span></code> is the interesting part: a <code class="docutils literal notranslate"><span class="pre">boolean</span></code> that also tells the compiler what a <code class="docutils literal notranslate"><span class="pre">true</span></code> result
+proves. Python’s <code class="docutils literal notranslate"><span class="pre">TypeGuard[ToolCall]</span></code> is exactly this, and it is the one place the analogy is perfect.</p>
+<p>Note that the compiler does <strong>not</strong> verify the body. You could <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">true</span></code> and it would believe you. A type predicate
+is a promise you are making, not one the compiler checks — the same trust model as <code class="docutils literal notranslate"><span class="pre">typing.cast</span></code>.</p>
+<p><strong>Consequence 3: generics vanish too.</strong> <code class="docutils literal notranslate"><span class="pre">ToolResultMessage&lt;ReadDetails&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">ToolResultMessage&lt;BashDetails&gt;</span></code> are the same
+thing at runtime. You cannot inspect <code class="docutils literal notranslate"><span class="pre">TDetails</span></code>, dispatch on it, or construct from it. Python’s
+<code class="docutils literal notranslate"><span class="pre">get_args(SomeGeneric[int])</span></code> has no counterpart.</p>
+<p><strong>What you get in exchange.</strong> It is a real trade, and TypeScript’s side is not empty:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Python + pydantic</p></th>
+<th class="head"><p>TypeScript</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Runtime validation</p></td>
+<td><p>built in</p></td>
+<td><p>needs a schema library</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">isinstance</span></code> on a shape</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>Startup cost</p></td>
+<td><p>builds validators at import</p></td>
+<td><p>zero</p></td>
+</tr>
+<tr class="row-odd"><td><p>Per-call cost</p></td>
+<td><p>validates on every construction</p></td>
+<td><p>zero unless you ask</p></td>
+</tr>
+<tr class="row-even"><td><p>Type-level computation</p></td>
+<td><p>very limited</p></td>
+<td><p>conditional types, mapped types, <code class="docutils literal notranslate"><span class="pre">Extract</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Narrowing from a check</p></td>
+<td><p>limited</p></td>
+<td><p>thorough, and the main way you work</p></td>
+</tr>
+</tbody>
+</table>
+<p>Zero runtime cost is why the erasure exists. Types that do not exist cannot slow anything down. And because the compiler
+is not constrained by needing to produce runtime artifacts, it can do things Python’s cannot — Pass 8’s conditional type
+is not expressible in Python at all.</p>
+<p><strong>What this means for your harness.</strong> You get to delete a whole layer. Everywhere pi keeps a schema <em>and</em> a type in sync
+by hand, you write one pydantic model and get both. Concretely, across the rest of this course:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>pi has to</p></th>
+<th class="head"><p>You write</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>a TypeBox schema plus <code class="docutils literal notranslate"><span class="pre">Static&lt;typeof</span> <span class="pre">schema&gt;</span></code></p></td>
+<td><p>one pydantic model</p></td>
+</tr>
+<tr class="row-odd"><td><p>a separate <code class="docutils literal notranslate"><span class="pre">Value.Check()</span></code> call to validate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_validate()</span></code>, same object</p></td>
+</tr>
+<tr class="row-even"><td><p>hand-written type predicates for runtime checks</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">isinstance</span></code>, which actually works</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Model.compat</span></code> as a conditional type</p></td>
+<td><p>separate models per wire format, or a plain dict</p></td>
+</tr>
+</tbody>
+</table>
+<p>That is not a small saving. It is most of <code class="docutils literal notranslate"><span class="pre">packages/ai</span></code>’s type machinery. When you meet a pi pattern in a later module and
+it looks like a lot of ceremony for little gain, check whether it is paying this tax — and if it is, skip it.</p>
+</section>
+<section id="concept-3-absent-null-and-set-reading-pi-s-optional-fields">
+<h2>Concept 3: Absent, Null, and Set — Reading pi’s Optional Fields<a class="headerlink" href="#concept-3-absent-null-and-set-reading-pi-s-optional-fields" title="Link to this heading"></a></h2>
+<p>Python has one empty value. JavaScript has two, and pi uses both to mean different things. You need this to read pi’s
+config types correctly; you do not need it to write Python.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Where it comes from</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">undefined</span></code></p></td>
+<td><p>“not set”</p></td>
+<td><p>a missing property, a missing argument, no <code class="docutils literal notranslate"><span class="pre">return</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td><p>“set, to nothing”</p></td>
+<td><p>only ever explicit — nothing produces it by accident</p></td>
+</tr>
+</tbody>
+</table>
+<p>Combine that with the optional-property marker <code class="docutils literal notranslate"><span class="pre">?</span></code> and pi gets <strong>three</strong> distinguishable states from one field. Line 86
+of <code class="docutils literal notranslate"><span class="pre">types.ts</span></code>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">ThinkingLevelMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Partial</span><span class="o">&lt;</span><span class="nx">Record</span><span class="o">&lt;</span><span class="nx">ModelThinkingLevel</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Partial&lt;...&gt;</span></code> makes every key optional, so a key can be absent. The value type includes <code class="docutils literal notranslate"><span class="pre">null</span></code>. The doc comment above
+it explains why both are needed: “Missing keys use provider defaults. null marks a level as unsupported.”</p>
+<ul class="simple">
+<li><p>key absent — no opinion, fall back to the provider default</p></li>
+<li><p>value is <code class="docutils literal notranslate"><span class="pre">null</span></code> — this level is explicitly not supported</p></li>
+<li><p>value is a string — use this provider-specific value</p></li>
+</ul>
+<p>Collapse <code class="docutils literal notranslate"><span class="pre">undefined</span></code> and <code class="docutils literal notranslate"><span class="pre">null</span></code> into one and that information is gone. You saw the same three-state shape in Pass 6 with
+<code class="docutils literal notranslate"><span class="pre">constrainedSampling?:</span> <span class="pre">false</span> <span class="pre">|</span> <span class="pre">ConstrainedSamplingConfig</span></code>, where absent means “no preference” and <code class="docutils literal notranslate"><span class="pre">false</span></code> means
+“explicitly off.”</p>
+<p><strong>How to model that in Python.</strong> Python’s <code class="docutils literal notranslate"><span class="pre">None</span></code> covers <code class="docutils literal notranslate"><span class="pre">null</span></code> cleanly, but “absent” needs help, because
+<code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></code> cannot tell “the caller omitted it” from “the caller passed None.” Two standard answers:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. pydantic: ask whether the field was actually provided</span>
+<span class="n">model</span><span class="o">.</span><span class="n">model_fields_set</span>          <span class="c1"># a set of the names the input supplied</span>
+
+<span class="c1"># 2. a distinct sentinel for "absent"</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Unset</span><span class="p">:</span> <span class="o">...</span>
+<span class="n">UNSET</span> <span class="o">=</span> <span class="n">Unset</span><span class="p">()</span>
+<span class="n">level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Unset</span> <span class="o">=</span> <span class="n">UNSET</span>
+</pre></div>
+</div>
+<p>Reach for these only where the distinction is load-bearing, as it is in provider config. For ordinary optional fields,
+plain <code class="docutils literal notranslate"><span class="pre">None</span></code> is right, and pi’s own habit is the same — the overwhelming majority of its optional fields are simple
+<code class="docutils literal notranslate"><span class="pre">?</span></code> properties where absent is the only empty state.</p>
+<p><strong>Two operators you will read constantly:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x?.y</span></code> — <strong>optional chaining</strong>. Evaluates to <code class="docutils literal notranslate"><span class="pre">undefined</span></code> instead of throwing when <code class="docutils literal notranslate"><span class="pre">x</span></code> is null or undefined. You saw
+<code class="docutils literal notranslate"><span class="pre">context.abortSignal?.aborted</span></code> in <code class="docutils literal notranslate"><span class="pre">write.ts</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">??</span> <span class="pre">y</span></code> — <strong>nullish coalescing</strong>. Falls back to <code class="docutils literal notranslate"><span class="pre">y</span></code> only for <code class="docutils literal notranslate"><span class="pre">null</span></code> and <code class="docutils literal notranslate"><span class="pre">undefined</span></code>, unlike <code class="docutils literal notranslate"><span class="pre">||</span></code> which also falls
+back for <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>. When you see <code class="docutils literal notranslate"><span class="pre">??</span></code> in pi, read it as “default, but <code class="docutils literal notranslate"><span class="pre">0</span></code> and empty string are legitimate values.”</p></li>
+</ul>
+<p>That last distinction is why <code class="docutils literal notranslate"><span class="pre">options.limit</span> <span class="pre">??</span> <span class="pre">100</span></code> is correct and <code class="docutils literal notranslate"><span class="pre">options.limit</span> <span class="pre">||</span> <span class="pre">100</span></code> is a bug when a limit of <code class="docutils literal notranslate"><span class="pre">0</span></code>
+is meaningful. You will not write this bug in Python, but you will read code that was careful about it, and the care is
+the signal.</p>
+</section>
+<section id="concept-4-result-instead-of-exceptions">
+<h2>Concept 4: Result Instead of Exceptions<a class="headerlink" href="#concept-4-result-instead-of-exceptions" title="Link to this heading"></a></h2>
+<p>Open <a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/harness/types.ts#L8-L41"><code class="docutils literal notranslate"><span class="pre">packages/agent/src/harness/types.ts</span></code></a>
+and read lines 8-41:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="cm">/** Result of a fallible operation. Expected failures are returned as `ok: false` instead of thrown. */</span>
+<span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">Result</span><span class="o">&lt;</span><span class="nx">TValue</span><span class="p">,</span><span class="w"> </span><span class="nx">TError</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ok</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">TValue</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ok</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">;</span><span class="w"> </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="kt">TError</span><span class="w"> </span><span class="p">};</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">ok</span><span class="o">&lt;</span><span class="nx">TValue</span><span class="p">,</span><span class="w"> </span><span class="nx">TError</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">TValue</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Result</span><span class="o">&lt;</span><span class="nx">TValue</span><span class="p">,</span><span class="w"> </span><span class="nx">TError</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ok</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">err</span><span class="o">&lt;</span><span class="nx">TValue</span><span class="p">,</span><span class="w"> </span><span class="nx">TError</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="kt">TError</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Result</span><span class="o">&lt;</span><span class="nx">TValue</span><span class="p">,</span><span class="w"> </span><span class="nx">TError</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ok</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getOrThrow</span><span class="o">&lt;</span><span class="nx">TValue</span><span class="p">,</span><span class="w"> </span><span class="nx">TError</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">result</span><span class="o">:</span><span class="w"> </span><span class="kt">Result</span><span class="o">&lt;</span><span class="nx">TValue</span><span class="p">,</span><span class="w"> </span><span class="nx">TError</span><span class="o">&gt;</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">TValue</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">result</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">error</span><span class="p">;</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Result</span></code> is a discriminated union again — but discriminated on a <strong>boolean</strong>, not a string. <code class="docutils literal notranslate"><span class="pre">ok:</span> <span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">ok:</span> <span class="pre">false</span></code> are
+distinct literal types, so <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(result.ok)</span></code> narrows exactly like <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(message.role</span> <span class="pre">===</span> <span class="pre">&quot;user&quot;)</span></code>.</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">env</span><span class="p">.</span><span class="nx">readTextFile</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span><span class="w"> </span><span class="nx">context</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">result</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="c1">// result.error is available; result.value is not</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="sb">`could not read: </span><span class="si">${</span><span class="nx">result</span><span class="p">.</span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// result.value is available; result.error is not</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Why not exceptions?</strong> TypeScript has <code class="docutils literal notranslate"><span class="pre">throw</span></code> and <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">catch</span></code>, and pi uses them. But it cannot type them. There is no
+<code class="docutils literal notranslate"><span class="pre">throws</span></code> clause. A function’s signature says nothing about what it might raise, and <code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">(e)</span></code> gives you <code class="docutils literal notranslate"><span class="pre">e:</span> <span class="pre">unknown</span></code> —
+not even <code class="docutils literal notranslate"><span class="pre">Error</span></code>, because JavaScript permits throwing any value at all, including a string or a number.</p>
+<p>Compare:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">read_file</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>   <span class="c1"># might raise FileNotFoundError, PermissionError, ...</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">readFile</span><span class="p">(</span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Result</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">FileError</span><span class="o">&gt;</span><span class="w">   </span><span class="c1">// the failures are in the signature</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Result</span></code> version puts failures in the type. You cannot reach <code class="docutils literal notranslate"><span class="pre">.value</span></code> without handling <code class="docutils literal notranslate"><span class="pre">.ok</span></code>, because the compiler
+will not let you. Python has no equivalent enforcement — an uncaught <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> type-checks fine.</p>
+<p>That is why <code class="docutils literal notranslate"><span class="pre">toError(error:</span> <span class="pre">unknown):</span> <span class="pre">Error</span></code> exists on line 32 of the same file: it normalizes whatever came out of a
+<code class="docutils literal notranslate"><span class="pre">catch</span></code> into an actual <code class="docutils literal notranslate"><span class="pre">Error</span></code> before pi treats it as one. <code class="docutils literal notranslate"><span class="pre">getOrUndefined</span></code> sits between the two, and its doc comment is
+worth reading for the reasoning: it only accepts object values, “to avoid truthiness bugs with primitives,” because a
+successful result holding <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> would otherwise be indistinguishable from a failure at the call site.</p>
+<p><strong>pi’s rule:</strong> <code class="docutils literal notranslate"><span class="pre">Result</span></code> for <strong>expected</strong> failures — file not found, permission denied, provider returned 429. <code class="docutils literal notranslate"><span class="pre">throw</span></code>
+for <strong>bugs</strong> — invariant violated, unreachable branch reached. An expected failure is part of the function’s contract. A
+bug is not.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Result</span></code> is the clearest case in the module of a pattern worth weighing before you carry it over.</strong> pi needs
+<code class="docutils literal notranslate"><span class="pre">Result</span></code> because TypeScript cannot type what a function throws — there is no <code class="docutils literal notranslate"><span class="pre">throws</span></code> clause, and <code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">(e)</span></code> gives you
+<code class="docutils literal notranslate"><span class="pre">unknown</span></code>. Python has typed exceptions, a real hierarchy, <code class="docutils literal notranslate"><span class="pre">except</span></code> clauses that narrow, and tooling that tracks them, so
+the limitation pi is working around is not one you have. Raising <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> is available to you as the
+idiomatic answer.</p>
+<p>The <em>distinction</em> pi is drawing transfers either way, and it is the valuable part: expected failures are part of your
+contract and should be documented and handled; bugs should crash loudly. Exception classes express that, and so does a
+wrapper type. The case where a <code class="docutils literal notranslate"><span class="pre">Result</span></code>-like value clearly earns its keep is collecting many failures without unwinding
+— batch validation, say — so that is the one to weigh it against.</p>
+<p><code class="docutils literal notranslate"><span class="pre">getOrThrow</span></code> is the escape hatch between the two worlds, and its doc comment scopes it honestly: “Intended for tests and
+explicit adapter boundaries.” <code class="docutils literal notranslate"><span class="pre">write.ts</span></code> uses it on line 32 because a failed write inside a tool should abort the tool,
+and the tool-running layer above already catches and converts.</p>
+<p>Later modules add <code class="docutils literal notranslate"><span class="pre">TaggedError</span></code>, which gives typed error variants and an exhaustive <code class="docutils literal notranslate"><span class="pre">matchError</span></code>. That is the direct
+analogue of a Python exception hierarchy plus <code class="docutils literal notranslate"><span class="pre">except</span></code> clauses — except returned as values, and checked for
+exhaustiveness.</p>
+</section>
+<section id="concept-5-async-streams-and-cancellation">
+<h2>Concept 5: Async, Streams, and Cancellation<a class="headerlink" href="#concept-5-async-streams-and-cancellation" title="Link to this heading"></a></h2>
+<p>This is the other place Python is straightforwardly better, and it is worth being explicit about why: <strong><code class="docutils literal notranslate"><span class="pre">asyncio</span></code>
+cancellation actually raises.</strong> pi hand-writes a cancellation check at every boundary and has to thread cancellation
+through every function in the call chain. You get the same behaviour from the language.</p>
+<p>Two layers do that threading differently, and it is worth knowing which is which before you read code. <code class="docutils literal notranslate"><span class="pre">packages/ai</span></code> and
+the agent loop pass a bare <code class="docutils literal notranslate"><span class="pre">AbortSignal</span></code>. The harness and tool layer passes a <code class="docutils literal notranslate"><span class="pre">Context</span></code> from pi’s <code class="docutils literal notranslate"><span class="pre">chord</span></code> package — one
+object holding the signal plus scoped values, which is why <code class="docutils literal notranslate"><span class="pre">write.ts</span></code> reads <code class="docutils literal notranslate"><span class="pre">context.abortSignal</span></code> rather than <code class="docutils literal notranslate"><span class="pre">signal</span></code>.
+The mechanism underneath is identical; only the number of parameters changed.</p>
+<p>The two models map closely otherwise, with two sharp exceptions. Take the mapping first:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Python</p></th>
+<th class="head"><p>TypeScript</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">f()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">function</span> <span class="pre">f()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">x</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">asyncio.gather(a,</span> <span class="pre">b)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Promise.all([a,</span> <span class="pre">b])</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">asyncio.sleep(1)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">Promise((r)</span> <span class="pre">=&gt;</span> <span class="pre">setTimeout(r,</span> <span class="pre">1000))</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">f():</span> <span class="pre">yield</span> <span class="pre">x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">function*</span> <span class="pre">f()</span> <span class="pre">{</span> <span class="pre">yield</span> <span class="pre">x;</span> <span class="pre">}</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">it:</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">await</span> <span class="pre">(const</span> <span class="pre">x</span> <span class="pre">of</span> <span class="pre">it)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable&lt;T&gt;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">__aiter__</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[Symbol.asyncIterator]()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">asyncio.run(main())</span></code></p></td>
+<td><p>not needed — top-level <code class="docutils literal notranslate"><span class="pre">await</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">asyncio.Task</span></code></p></td>
+<td><p>there is no separate task type; a promise is a promise</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">Symbol.asyncIterator</span></code> is the dunder. <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> is JavaScript’s mechanism for protocol keys that cannot collide with
+ordinary string keys — the same role as <code class="docutils literal notranslate"><span class="pre">__aiter__</span></code>’s double underscores, implemented differently. You can see the shape
+in <a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/utils/event-stream.ts#L72-L84"><code class="docutils literal notranslate"><span class="pre">event-stream.ts</span></code></a>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="o">*</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">asyncIterator</span><span class="p">]()</span><span class="o">:</span><span class="w"> </span><span class="nx">AsyncIterator</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="k">yield</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">()</span><span class="o">!</span><span class="p">;</span>
+<span class="w">		</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">done</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="k">return</span><span class="p">;</span>
+<span class="w">		</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">IteratorResult</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;&gt;</span><span class="p">((</span><span class="nx">resolve</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">waiting</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="nx">resolve</span><span class="p">));</span>
+<span class="w">			</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">done</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">			</span><span class="k">yield</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+<span class="w">		</span><span class="p">}</span>
+<span class="w">	</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Read that as: hand out anything queued; if the producer is finished, stop; otherwise park until someone pushes. The
+<code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">*</span></code> prefix plus the <code class="docutils literal notranslate"><span class="pre">[Symbol.asyncIterator]</span></code> name is <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">__aiter__</span></code> with <code class="docutils literal notranslate"><span class="pre">yield</span></code> in it. The trailing <code class="docutils literal notranslate"><span class="pre">!</span></code> on
+<code class="docutils literal notranslate"><span class="pre">this.queue.dequeue()!</span></code> is a <strong>non-null assertion</strong>: “I know this returns <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">|</span> <span class="pre">undefined</span></code>, but I just checked the length,
+so treat it as <code class="docutils literal notranslate"><span class="pre">T</span></code>.” Same trust model as <code class="docutils literal notranslate"><span class="pre">cast</span></code>.</p>
+<p><strong>Exception 1: promises are eager.</strong> This is the big one.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">coro</span> <span class="o">=</span> <span class="n">fetch_data</span><span class="p">()</span>      <span class="c1"># nothing has happened yet</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">coro</span>      <span class="c1"># NOW it runs</span>
+</pre></div>
+</div>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">promise</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fetchData</span><span class="p">();</span><span class="w">   </span><span class="c1">// ALREADY RUNNING</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">promise</span><span class="p">;</span><span class="w">  </span><span class="c1">// just waits for the result</span>
+</pre></div>
+</div>
+<p>A Python coroutine is inert until awaited. A JavaScript promise starts the moment it is created. <code class="docutils literal notranslate"><span class="pre">await</span></code> only observes it.</p>
+<p>Three practical consequences:</p>
+<p><strong>You can start work and await it later.</strong> This is often what you want:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">slowThing</span><span class="p">();</span><span class="w">          </span><span class="c1">// both start now</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">otherSlowThing</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">y</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="k">await</span><span class="w"> </span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">b</span><span class="p">];</span><span class="w">   </span><span class="c1">// total time = max, not sum</span>
+</pre></div>
+</div>
+<p><strong>An unawaited rejection is an error.</strong> If a promise rejects and nobody is awaiting or catching it, Node prints an
+unhandled rejection warning and can exit. Python is more forgiving about a coroutine you never awaited.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">promise</span></code> is how pi says “on purpose.”</strong> Look at
+<a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts#L43-L57"><code class="docutils literal notranslate"><span class="pre">agent-loop.ts</span></code> lines 43-57</a>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createAgentStream</span><span class="p">();</span>
+
+<span class="ow">void</span><span class="w"> </span><span class="nx">runAgentLoop</span><span class="p">(</span>
+<span class="w">	</span><span class="nx">prompts</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">context</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">config</span><span class="p">,</span>
+<span class="w">	</span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="nx">stream</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+<span class="w">	</span><span class="p">},</span>
+<span class="w">	</span><span class="nx">signal</span><span class="p">,</span>
+<span class="w">	</span><span class="nx">streamFn</span><span class="p">,</span>
+<span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">messages</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">stream</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">messages</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="k">return</span><span class="w"> </span><span class="nx">stream</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">agentLoop</span></code> starts the real work and returns the stream <strong>immediately</strong>, without awaiting. The caller iterates the stream
+while the loop runs behind it. The <code class="docutils literal notranslate"><span class="pre">void</span></code> operator marks the promise as deliberately not awaited, so linters do not flag
+it. This is the shape of every streaming API in pi, and it only works because promises are eager — the loop is already
+running by the time <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">stream</span></code> executes.</p>
+<p><strong>Exception 2: cancellation is cooperative and hand-written.</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>            <span class="c1"># raises CancelledError at the next await point</span>
+</pre></div>
+</div>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="nx">controller</span><span class="p">.</span><span class="nx">abort</span><span class="p">();</span><span class="w">      </span><span class="c1">// sets a flag and fires an event. Nothing raises. Nothing stops.</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">AbortSignal</span></code> is a flag plus an event listener. Aborting does not interrupt anything. Every piece of code that should
+respond has to check <code class="docutils literal notranslate"><span class="pre">signal.aborted</span></code>, or register a listener, or pass the signal down to something that does.</p>
+<p>This is why <code class="docutils literal notranslate"><span class="pre">write.ts</span></code> checks twice. This is why every function in pi’s call chain takes a <code class="docutils literal notranslate"><span class="pre">signal</span></code> or a <code class="docutils literal notranslate"><span class="pre">context</span></code>
+parameter. Forget to pass it down once, and everything below that point becomes uncancellable — with no warning of any
+kind.</p>
+<p>Python’s <code class="docutils literal notranslate"><span class="pre">contextvars</span></code> removes even the parameter. A <code class="docutils literal notranslate"><span class="pre">ContextVar</span></code> set at the top of a task is readable anywhere below it
+without appearing in a single signature, and <code class="docutils literal notranslate"><span class="pre">asyncio.Task.cancel()</span></code> handles the cancellation half. Between the two,
+the whole threading problem goes away.</p>
+<p>Here is the behaviour, made visible. Save this and run it with <code class="docutils literal notranslate"><span class="pre">tsx</span></code>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="o">*</span><span class="w"> </span><span class="nx">streamWords</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">signal</span><span class="o">:</span><span class="w"> </span><span class="kt">AbortSignal</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">AsyncGenerator</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">word</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">			</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">signal</span><span class="p">.</span><span class="nx">aborted</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">			</span><span class="k">await</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">));</span>
+<span class="w">			</span><span class="k">yield</span><span class="w"> </span><span class="nx">word</span><span class="p">;</span>
+<span class="w">		</span><span class="p">}</span>
+<span class="w">	</span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<span class="w">		</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"\n[cleanup ran]"</span><span class="p">);</span>
+<span class="w">	</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">controller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AbortController</span><span class="p">();</span>
+<span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">controller</span><span class="p">.</span><span class="nx">abort</span><span class="p">(),</span><span class="w"> </span><span class="mf">350</span><span class="p">);</span>
+
+<span class="k">for</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">word</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">streamWords</span><span class="p">(</span><span class="s2">"one two three four five six"</span><span class="p">,</span><span class="w"> </span><span class="nx">controller</span><span class="p">.</span><span class="nx">signal</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">	</span><span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">word</span><span class="si">}</span><span class="sb"> `</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"[loop exited]"</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">one</span> <span class="n">two</span> <span class="n">three</span> <span class="n">four</span>
+<span class="p">[</span><span class="n">cleanup</span> <span class="n">ran</span><span class="p">]</span>
+<span class="p">[</span><span class="n">loop</span> <span class="n">exited</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Look carefully at that. The abort fires at 350 ms. Words are yielded at 100, 200, 300, 400 ms. <strong>“four” is emitted after
+the abort, at 400 ms</strong> — because when the abort fired, the generator was parked inside <code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">setTimeout(...)</span></code>, and
+nothing interrupted it. It only noticed on the next trip through the loop.</p>
+<p>Python would have raised <code class="docutils literal notranslate"><span class="pre">CancelledError</span></code> inside that <code class="docutils literal notranslate"><span class="pre">await</span></code> and stopped at three words. TypeScript does not. Your
+cancellation latency is exactly the distance between your checks.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">finally</span></code> block does run, which is the good news: <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">await</span></code> calls the generator’s <code class="docutils literal notranslate"><span class="pre">return()</span></code> when the loop exits
+early, and that triggers <code class="docutils literal notranslate"><span class="pre">finally</span></code> for cleanup. That part works like Python.</p>
+<p>For the harder case — cancelling something you cannot check inside, like an in-flight HTTP request — pi has
+<code class="docutils literal notranslate"><span class="pre">raceWithAbortSignal</span></code> in
+<a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/ai/src/utils/abort.ts#L17-L50"><code class="docutils literal notranslate"><span class="pre">utils/abort.ts</span></code></a>.
+It races the operation against the signal, and note lines 18-21: if the signal has <em>already</em> aborted, it still attaches a
+<code class="docutils literal notranslate"><span class="pre">.catch(()</span> <span class="pre">=&gt;</span> <span class="pre">{})</span></code> to the abandoned promise. That is the unhandled-rejection problem above, handled deliberately.</p>
+</section>
+<section id="concept-6-the-twelve-packages">
+<h2>Concept 6: The Twelve Packages<a class="headerlink" href="#concept-6-the-twelve-packages" title="Link to this heading"></a></h2>
+<p>Time for the map. Run this from the repo root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>packages/
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">agent</span>   <span class="n">ai</span>      <span class="n">chord</span>   <span class="n">client</span>    <span class="n">coding</span><span class="o">-</span><span class="n">agent</span>  <span class="n">durable</span>
+<span class="n">evals</span>   <span class="n">protocol</span>  <span class="n">server</span>  <span class="n">session</span><span class="o">-</span><span class="n">backends</span>  <span class="n">telemetry</span>  <span class="n">tui</span>
+</pre></div>
+</div>
+<p>Twelve directories. Here is what each holds, and which module of this course builds your version of it:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Package</p></th>
+<th class="head"><p>Holds</p></th>
+<th class="head"><p>Python tools to consider</p></th>
+<th class="head"><p>Module</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ai</span></code></p></td>
+<td><p>Provider adapters, model catalog, streaming, token accounting</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">httpx</span></code>, <code class="docutils literal notranslate"><span class="pre">httpx-sse</span></code>, pydantic</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">agent</span></code></p></td>
+<td><p>The agent loop, tools, sessions, compaction — the harness core</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code>, pydantic</p></td>
+<td><p>2 and 3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tui</span></code></p></td>
+<td><p>Terminal UI: differential rendering, editor, autocomplete</p></td>
+<td><p>Textual</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">coding-agent</span></code></p></td>
+<td><p>The CLI you actually run; extensions, skills, settings</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">importlib</span></code>, Typer or Click</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">protocol</span></code></p></td>
+<td><p>Typed message schemas for the client/server split</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cbor2</span></code>, pydantic</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">client</span></code> / <code class="docutils literal notranslate"><span class="pre">server</span></code></p></td>
+<td><p>The two halves of running the agent out of process</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> streams</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">telemetry</span></code></p></td>
+<td><p>Vendor-neutral telemetry contracts and typed schemas</p></td>
+<td><p>—</p></td>
+<td><p>mentioned in 6</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">session-backends</span></code></p></td>
+<td><p>Pluggable session storage (SQLite)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sqlite3</span></code></p></td>
+<td><p>mentioned in 3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">evals</span></code></p></td>
+<td><p>Benchmarking harness behaviour</p></td>
+<td><p>—</p></td>
+<td><p>not covered</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">chord</span></code></p></td>
+<td><p>Plugin/facet runtime, services, replicated state, and the <code class="docutils literal notranslate"><span class="pre">Context</span></code> type the tools use</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">contextvars</span></code></p></td>
+<td><p>mentioned in 5</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">durable</span></code></p></td>
+<td><p>Durable conversation, task, and document records</p></td>
+<td><p>—</p></td>
+<td><p>not covered</p></td>
+</tr>
+</tbody>
+</table>
+<p>Two of those, <code class="docutils literal notranslate"><span class="pre">chord</span></code> and <code class="docutils literal notranslate"><span class="pre">durable</span></code>, are newer than the rest and are where pi is currently growing. <code class="docutils literal notranslate"><span class="pre">chord</span></code> is the one
+you will actually bump into, because its <code class="docutils literal notranslate"><span class="pre">Context</span></code> is the last parameter of every tool (Part B, File 2). Its README is
+explicit that it is not a pi package at all: it depends on nothing else in the repo and is meant to be usable by
+unrelated applications.</p>
+<p><strong>The dependency order is the interesting part.</strong> From the <code class="docutils literal notranslate"><span class="pre">build</span></code> script in the root <code class="docutils literal notranslate"><span class="pre">package.json</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chord</span> <span class="o">-&gt;</span> <span class="n">tui</span> <span class="o">-&gt;</span> <span class="n">telemetry</span> <span class="o">-&gt;</span> <span class="n">ai</span> <span class="o">-&gt;</span> <span class="n">durable</span> <span class="o">-&gt;</span> <span class="n">agent</span> <span class="o">-&gt;</span> <span class="n">session</span><span class="o">-</span><span class="n">backends</span>
+      <span class="o">-&gt;</span> <span class="n">protocol</span> <span class="o">-&gt;</span> <span class="n">client</span> <span class="o">-&gt;</span> <span class="n">server</span> <span class="o">-&gt;</span> <span class="n">coding</span><span class="o">-</span><span class="n">agent</span>
+</pre></div>
+</div>
+<p>Read it as an argument about layering:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">chord</span></code>, <code class="docutils literal notranslate"><span class="pre">tui</span></code>, and <code class="docutils literal notranslate"><span class="pre">telemetry</span></code> depend on nothing.</strong> A terminal renderer does not need to know what an agent is.
+That independence is what makes it testable, and <code class="docutils literal notranslate"><span class="pre">chord</span></code> is built first for the same reason.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ai</span></code> depends on neither of them.</strong> It knows about models and messages, not about loops or terminals. You could build
+a completely different agent on top of <code class="docutils literal notranslate"><span class="pre">ai</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">agent</span></code> depends on <code class="docutils literal notranslate"><span class="pre">ai</span></code>.</strong> The loop needs messages and a way to call a model. It does <em>not</em> depend on <code class="docutils literal notranslate"><span class="pre">tui</span></code> — the
+harness core has no idea a terminal exists.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">coding-agent</span></code> is last and depends on everything.</strong> All the wiring lives in the outermost layer.</p></li>
+</ul>
+<p>That shape — the core knowing nothing about the interface — is why pi can run as a TUI, as a JSON stream, or as a server,
+without the loop changing. And it is the reason this course builds packages in that order too: you can finish Module 2
+and have a working agent with no UI at all.</p>
+<p><strong>The one number worth remembering:</strong> the agent loop itself, in
+<a class="reference external" href="https://github.com/earendil-works/pi/blob/v0.87.0/packages/agent/src/agent-loop.ts"><code class="docutils literal notranslate"><span class="pre">packages/agent/src/agent-loop.ts</span></code></a>,
+is a single file of 898 lines that holds <strong>no state</strong>. Everything difficult — the transcript, compaction, crash recovery,
+permissions — lives beside it, not in it. Open the file and skim it now. You will not understand it yet. Notice how small
+it is.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="part_b_files.html" class="btn btn-neutral float-left" title="Part B: Guided Reading of Three Complete Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="project_1_run_pi.html" class="btn btn-neutral float-right" title="Project 1: Build and Run pi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Dimitris Poulopoulos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
